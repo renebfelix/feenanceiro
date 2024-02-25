@@ -1,0 +1,7 @@
+{
+	"name": "@feenanceiro/tsconfig-commons",
+	"version": "1.0.0",
+	"license": "MIT",
+	"main": "base.json",
+  	"author": "Rene Felix"
+}

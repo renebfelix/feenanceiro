@@ -1,0 +1,22 @@
+{
+  "name": "@feenanceiro/site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+	"@feenanceiro/components": "*",
+	"@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^11.0.6"
+  },
+  "devDependencies": {
+	"@feenanceiro/types": "*",
+	"@feenanceiro/tsconfig-commons": "*"
+  }
+}

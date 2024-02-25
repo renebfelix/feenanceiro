@@ -1,0 +1,1 @@
+export { UserProps } from './userProprs';

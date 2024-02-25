@@ -1,0 +1,28 @@
+{
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"packages/*",
+			"public/*",
+			"types/*",
+			"utils/*",
+			"setup/*"
+		]
+	},
+	"scripts": {
+		"app": "yarn workspace @feenanceiro/app",
+		"app:dev": "yarn workspace @feenanceiro/app dev",
+		"app:build": "yarn workspace @feenanceiro/app build",
+		"app:start": "yarn workspace @feenanceiro/app start",
+
+		"site": "yarn workspace @feenanceiro/site",
+		"site:dev": "yarn workspace @feenanceiro/site dev",
+		"site:build": "yarn workspace @feenanceiro/site build",
+		"site:start": "yarn workspace @feenanceiro/site start",
+
+		"api": "yarn workspace @feenanceiro/api",
+		"api:dev": "yarn workspace @feenanceiro/api dev",
+		"api:build": "yarn workspace @feenanceiro/api build",
+		"api:start": "yarn workspace @feenanceiro/api start"
+	}
+}
