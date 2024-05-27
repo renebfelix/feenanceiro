@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model billings_info {
+  idBillingInfo          Int               @id @default(autoincrement())
+  descriptionBillingInfo String            @db.VarChar(255)
+  dataBillingInfo        DateTime          @db.Date
+  valueBillingInfo       Float             @db.Float
+  deletedBillingInfo     DateTime?         @db.DateTime(0)
+  typeBillingInfo        String            @db.VarChar(100)
+  parcelBillingInfo      Int?
+  idUserBillingInfo      Int?
+  divisionBillingInfo    Int
+  categoryBillingInfo    Int
+  paymentBillingInfo     Int
+  valueTypeBillingInfo   String            @db.VarChar(100)
+  dataCriacaoBillingInfo DateTime?         @db.DateTime(0)
+  users                  users?            @relation(fields: [idUserBillingInfo], references: [idUser], onDelete: Restrict, onUpdate: Restrict, map: "billings_info_FK")
+  cards                  cards             @relation(fields: [paymentBillingInfo], references: [idCard], onUpdate: Restrict, map: "billings_info_cards_FK")
+  categories             categories        @relation(fields: [categoryBillingInfo], references: [idCategory], onUpdate: Restrict, map: "billings_info_categories_FK")
+  billings_values        billings_values[]
+
+  @@index([idUserBillingInfo], map: "billings_info_FK")
+  @@index([paymentBillingInfo], map: "billings_info_cards_FK")
+  @@index([categoryBillingInfo], map: "billings_info_categories_FK")
+}
+
+model billings_status {
+  idBillingStatus             Int             @id @default(autoincrement())
+  idBillingValueBillingStatus Int
+  statusBillingStatus         String?         @db.VarChar(100)
+  dateBillingStatus           DateTime?       @db.Date
+  responsableBillingStatus    Int
+  billings_values             billings_values @relation(fields: [idBillingValueBillingStatus], references: [idBillingValue], onUpdate: Restrict, map: "billings_status_billings_values_FK")
+
+  @@index([idBillingValueBillingStatus], map: "billings_status_billings_values_FK")
+}
+
+model billings_values {
+  idBillingValue            Int               @id @default(autoincrement())
+  valueBillingValue         Float             @db.Float
+  idBillingInfoBillingValue Int
+  dateBillingValue          DateTime?         @db.Date
+  responsableBillingValue   Int
+  numberParcelBillingValue  Int?
+  billings_status           billings_status[]
+  billings_info             billings_info     @relation(fields: [idBillingInfoBillingValue], references: [idBillingInfo], onUpdate: Restrict, map: "billing_values_FK")
+
+  @@index([idBillingInfoBillingValue], map: "billing_values_FK")
+}
+
+model cards {
+  idCard          Int             @id @default(autoincrement())
+  nameCard        String          @db.VarChar(100)
+  dueDateCard     Int?
+  closingDateCard Int?
+  limitCard       Float?          @db.Float
+  idUserCard      Int
+  deletedCard     DateTime?       @db.DateTime(0)
+  typeCard        String          @db.VarChar(100)
+  billings_info   billings_info[]
+  users           users           @relation(fields: [idUserCard], references: [idUser], onUpdate: Restrict, map: "cards_FK")
+
+  @@index([idUserCard], map: "cards_FK")
+}
+
+model categories {
+  idCategory      Int             @id @default(autoincrement())
+  nameCategory    String          @db.VarChar(100)
+  idUserCategory  Int
+  deletedCategory DateTime?       @db.DateTime(0)
+  limitCategory   Float?          @db.Float
+  billings_info   billings_info[]
+  users           users           @relation(fields: [idUserCategory], references: [idUser], onUpdate: Restrict, map: "categories_users_FK")
+
+  @@index([idUserCategory], map: "categories_users_FK")
+}
+
+model icons {
+  idIcon    Int    @id @default(autoincrement())
+  nameIcon  String @db.VarChar(100)
+  fileIcone String @db.VarChar(100)
+}
+
+model reset_password {
+  idReset             Int      @id @default(autoincrement())
+  idUserReset         Int
+  dateReset           DateTime @db.DateTime(0)
+  dateExpirationReset DateTime @db.DateTime(0)
+  uuidReset           String   @db.VarChar(100)
+  finishedReset       Boolean
+  users               users    @relation(fields: [idUserReset], references: [idUser], onUpdate: Restrict, map: "reset_password_users_FK")
+
+  @@index([idUserReset], map: "reset_password_users_FK")
+}
+
+model responsables {
+  idResponsable        Int       @id @default(autoincrement())
+  nameResponsable      String    @db.VarChar(100)
+  deletedResponsable   DateTime? @db.DateTime(0)
+  idUserResponsable    Int
+  isDefaultResponsable Boolean
+  uuidResponsable      String    @db.VarChar(100)
+  users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
+
+  @@index([idUserResponsable], map: "responsables_FK")
+}
+
+model users {
+  idUser         Int              @id @default(autoincrement())
+  usernameUser   String           @db.VarChar(100)
+  emailUser      String           @db.VarChar(255)
+  passwordUser   String           @db.VarChar(255)
+  fullnameUser   String           @db.VarChar(255)
+  limitUser      Float?           @db.Float
+  photoUser      String?          @db.VarChar(255)
+  uuidUser       String           @db.VarChar(100)
+  billings_info  billings_info[]
+  cards          cards[]
+  categories     categories[]
+  reset_password reset_password[]
+  responsables   responsables[]
+}
