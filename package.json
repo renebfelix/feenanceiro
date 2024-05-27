@@ -11,14 +11,16 @@
 	},
 	"scripts": {
 		"app": "yarn workspace @feenanceiro/app",
-		"app:dev": "yarn workspace @feenanceiro/app dev",
-		"app:build": "yarn workspace @feenanceiro/app build",
-		"app:start": "yarn workspace @feenanceiro/app start",
+		"app:dev": "yarn workspace @feenanceiro/app start",
+		"app:android": "yarn workspace @feenanceiro/app android",
+		"app:ios": "yarn workspace @feenanceiro/app ios",
+		"app:web": "yarn workspace @feenanceiro/app web",
+		"app:apk": "yarn workspace @feenanceiro/app build:apk",
 
-		"site": "yarn workspace @feenanceiro/site",
-		"site:dev": "yarn workspace @feenanceiro/site dev",
-		"site:build": "yarn workspace @feenanceiro/site build",
-		"site:start": "yarn workspace @feenanceiro/site start",
+		"web": "yarn workspace @feenanceiro/web",
+		"web:dev": "yarn workspace @feenanceiro/web dev",
+		"web:build": "yarn workspace @feenanceiro/web build",
+		"web:start": "yarn workspace @feenanceiro/web start",
 
 		"api": "yarn workspace @feenanceiro/api",
 		"api:dev": "yarn workspace @feenanceiro/api dev",

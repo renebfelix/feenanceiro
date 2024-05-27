@@ -1,5 +1,6 @@
 {
-	"extends": "@feenanceiro/tsconfig-commons/base.json",
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules"]
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true
+  }
 }
