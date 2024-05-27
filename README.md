@@ -14,6 +14,7 @@ Um projeto multiplataforma para controle e planejamento de finanças pessoais.
 
 ## Tecnologies:
 * NodeJs
+* MySQL
 * NextJS
 * React Native
 
