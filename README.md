@@ -1,1 +1,23 @@
-# feenanceiro
+![Alt text](https://i.imgur.com/1ulcThc.png "Feenanceiro")
+
+# Feenanceiro
+Um projeto multiplataforma para controle de finanças.
+
+## Description
+* **Author**: [Rene Felix](https://github.com/renebfelix)
+* **URL**: [feenanceiro.com.br](https://feenanceiro.com.br/) *(beta)*
+
+## Scope
+* API
+* Versão responsiva Web
+* Aplicativo Android e iOS
+
+## Tecnologies:
+* NodeJs
+* NextJS
+* React Native
+
+## Skills
+* [Express](https://expressjs.com/)
+* [Expo](https://expo.dev/)
+* [NextJs](https://nextjs.org/)
