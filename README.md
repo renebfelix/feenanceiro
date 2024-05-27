@@ -1,7 +1,7 @@
 ![Alt text](https://i.imgur.com/1ulcThc.png "Feenanceiro")
 
 # Feenanceiro
-Um projeto multiplataforma para controle de finanças.
+Um projeto multiplataforma para controle e planejamento de finanças pessoais.
 
 ## Description
 * **Author**: [Rene Felix](https://github.com/renebfelix)
