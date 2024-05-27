@@ -16,6 +16,7 @@
 		"app:ios": "yarn workspace @feenanceiro/app ios",
 		"app:web": "yarn workspace @feenanceiro/app web",
 		"app:apk": "yarn workspace @feenanceiro/app build:apk",
+		"app:prisma": "yarn workspace @feenanceiro/app prisma:pull",
 
 		"web": "yarn workspace @feenanceiro/web",
 		"web:dev": "yarn workspace @feenanceiro/web dev",
