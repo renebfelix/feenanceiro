@@ -1,20 +1,30 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import dotenv from "dotenv";
-import { UserProps } from '@feenanceiro/types';
-
+import { isValidLogin } from "../services/middleware";
 dotenv.config();
 
+const cors = require('cors');
+const loginRouter = require('./auth/login');
+
 const app: Express = express();
-const port = process.env.PORT;
+const port = process.env.APP_PORT;
+const urlBase = `${process.env.APP_URL_BASE}`;
 
-app.get("/", (req: Request, res: Response) => {
-	const user: UserProps = {
-		name: "Rene",
-	};
+// CORS Settings
+app.use(cors({
+	origin: "*"
+}));
 
-	res.send("Express + TypeScript Server");
-});
+// Files public upload
+app.use(express.static('public/static'));
 
+// Routes
+app.use(`${urlBase}`, loginRouter);
+
+// Rotas autenticadas
+app.use(isValidLogin);
+
+// Start Server
 app.listen(port, () => {
-console.log(`[server]: Server is running at http://localhost:${port}`);
+	console.log(`Feenanceiro Started (${urlBase}): ${Date()}`);
 });

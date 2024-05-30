@@ -11,8 +11,13 @@
 		"prisma:pull": "prisma db pull"
 	},
 	"dependencies": {
+		"@types/cors": "^2.8.17",
+		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
 		"dotenv": "^16.4.5",
-		"express": "^4.18.2"
+		"express": "^4.18.2",
+		"js-string-escape": "^1.0.1",
+		"jsonwebtoken": "^9.0.2"
 	},
 	"devDependencies": {
 		"@feenanceiro/tsconfig-commons": "*",
