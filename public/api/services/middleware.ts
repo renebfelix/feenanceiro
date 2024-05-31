@@ -8,10 +8,9 @@ const isValidLogin = function(request: Request, response: Response, next: NextFu
 
 	try {
 		const payload = jsonwebtoken.verify(token, process.env.APP_JWT_PRIVATE);
-		const username = typeof payload !== "string" && payload.username;
-		const id = typeof payload !== "string" && payload.id;
+		const uuid = typeof payload !== "string" && payload.uuid;
 
-		if(!username || !id){
+		if(!uuid){
 			return response.status(401).send({message: "Invalid token"});
 		}else{
 			return next();

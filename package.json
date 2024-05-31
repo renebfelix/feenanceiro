@@ -16,7 +16,6 @@
 		"app:ios": "yarn workspace @feenanceiro/app ios",
 		"app:web": "yarn workspace @feenanceiro/app web",
 		"app:apk": "yarn workspace @feenanceiro/app build:apk",
-		"app:prisma": "yarn workspace @feenanceiro/app prisma:pull",
 
 		"web": "yarn workspace @feenanceiro/web",
 		"web:dev": "yarn workspace @feenanceiro/web dev",
@@ -26,6 +25,7 @@
 		"api": "yarn workspace @feenanceiro/api",
 		"api:dev": "yarn workspace @feenanceiro/api dev",
 		"api:build": "yarn workspace @feenanceiro/api build",
-		"api:start": "yarn workspace @feenanceiro/api start"
+		"api:start": "yarn workspace @feenanceiro/api start",
+		"api:prisma-pull": "yarn workspace @feenanceiro/api prisma:pull"
 	}
 }

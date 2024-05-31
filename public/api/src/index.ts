@@ -3,8 +3,12 @@ import dotenv from "dotenv";
 import { isValidLogin } from "../services/middleware";
 dotenv.config();
 
+import { loginRouter } from './auth/login';
+import { createRouter } from './auth/createAccount';
+import { refreshRouter } from "./auth/refreshToken";
+
 const cors = require('cors');
-const loginRouter = require('./auth/login');
+const bodyParser = require("body-parser");
 
 const app: Express = express();
 const port = process.env.APP_PORT;
@@ -18,8 +22,15 @@ app.use(cors({
 // Files public upload
 app.use(express.static('public/static'));
 
+// Middlewares
+app.use(bodyParser.json());
+
 // Routes
-app.use(`${urlBase}`, loginRouter);
+app.use(`${urlBase}`, [
+	loginRouter,
+	createRouter,
+	refreshRouter
+]);
 
 // Rotas autenticadas
 app.use(isValidLogin);

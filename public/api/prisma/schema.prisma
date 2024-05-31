@@ -15,7 +15,7 @@ model billings_info {
   deletedBillingInfo     DateTime?         @db.DateTime(0)
   typeBillingInfo        String            @db.VarChar(100)
   parcelBillingInfo      Int?
-  idUserBillingInfo      Int?
+  idUserBillingInfo      String?
   divisionBillingInfo    Int
   categoryBillingInfo    Int
   paymentBillingInfo     Int
@@ -61,7 +61,7 @@ model cards {
   dueDateCard     Int?
   closingDateCard Int?
   limitCard       Float?          @db.Float
-  idUserCard      Int
+  idUserCard      String
   deletedCard     DateTime?       @db.DateTime(0)
   typeCard        String          @db.VarChar(100)
   billings_info   billings_info[]
@@ -73,7 +73,7 @@ model cards {
 model categories {
   idCategory      Int             @id @default(autoincrement())
   nameCategory    String          @db.VarChar(100)
-  idUserCategory  Int
+  idUserCategory  String
   deletedCategory DateTime?       @db.DateTime(0)
   limitCategory   Float?          @db.Float
   billings_info   billings_info[]
@@ -90,7 +90,7 @@ model icons {
 
 model reset_password {
   idReset             Int      @id @default(autoincrement())
-  idUserReset         Int
+  idUserReset         String
   dateReset           DateTime @db.DateTime(0)
   dateExpirationReset DateTime @db.DateTime(0)
   uuidReset           String   @db.VarChar(100)
@@ -104,7 +104,7 @@ model responsables {
   idResponsable        Int       @id @default(autoincrement())
   nameResponsable      String    @db.VarChar(100)
   deletedResponsable   DateTime? @db.DateTime(0)
-  idUserResponsable    Int
+  idUserResponsable    String
   isDefaultResponsable Boolean
   uuidResponsable      String    @db.VarChar(100)
   users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
@@ -112,18 +112,30 @@ model responsables {
   @@index([idUserResponsable], map: "responsables_FK")
 }
 
+
+model refresh_token {
+  idRefresh        		String @id @default(uuid())
+  expiresInRefresh 		Int
+  idUserRefresh  		String
+  users            		users  @relation(fields: [idUserRefresh], references: [idUser], onUpdate: Restrict, map: "refresh_token_users_FK")
+
+  @@index([idUserRefresh], map: "refresh_token_users_FK")
+}
+
 model users {
-  idUser         Int              @id @default(autoincrement())
+  idUser         String           @id @default(uuid())
   usernameUser   String           @db.VarChar(100)
   emailUser      String           @db.VarChar(255)
   passwordUser   String           @db.VarChar(255)
   fullnameUser   String           @db.VarChar(255)
   limitUser      Float?           @db.Float
-  photoUser      String?          @db.VarChar(255)
-  uuidUser       String           @db.VarChar(100)
+  photoUser      String?
+  deletedUser    DateTime?        @db.DateTime(0)
+  blockedUser    DateTime?        @db.DateTime(0)
   billings_info  billings_info[]
   cards          cards[]
   categories     categories[]
+  refresh_token  refresh_token[]
   reset_password reset_password[]
   responsables   responsables[]
 }
