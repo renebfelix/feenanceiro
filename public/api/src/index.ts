@@ -8,6 +8,7 @@ import { createRouter } from './auth/createAccount';
 import { refreshRouter } from "./auth/refreshToken";
 import { requestPassword } from './auth/reset-password/request-password';
 import { verifyPasswordRouter } from './auth/reset-password/verify-password';
+import { changePasswordRoute } from "./auth/reset-password/change-password";
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -33,7 +34,8 @@ app.use(`${urlBase}`, [
 	createRouter,
 	refreshRouter,
 	requestPassword,
-	verifyPasswordRouter
+	verifyPasswordRouter,
+	changePasswordRoute
 ]);
 
 // Rotas autenticadas
