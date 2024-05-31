@@ -89,13 +89,12 @@ model icons {
 }
 
 model reset_password {
-  idReset             Int      @id @default(autoincrement())
+  idReset             String     @id @default(uuid())
   idUserReset         String
-  dateReset           DateTime @db.DateTime(0)
-  dateExpirationReset DateTime @db.DateTime(0)
-  uuidReset           String   @db.VarChar(100)
   finishedReset       Boolean
-  users               users    @relation(fields: [idUserReset], references: [idUser], onUpdate: Restrict, map: "reset_password_users_FK")
+  dateReset           Int
+  dateExpirationReset Int
+  users               users   @relation(fields: [idUserReset], references: [idUser], onUpdate: Restrict, map: "reset_password_users_FK")
 
   @@index([idUserReset], map: "reset_password_users_FK")
 }
@@ -112,12 +111,11 @@ model responsables {
   @@index([idUserResponsable], map: "responsables_FK")
 }
 
-
 model refresh_token {
-  idRefresh        		String @id @default(uuid())
-  expiresInRefresh 		Int
-  idUserRefresh  		String
-  users            		users  @relation(fields: [idUserRefresh], references: [idUser], onUpdate: Restrict, map: "refresh_token_users_FK")
+  idRefresh        String @id @default(uuid())
+  expiresInRefresh Int
+  idUserRefresh    String
+  users            users  @relation(fields: [idUserRefresh], references: [idUser], onUpdate: Restrict, map: "refresh_token_users_FK")
 
   @@index([idUserRefresh], map: "refresh_token_users_FK")
 }

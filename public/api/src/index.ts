@@ -6,6 +6,7 @@ dotenv.config();
 import { loginRouter } from './auth/login';
 import { createRouter } from './auth/createAccount';
 import { refreshRouter } from "./auth/refreshToken";
+import { requestPassword } from './auth/reset-password/request-password';
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -25,11 +26,12 @@ app.use(express.static('public/static'));
 // Middlewares
 app.use(bodyParser.json());
 
-// Routes
+// Routes - AUTH
 app.use(`${urlBase}`, [
 	loginRouter,
 	createRouter,
-	refreshRouter
+	refreshRouter,
+	requestPassword
 ]);
 
 // Rotas autenticadas
