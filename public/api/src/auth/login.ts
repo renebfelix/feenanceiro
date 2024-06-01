@@ -5,7 +5,6 @@ import { generateRefreshToken } from "../../services/generateRefreshToken";
 import { database } from "../prisma/client";
 import { generateToken } from "../../services/generateToken";
 
-const jsonwebtoken = require('jsonwebtoken');
 const loginRouter = Router();
 
 loginRouter.post(`/auth/login`, async (req: Request, res: Response) => {

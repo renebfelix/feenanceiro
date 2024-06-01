@@ -17,7 +17,7 @@ model billings_info {
   parcelBillingInfo      Int?
   idUserBillingInfo      String?
   divisionBillingInfo    Int
-  categoryBillingInfo    Int
+  categoryBillingInfo    String
   paymentBillingInfo     Int
   valueTypeBillingInfo   String            @db.VarChar(100)
   dataCriacaoBillingInfo DateTime?         @db.DateTime(0)
@@ -71,7 +71,7 @@ model cards {
 }
 
 model categories {
-  idCategory      Int             @id @default(autoincrement())
+  idCategory      String             @id @default(uuid())
   nameCategory    String          @db.VarChar(100)
   idUserCategory  String
   deletedCategory DateTime?       @db.DateTime(0)

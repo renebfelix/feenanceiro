@@ -9,6 +9,8 @@ import { refreshRouter } from "./auth/refreshToken";
 import { requestPassword } from './auth/reset-password/request-password';
 import { verifyPasswordRouter } from './auth/reset-password/verify-password';
 import { changePasswordRoute } from "./auth/reset-password/change-password";
+import { categoryRoute } from './app/categories/create-category';
+import { listCategoriesRouter } from "./app/categories/list-categories";
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -40,6 +42,11 @@ app.use(`${urlBase}`, [
 
 // Rotas autenticadas
 app.use(isValidLogin);
+
+app.use(`${urlBase}`, [
+	categoryRoute,
+	listCategoriesRouter
+]);
 
 // Start Server
 app.listen(port, () => {

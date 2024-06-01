@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 export function userDataToken(token: string) {
-	let { id } = jwt.verify(token, process.env.APP_JWT_PRIVATE);
+	const newToken = token.split(" ");
+	let { uuid } = jwt.verify(newToken[1], process.env.APP_JWT_PRIVATE);
 
 	return {
-		id: id,
+		uuid,
 	}
 }

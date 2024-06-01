@@ -4,7 +4,7 @@ function generateToken(uuid: string){
 	const token = sign(
 		{uuid},
 		`${process.env.APP_JWT_PRIVATE}`,
-		{expiresIn: '10m'}
+		{expiresIn: '120m'}
 	);
 
 	return token;
