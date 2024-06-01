@@ -23,6 +23,7 @@ createCardRouter.post(`/app/card`, async (req: Request, res: Response) => {
 				idUserCard: uuid
 			},
 			select: {
+				idCard: true,
 				nameCard: true,
 				typeCard: true,
 				dueDateCard: true,
