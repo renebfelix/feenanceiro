@@ -11,6 +11,7 @@ import { verifyPasswordRouter } from './auth/reset-password/verify-password';
 import { changePasswordRoute } from "./auth/reset-password/change-password";
 import { categoryRoute } from './app/categories/create-category';
 import { listCategoriesRouter } from "./app/categories/list-categories";
+import { updateCategoryRoute } from "./app/categories/update-category";
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -45,7 +46,8 @@ app.use(isValidLogin);
 
 app.use(`${urlBase}`, [
 	categoryRoute,
-	listCategoriesRouter
+	listCategoriesRouter,
+	updateCategoryRoute
 ]);
 
 // Start Server
