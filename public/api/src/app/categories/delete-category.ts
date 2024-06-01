@@ -1,24 +1,23 @@
 import { Request, Response, Router } from "express";
 import { database } from "../../prisma/client";
 import { userDataToken } from "../../../utils/userDatatoken";
-import { errorHandler } from "../../../utils/errorsHandlers";
+import moment from "moment";
 import { findCategory } from "./findCategory";
+import { errorHandler } from "../../../utils/errorsHandlers";
 
-const updateCategoryRoute = Router();
+const deleteCategoryRoute = Router();
 
-updateCategoryRoute.put(`/app/category/:uuidCategory`, async(req: Request, res: Response) => {
-	const { uuidCategory } = req.params;
-	const { name, limit } = req.body;
+deleteCategoryRoute.delete(`/app/category/:uuidCategory`, async(req: Request, res: Response) => {
 	const { uuid } = userDataToken(req.headers.authorization ?? '');
+	const { uuidCategory } = req.params;
 	const selectCatergory = await findCategory(uuidCategory, uuid);
 
 	if (!selectCatergory){
 		res.status(401).send(errorHandler(1, "Sem permissão"));
-	} else{
-		const updateCategory = await database.categories.update({
+	} else {
+		const deleteCategory = await database.categories.update({
 			data: {
-				nameCategory: name,
-				limitCategory: limit,
+				deletedCategory: new Date(moment().format("YYYY-MM-DD H:mm:ss")),
 			},
 			where: {
 				idCategory: uuidCategory,
@@ -26,12 +25,13 @@ updateCategoryRoute.put(`/app/category/:uuidCategory`, async(req: Request, res: 
 			}
 		});
 
-		if (!updateCategory) {
+		if (!deleteCategory){
 			res.status(401).send(errorHandler(1, "Ocorreu um erro"));
 		} else {
 			res.send();
 		}
 	}
+
 });
 
-export { updateCategoryRoute };
+export { deleteCategoryRoute }

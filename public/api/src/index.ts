@@ -9,9 +9,13 @@ import { refreshRouter } from "./auth/refreshToken";
 import { requestPassword } from './auth/reset-password/request-password';
 import { verifyPasswordRouter } from './auth/reset-password/verify-password';
 import { changePasswordRoute } from "./auth/reset-password/change-password";
-import { categoryRoute } from './app/categories/create-category';
-import { listCategoriesRouter } from "./app/categories/list-categories";
-import { updateCategoryRoute } from "./app/categories/update-category";
+
+import {
+	categoryRoute,
+	deleteCategoryRoute,
+	listCategoriesRouter,
+	updateCategoryRoute
+} from './app/categories';
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -47,7 +51,8 @@ app.use(isValidLogin);
 app.use(`${urlBase}`, [
 	categoryRoute,
 	listCategoriesRouter,
-	updateCategoryRoute
+	updateCategoryRoute,
+	deleteCategoryRoute
 ]);
 
 // Start Server
