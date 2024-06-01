@@ -34,6 +34,13 @@ import {
 	deleteCardRoute
 } from './app/cards';
 
+import {
+	createBankRouter,
+	listBanksRouter,
+	updateBankRoute,
+	deleteBankRoute
+} from "./app/banks"
+
 const cors = require('cors');
 const bodyParser = require("body-parser");
 
@@ -77,7 +84,11 @@ app.use(`${urlBase}`, [
 	createCardRouter,
 	listCardsRouter,
 	updateCardRoute,
-	deleteCardRoute
+	deleteCardRoute,
+	createBankRouter,
+	listBanksRouter,
+	updateBankRoute,
+	deleteBankRoute
 ]);
 
 // Start Server

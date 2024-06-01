@@ -5,7 +5,8 @@ export async function findCard(uuidCard: string, uuidUser: string){
 		where: {
 			idCard: uuidCard,
 			idUserCard: uuidUser,
-			deletedCard: null
+			deletedCard: null,
+			typeCard: "CREDITO"
 		}
 	});
 

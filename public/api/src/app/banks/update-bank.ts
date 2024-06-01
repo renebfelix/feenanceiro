@@ -3,36 +3,33 @@ import { userDataToken } from "../../../utils/userDatatoken";
 import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
-import { findCard } from "./findCard";
+import { findBank } from "./findBank";
 
-const updateCardRoute = Router();
+const updateBankRoute = Router();
 
-updateCardRoute.put(`/app/card/:uuidCard`, async(req: Request, res: Response) => {
-	const { uuidCard } = req.params;
+updateBankRoute.put(`/app/bank/:uuidBank`, async(req: Request, res: Response) => {
+	const { uuidBank } = req.params;
 	const { uuid } = userDataToken(req.headers.authorization ?? '');
-	const { name, dueCard, closingDate, limit } = req.body;
-	const selectCards = await findCard(uuidCard, uuid);
+	const { name } = req.body;
+	const selectBank = await findBank(uuidBank, uuid);
 
-	if (isEmpty([name, dueCard, closingDate, limit])){
+	if (isEmpty([name])){
 		res.status(401).send(errorHandler(1, "Preencha todos os campos"));
 	} else {
-		if (!selectCards) {
+		if (!selectBank) {
 			res.status(401).send(errorHandler(1, "Sem permissão"));
 		} else {
-			const updateCard = await database.cards.update({
+			const updateBank = await database.cards.update({
 				data: {
 					nameCard: name,
-					dueDateCard: dueCard,
-					closingDateCard: closingDate,
-					limitCard: limit
 				},
 				where: {
-					idCard: uuidCard,
+					idCard: uuidBank,
 					idUserCard: uuid
 				}
 			});
 
-			if (!updateCard) {
+			if (!updateBank) {
 				res.status(401).send(errorHandler(1, "Ocorreu um erro"));
 			} else {
 				res.send();
@@ -41,4 +38,4 @@ updateCardRoute.put(`/app/card/:uuidCard`, async(req: Request, res: Response) =>
 	}
 });
 
-export { updateCardRoute }
+export { updateBankRoute }
