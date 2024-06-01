@@ -100,7 +100,7 @@ model reset_password {
 }
 
 model responsables {
-  idResponsable        Int       @id @default(autoincrement())
+  idResponsable        String       @id @default(uuid())
   nameResponsable      String    @db.VarChar(100)
   deletedResponsable   DateTime? @db.DateTime(0)
   idUserResponsable    String
