@@ -11,22 +11,21 @@ createResponsableRouter.post(`/app/responsable`, async(req: Request, res: Respon
 
 	if (!name) {
 		res.status(400).send(errorHandler(1, "Preencha todos os campos"));
-	} else {
-		const createResponsable = await database.responsables.create({
-			data: {
-				nameResponsable: name,
-				idUserResponsable: uuid,
-				isDefaultResponsable: false
-			}
-		});
-
-		if (!createResponsable) {
-			res.status(400).send(errorHandler(1, "Ocorreu um erro"));
-		} else {
-			res.status(201).send();
-		}
 	}
 
+	const createResponsable = await database.responsables.create({
+		data: {
+			nameResponsable: name,
+			idUserResponsable: uuid,
+			isDefaultResponsable: false
+		}
+	});
+
+	if (!createResponsable) {
+		res.status(400).send(errorHandler(1, "Ocorreu um erro"));
+	}
+
+	res.status(201).send();
 });
 
 export { createResponsableRouter };

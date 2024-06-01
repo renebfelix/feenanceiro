@@ -22,9 +22,9 @@ listCategoriesRouter.get(`/app/categories`, async (req: Request, res: Response) 
 
 	if (!listCategories){
 		res.status(401).send(errorHandler(1, "Ocorreu um erro"));
-	} else {
-		res.send(listCategories);
 	}
+
+	res.send(listCategories);
 })
 
 export { listCategoriesRouter }

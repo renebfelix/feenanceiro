@@ -15,28 +15,28 @@ editResponsableRoute.put(`/app/responsable/:uuidResponsable`, async (req: Reques
 
 	if (!selectResponsable) {
 		res.status(401).send(errorHandler(2, 'Sem permissão'));
-	} else {
-		if (name === ""){
-			res.status(401).send(errorHandler(2, 'Preencha todos os campos'));
-		} else{
-			const edit = await database.responsables.update({
-				where: {
-					idResponsable: uuidResponsable
-				},
-				data: {
-					nameResponsable: {
-						set: name
-					}
-				}
-			});
+	}
 
-			if (!edit) {
-				res.status(401).send(errorHandler(2, 'Ocorreu um erro'));
-			} else {
-				res.send();
+	if (name === ""){
+		res.status(401).send(errorHandler(2, 'Preencha todos os campos'));
+	}
+
+	const edit = await database.responsables.update({
+		where: {
+			idResponsable: uuidResponsable
+		},
+		data: {
+			nameResponsable: {
+				set: name
 			}
 		}
+	});
+
+	if (!edit) {
+		res.status(401).send(errorHandler(2, 'Ocorreu um erro'));
 	}
+
+	res.send();
 })
 
 export { editResponsableRoute }
