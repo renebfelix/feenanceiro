@@ -3,6 +3,7 @@ import { database } from "../../prisma/client";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { findCategory } from "./findCategory";
+import { isEmpty } from "../../../utils/isEmpty";
 
 const updateCategoryRoute = Router();
 
@@ -15,7 +16,7 @@ updateCategoryRoute.put(`/app/category/:uuidCategory`, async(req: Request, res: 
 	if (!selectCatergory){
 		res.status(401).send(errorHandler(1, "Sem permissão"));
 	} else {
-		if (name === "" || limit === ""){
+		if (isEmpty([name, limit])){
 			res.status(401).send(errorHandler(1, "Preencha todos os campos"));
 		} else {
 			const updateCategory = await database.categories.update({

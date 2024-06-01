@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { database } from "../../prisma/client";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { errorHandler } from "../../../utils/errorsHandlers";
+import { isEmpty } from "../../../utils/isEmpty";
 
 const createResponsableRouter = Router();
 
@@ -9,7 +10,7 @@ createResponsableRouter.post(`/app/responsable`, async(req: Request, res: Respon
 	const { name } = req.body;
 	const { uuid } = userDataToken(req.headers.authorization ?? '');
 
-	if (!name) {
+	if (isEmpty([name])) {
 		res.status(400).send(errorHandler(1, "Preencha todos os campos"));
 	} else {
 		const createResponsable = await database.responsables.create({

@@ -18,7 +18,7 @@ model billings_info {
   idUserBillingInfo      String?
   divisionBillingInfo    Int
   categoryBillingInfo    String
-  paymentBillingInfo     Int
+  paymentBillingInfo     String
   valueTypeBillingInfo   String            @db.VarChar(100)
   dataCriacaoBillingInfo DateTime?         @db.DateTime(0)
   users                  users?            @relation(fields: [idUserBillingInfo], references: [idUser], onDelete: Restrict, onUpdate: Restrict, map: "billings_info_FK")
@@ -56,7 +56,7 @@ model billings_values {
 }
 
 model cards {
-  idCard          Int             @id @default(autoincrement())
+  idCard          String             @id @default(uuid())
   nameCard        String          @db.VarChar(100)
   dueDateCard     Int?
   closingDateCard Int?
