@@ -14,23 +14,23 @@ deleteCategoryRoute.delete(`/app/category/:uuidCategory`, async(req: Request, re
 
 	if (!selectCatergory){
 		res.status(401).send(errorHandler(1, "Sem permissão"));
-	}
+	} else {
+		const deleteCategory = await database.categories.update({
+			data: {
+				deletedCategory: new Date(moment().format("YYYY-MM-DD H:mm:ss")),
+			},
+			where: {
+				idCategory: uuidCategory,
+				idUserCategory: uuid
+			}
+		});
 
-	const deleteCategory = await database.categories.update({
-		data: {
-			deletedCategory: new Date(moment().format("YYYY-MM-DD H:mm:ss")),
-		},
-		where: {
-			idCategory: uuidCategory,
-			idUserCategory: uuid
+		if (!deleteCategory){
+			res.status(401).send(errorHandler(1, "Ocorreu um erro"));
+		} else {
+			res.send();
 		}
-	});
-
-	if (!deleteCategory){
-		res.status(401).send(errorHandler(1, "Ocorreu um erro"));
 	}
-
-	res.send();
 });
 
 export { deleteCategoryRoute }

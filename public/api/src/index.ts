@@ -23,7 +23,8 @@ import {
 import {
 	createResponsableRouter,
 	listResponsablesRouter,
-	editResponsableRoute
+	editResponsableRoute,
+	deleteResponsableRoute
 } from './app/responsables'
 
 const cors = require('cors');
@@ -64,7 +65,8 @@ app.use(`${urlBase}`, [
 	deleteCategoryRoute,
 	createResponsableRouter,
 	listResponsablesRouter,
-	editResponsableRoute
+	editResponsableRoute,
+	deleteResponsableRoute
 ]);
 
 // Start Server

@@ -19,9 +19,9 @@ categoryRoute.post(`/app/category`, async (req: Request, res: Response) => {
 
 	if (!createCategory){
 		res.status(401).send(errorHandler(2, 'Erro ao criar categoria'));
+	} else {
+		res.status(201).send();
 	}
-
-	res.status(201).send();
 })
 
 export { categoryRoute }
