@@ -2,6 +2,8 @@ import { Request, Response, Router } from "express";
 import { database } from "../prisma/client";
 import { createPassword } from "../../utils/generatePassword";
 import { errorHandler } from "../../utils/errorsHandlers";
+import { createDefaultCategories } from "../../services/defaults/defaultCategories";
+import { createDefaultResponsable } from "../../services/defaults/defaultResponsables";
 
 const createRouter = Router();
 
@@ -35,9 +37,17 @@ createRouter.post(`/auth/create-account`, async (req: Request, res: Response) =>
 		});
 
 		if (createAccount){
-			res.status(201).send({
-				message: "Criado com sucesso!"
-			});
+			const categories = await createDefaultCategories(createAccount.idUser);
+			const responsables = await createDefaultResponsable(createAccount.idUser, createAccount.fullnameUser);
+
+			if (categories && responsables){
+				res.status(201).send({
+					message: "Criado com sucesso!"
+				});
+			} else {
+				res.status(401).send(errorHandler(6, "Ocorreu um erro"));
+			}
+
 		}else {
 			res.status(401).send(errorHandler(6, "Ocorreu um erro"));
 		}
