@@ -44,7 +44,8 @@ import {
 import {
 	userDataRoute,
 	editUserRouter,
-	verifyPasswordRoute
+	verifyPasswordRoute,
+	editPasswordRoute
 } from './app/user';
 
 const cors = require('cors');
@@ -83,21 +84,26 @@ app.use(`${urlBase}`, [
 	listCategoriesRouter,
 	updateCategoryRoute,
 	deleteCategoryRoute,
+
 	createResponsableRouter,
 	listResponsablesRouter,
 	editResponsableRoute,
 	deleteResponsableRoute,
+
 	createCardRouter,
 	listCardsRouter,
 	updateCardRoute,
 	deleteCardRoute,
+
 	createBankRouter,
 	listBanksRouter,
 	updateBankRoute,
 	deleteBankRoute,
+
 	userDataRoute,
 	editUserRouter,
-	verifyPasswordRoute
+	verifyPasswordRoute,
+	editPasswordRoute
 ]);
 
 // Start Server

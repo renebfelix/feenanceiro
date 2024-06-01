@@ -1,9 +1,8 @@
 import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
-import { database } from "../../prisma/client";
-import { createPassword } from "../../../utils/generatePassword";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { isEmpty } from "../../../utils/isEmpty";
+import { verifyPasswordUtil } from "./verify-password-util";
 
 const verifyPasswordRoute = Router();
 
@@ -14,15 +13,7 @@ verifyPasswordRoute.post('/app/user/verify-password', async(req: Request, res: R
 	if (isEmpty([password])){
 		res.status(401).send(errorHandler(1, "Preencha todos os campos"));
 	} else {
-		const selectPassword = await database.users.findFirst({
-			where: {
-				idUser: uuid,
-				passwordUser: createPassword(password)
-			},
-			select: {
-				passwordUser: true
-			}
-		})
+		const selectPassword = await verifyPasswordUtil(password, uuid);
 
 		if (!selectPassword) {
 			res.status(401).send(errorHandler(1, "Senha inválida"));
