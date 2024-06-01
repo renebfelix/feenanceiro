@@ -39,7 +39,13 @@ import {
 	listBanksRouter,
 	updateBankRoute,
 	deleteBankRoute
-} from "./app/banks"
+} from "./app/banks";
+
+import {
+	userDataRoute,
+	editUserRouter,
+	verifyPasswordRoute
+} from './app/user';
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -88,7 +94,10 @@ app.use(`${urlBase}`, [
 	createBankRouter,
 	listBanksRouter,
 	updateBankRoute,
-	deleteBankRoute
+	deleteBankRoute,
+	userDataRoute,
+	editUserRouter,
+	verifyPasswordRoute
 ]);
 
 // Start Server
