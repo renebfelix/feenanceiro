@@ -28,7 +28,10 @@ import {
 } from './app/responsables';
 
 import {
-	createCardRouter
+	createCardRouter,
+	listCardsRouter,
+	updateCardRoute,
+	deleteCardRoute
 } from './app/cards';
 
 const cors = require('cors');
@@ -71,7 +74,10 @@ app.use(`${urlBase}`, [
 	listResponsablesRouter,
 	editResponsableRoute,
 	deleteResponsableRoute,
-	createCardRouter
+	createCardRouter,
+	listCardsRouter,
+	updateCardRoute,
+	deleteCardRoute
 ]);
 
 // Start Server

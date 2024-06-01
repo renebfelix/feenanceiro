@@ -11,7 +11,7 @@ createCardRouter.post(`/app/card`, async (req: Request, res: Response) => {
 	const { name, type, dueCard, closingDate, limit } = req.body;
 
 	if (isEmpty([name, type, dueCard, closingDate, limit])){
-		res.status(400).send();
+		res.status(400).send(errorHandler(1, "Preencha todos os campos"));
 	} else {
 		const create = await database.cards.create({
 			data: {
