@@ -105,7 +105,6 @@ model responsables {
   deletedResponsable   DateTime? @db.DateTime(0)
   idUserResponsable    String
   isDefaultResponsable Boolean
-  uuidResponsable      String    @db.VarChar(100)
   users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
 
   @@index([idUserResponsable], map: "responsables_FK")

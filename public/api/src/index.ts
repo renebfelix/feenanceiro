@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 import { isValidLogin } from "../services/middleware";
 dotenv.config();
 
-import { loginRouter } from './auth/login';
-import { createRouter } from './auth/createAccount';
-import { refreshRouter } from "./auth/refreshToken";
-import { requestPassword } from './auth/reset-password/request-password';
-import { verifyPasswordRouter } from './auth/reset-password/verify-password';
-import { changePasswordRoute } from "./auth/reset-password/change-password";
+import {
+	loginRouter,
+	createRouter,
+	refreshRouter,
+	requestPassword,
+	verifyPasswordRouter,
+	changePasswordRoute
+} from "./auth";
 
 import {
 	categoryRoute,
@@ -16,6 +18,12 @@ import {
 	listCategoriesRouter,
 	updateCategoryRoute
 } from './app/categories';
+
+
+import {
+	createResponsableRouter,
+	listResponsablesRouter
+} from './app/responsables'
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -52,7 +60,9 @@ app.use(`${urlBase}`, [
 	categoryRoute,
 	listCategoriesRouter,
 	updateCategoryRoute,
-	deleteCategoryRoute
+	deleteCategoryRoute,
+	createResponsableRouter,
+	listResponsablesRouter
 ]);
 
 // Start Server

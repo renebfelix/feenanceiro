@@ -15,7 +15,8 @@ listCategoriesRouter.get(`/app/categories`, async (req: Request, res: Response) 
 			limitCategory: true,
 		},
 		where: {
-			idUserCategory: uuid
+			idUserCategory: uuid,
+			deletedCategory: null
 		}
 	});
 
