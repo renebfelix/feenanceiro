@@ -50,7 +50,8 @@ import {
 
 import {
 	createBillRoute,
-	listBillsRoute
+	listBillsRoute,
+	deleteBillRouter
 } from "./app/bills"
 
 const cors = require('cors');
@@ -112,6 +113,7 @@ app.use(`${urlBase}`, [
 
 	createBillRoute,
 	listBillsRoute,
+	deleteBillRouter,
 ]);
 
 // Start Server

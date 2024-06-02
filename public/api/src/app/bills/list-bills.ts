@@ -25,6 +25,7 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 						lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
 					},
 					responsableBillingValue: responsable?.toString(),
+					deletedBillingValue: null,
 					billings_info:{
 						idUserBillingInfo: uuid,
 						deletedBillingInfo: null,
@@ -40,6 +41,11 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 					responsableBillingValue: true,
 					numberParcelBillingValue: true,
 					dateBillingValue: true,
+					billings_status:{
+						select:{
+							statusBillingStatus: true
+						}
+					},
 					billings_info: {
 						select:{
 							idBillingInfo: true,

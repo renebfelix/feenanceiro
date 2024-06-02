@@ -33,12 +33,12 @@ model billings_info {
 }
 
 model billings_status {
-  idBillingStatus             String             @id @default(uuid())
-  idBillingValueBillingStatus String
-  statusBillingStatus         String?         @db.VarChar(100)
-  dateBillingStatus           DateTime?       @db.Date
-  responsableBillingStatus    Int
-  billings_values             billings_values @relation(fields: [idBillingValueBillingStatus], references: [idBillingValue], onUpdate: Restrict, map: "billings_status_billings_values_FK")
+  idBillingStatus             String             	@id @default(uuid())
+  idBillingValueBillingStatus String				@unique
+  statusBillingStatus         String?         		@db.VarChar(100)
+  dateBillingStatus           DateTime?       		@db.Date
+  responsableBillingStatus    String
+  billings_values             billings_values 		@relation(fields: [idBillingValueBillingStatus], references: [idBillingValue], onUpdate: Restrict, map: "billings_status_billings_values_FK")
 
   @@index([idBillingValueBillingStatus], map: "billings_status_billings_values_FK")
 }
@@ -50,6 +50,7 @@ model billings_values {
   dateBillingValue          DateTime?         @db.Date
   responsableBillingValue   String
   numberParcelBillingValue  Int?
+  deletedBillingValue		DateTime?
   billings_status           billings_status[]
   billings_info             billings_info     @relation(fields: [idBillingInfoBillingValue], references: [idBillingInfo], onUpdate: Restrict, map: "billing_values_FK")
 
