@@ -75,7 +75,25 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 				}
 			})
 
-			res.send(listBills);
+			let totalGastos = 0;
+			let totalEntradas = 0;
+
+			for(const bill of listBills){
+				if (bill.billings_info.valueTypeBillingInfo === "SAIDA"){
+					totalGastos = totalGastos + bill.valueBillingValue;
+				} else if (bill.billings_info.valueTypeBillingInfo === "ENTRADA") {
+					totalEntradas = totalEntradas + bill.valueBillingValue
+				}
+			}
+
+			res.send({
+				meta:{
+					totalGastos,
+					totalEntradas,
+					totalDescontado: totalGastos - totalEntradas
+				},
+				items: listBills
+			});
 		}
 	}
 });
