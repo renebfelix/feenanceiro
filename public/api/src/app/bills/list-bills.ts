@@ -90,7 +90,7 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 				meta:{
 					totalGastos,
 					totalEntradas,
-					totalDescontado: totalGastos - totalEntradas
+					totalDescontado: totalEntradas-totalGastos
 				},
 				items: listBills
 			});
