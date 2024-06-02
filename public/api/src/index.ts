@@ -48,6 +48,10 @@ import {
 	editPasswordRoute
 } from './app/user';
 
+import {
+	createBillRoute
+} from "./app/bills"
+
 const cors = require('cors');
 const bodyParser = require("body-parser");
 
@@ -103,7 +107,9 @@ app.use(`${urlBase}`, [
 	userDataRoute,
 	editUserRouter,
 	verifyPasswordRoute,
-	editPasswordRoute
+	editPasswordRoute,
+
+	createBillRoute
 ]);
 
 // Start Server

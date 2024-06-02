@@ -8,7 +8,7 @@ datasource db {
 }
 
 model billings_info {
-  idBillingInfo          Int               @id @default(autoincrement())
+  idBillingInfo          String            @id @default(uuid())
   descriptionBillingInfo String            @db.VarChar(255)
   dataBillingInfo        DateTime          @db.Date
   valueBillingInfo       Float             @db.Float
@@ -21,6 +21,7 @@ model billings_info {
   paymentBillingInfo     String
   valueTypeBillingInfo   String            @db.VarChar(100)
   dataCriacaoBillingInfo DateTime?         @db.DateTime(0)
+  observationBillingInfo String
   users                  users?            @relation(fields: [idUserBillingInfo], references: [idUser], onDelete: Restrict, onUpdate: Restrict, map: "billings_info_FK")
   cards                  cards             @relation(fields: [paymentBillingInfo], references: [idCard], onUpdate: Restrict, map: "billings_info_cards_FK")
   categories             categories        @relation(fields: [categoryBillingInfo], references: [idCategory], onUpdate: Restrict, map: "billings_info_categories_FK")
@@ -32,8 +33,8 @@ model billings_info {
 }
 
 model billings_status {
-  idBillingStatus             Int             @id @default(autoincrement())
-  idBillingValueBillingStatus Int
+  idBillingStatus             String             @id @default(uuid())
+  idBillingValueBillingStatus String
   statusBillingStatus         String?         @db.VarChar(100)
   dateBillingStatus           DateTime?       @db.Date
   responsableBillingStatus    Int
@@ -43,11 +44,11 @@ model billings_status {
 }
 
 model billings_values {
-  idBillingValue            Int               @id @default(autoincrement())
+  idBillingValue            String               @id @default(uuid())
   valueBillingValue         Float             @db.Float
-  idBillingInfoBillingValue Int
+  idBillingInfoBillingValue String
   dateBillingValue          DateTime?         @db.Date
-  responsableBillingValue   Int
+  responsableBillingValue   String
   numberParcelBillingValue  Int?
   billings_status           billings_status[]
   billings_info             billings_info     @relation(fields: [idBillingInfoBillingValue], references: [idBillingInfo], onUpdate: Restrict, map: "billing_values_FK")
