@@ -49,7 +49,8 @@ import {
 } from './app/user';
 
 import {
-	createBillRoute
+	createBillRoute,
+	listBillsRoute
 } from "./app/bills"
 
 const cors = require('cors');
@@ -109,7 +110,8 @@ app.use(`${urlBase}`, [
 	verifyPasswordRoute,
 	editPasswordRoute,
 
-	createBillRoute
+	createBillRoute,
+	listBillsRoute,
 ]);
 
 // Start Server
