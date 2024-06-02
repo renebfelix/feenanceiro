@@ -34,7 +34,7 @@ model billings_info {
 
 model billings_status {
   idBillingStatus             String             	@id @default(uuid())
-  idBillingValueBillingStatus String				@unique
+  idBillingValueBillingStatus String
   statusBillingStatus         String?         		@db.VarChar(100)
   dateBillingStatus           DateTime?       		@db.Date
   responsableBillingStatus    String

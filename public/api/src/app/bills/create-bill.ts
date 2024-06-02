@@ -82,7 +82,7 @@ createBillRoute.post('/app/bill', async (req: Request, res: Response) => {
 					valueBillingValue: valorParcela,
 					idBillingInfoBillingValue: createBill.idBillingInfo,
 					responsableBillingValue: responsable.value,
-					dateBillingValue: stringDateFormat(date),
+					dateBillingValue: type === "UNICA" ? stringDateFormat(date) : null,
 					numberParcelBillingValue: 1,
 				})
 			}

@@ -20,10 +20,6 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 
 			const listBills = await database.billings_values.findMany({
 				where: {
-					dateBillingValue: {
-						gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
-						lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
-					},
 					responsableBillingValue: responsable?.toString(),
 					deletedBillingValue: null,
 					billings_info:{
@@ -33,7 +29,18 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 						categoryBillingInfo: category?.toString(),
 						valueTypeBillingInfo: paymentValue?.toString(),
 						paymentBillingInfo: payment?.toString(),
-					}
+					},
+					OR: [
+						{
+							dateBillingValue: {
+								gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
+								lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
+							},
+						},
+						{
+							dateBillingValue: null
+						}
+					]
 				},
 				select: {
 					valueBillingValue: true,
