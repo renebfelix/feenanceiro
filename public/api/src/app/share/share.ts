@@ -31,10 +31,17 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 
 		const getShareData = await database.billings_values.findMany({
 			where: {
-				dateBillingValue: {
-					gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
-					lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
-				},
+				OR: [
+					{
+						dateBillingValue: {
+							gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
+							lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
+						},
+					},
+					{
+						dateBillingValue: null
+					}
+				],
 				responsableBillingValue: responsable.toString(),
 				deletedBillingValue: null,
 				billings_info: {
