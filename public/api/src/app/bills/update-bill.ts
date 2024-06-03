@@ -3,9 +3,8 @@ import { userDataToken } from "../../../utils/userDatatoken";
 import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
-import { manageFieldsInfoBill, parcelsFieldsValueBill } from "./utils/manage-fields-bill";
 import { BodyBillProps } from "./types/types";
-import { findInfoBill } from "./utils/findBill";
+import { findInfoBill, fieldsBillInfo, parcelsFieldsValueBill } from "./utils";
 
 const updateBillRoute = Router();
 
@@ -29,7 +28,7 @@ updateBillRoute.put('/app/bill/:uuidBillingInfo', async (req: Request, res: Resp
 		res.status(401).send(errorHandler(1, "Gasto não encontrado"));
 	}else {
 		const updateInfosBill = await database.billings_info.update({
-			data: manageFieldsInfoBill(bodyProps, uuid),
+			data: fieldsBillInfo(bodyProps, uuid),
 			where: {
 				idBillingInfo: uuidBillingInfo,
 				idUserBillingInfo: uuid,
@@ -48,7 +47,7 @@ updateBillRoute.put('/app/bill/:uuidBillingInfo', async (req: Request, res: Resp
 
 			if(!deleteValues){
 				res.status(404).send(errorHandler(3, "Ococrreu um erro"));
-			} else{
+			} else {
 				const updateValues = await database.billings_values.createMany({
 					data: parcelsFieldsValueBill(bodyProps, updateInfosBill.idBillingInfo),
 				});

@@ -15,28 +15,26 @@ updateCardRoute.put(`/app/card/:uuidCard`, async(req: Request, res: Response) =>
 
 	if (isEmpty([name, dueCard, closingDate, limit])){
 		res.status(401).send(errorHandler(1, "Preencha todos os campos"));
+	} else if (!selectCards) {
+		res.status(401).send(errorHandler(1, "Sem permissão"));
 	} else {
-		if (!selectCards) {
-			res.status(401).send(errorHandler(1, "Sem permissão"));
-		} else {
-			const updateCard = await database.cards.update({
-				data: {
-					nameCard: name,
-					dueDateCard: dueCard,
-					closingDateCard: closingDate,
-					limitCard: limit
-				},
-				where: {
-					idCard: uuidCard,
-					idUserCard: uuid
-				}
-			});
-
-			if (!updateCard) {
-				res.status(401).send(errorHandler(1, "Ocorreu um erro"));
-			} else {
-				res.send();
+		const updateCard = await database.cards.update({
+			data: {
+				nameCard: name,
+				dueDateCard: dueCard,
+				closingDateCard: closingDate,
+				limitCard: limit
+			},
+			where: {
+				idCard: uuidCard,
+				idUserCard: uuid
 			}
+		});
+
+		if (!updateCard) {
+			res.status(401).send(errorHandler(1, "Ocorreu um erro"));
+		} else {
+			res.send();
 		}
 	}
 });

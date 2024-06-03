@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
-import { findValueBill, findStatus } from "./utils/findBill";
+import { findValueBill, findBillStatus } from "./utils";
 import { database } from "../../prisma/client";
 import moment from "moment";
 
@@ -21,7 +21,7 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 		if (!searchBill) {
 			res.status(401).send(errorHandler(1, "Sem permissão"));
 		} else {
-			const searchStatus = await findStatus(searchBill.idBillingValue, uuid, date);
+			const searchStatus = await findBillStatus(searchBill.idBillingValue, uuid, date);
 			let queryCreateOrUpdate;
 
 			// Caso não haja nenhuma informação sobre status de pagamento na tabela, a conta é considerada "EM_ABERTO" por padrão
