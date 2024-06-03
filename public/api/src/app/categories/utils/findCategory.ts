@@ -1,4 +1,4 @@
-import { database } from "../../prisma/client";
+import { database } from "../../../prisma/client";
 
 export async function findCategory(uuidCategory: string, uuidUser: string){
 	const findCategory = await database.categories.findFirst({

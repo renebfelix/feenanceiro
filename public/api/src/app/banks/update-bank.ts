@@ -3,7 +3,7 @@ import { userDataToken } from "../../../utils/userDatatoken";
 import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
-import { findBank } from "./findBank";
+import { findBank } from "./utils/findBank";
 
 const updateBankRoute = Router();
 

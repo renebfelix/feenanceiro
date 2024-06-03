@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { findResponsable } from "./findResponsable";
+import { findResponsable } from "./utils/findResponsable";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";

@@ -1,8 +1,20 @@
 import moment from "moment";
-import { database } from "../../prisma/client";
+import { database } from "../../../prisma/client";
 
-export async function findBill(uuidBillingValue: string, uuid: string){
-	const findBill = await database.billings_values.findFirst({
+export async function findInfoBill(uuidBillingInfo: string, uuid: string){
+	const findValueBill = await database.billings_info.findFirst({
+		where: {
+			idBillingInfo: uuidBillingInfo,
+			idUserBillingInfo: uuid,
+			deletedBillingInfo: null
+		}
+	});
+
+	return findValueBill;
+}
+
+export async function findValueBill(uuidBillingValue: string, uuid: string){
+	const findValueBill = await database.billings_values.findFirst({
 		where: {
 			idBillingValue: uuidBillingValue,
 			billings_info: {
@@ -11,13 +23,11 @@ export async function findBill(uuidBillingValue: string, uuid: string){
 		}
 	});
 
-	return findBill;
+	return findValueBill;
 }
 
 export async function findStatus(uuidBillingValue: string, uuid: string, date: string){
 	const dateConvert = new Date(moment(date).format("YYYY-MM-DD"));
-
-	console.log(dateConvert);
 
 	const findStatus = await database.billings_status.findFirst({
 		where: {

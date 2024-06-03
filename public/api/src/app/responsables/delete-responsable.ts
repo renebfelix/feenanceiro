@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
-import { findResponsable } from "./findResponsable";
+import { findResponsable } from "./utils/findResponsable";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
 import moment from "moment";

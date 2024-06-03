@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { database } from "../../prisma/client";
 import { userDataToken } from "../../../utils/userDatatoken";
 import moment from "moment";
-import { findCategory } from "./findCategory";
+import { findCategory } from "./utils/findCategory";
 import { errorHandler } from "../../../utils/errorsHandlers";
 
 const deleteCategoryRoute = Router();

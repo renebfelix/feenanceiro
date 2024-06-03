@@ -52,7 +52,8 @@ import {
 	createBillRoute,
 	listBillsRoute,
 	deleteBillRouter,
-	statusBillRoute
+	statusBillRoute,
+	updateBillRoute
 } from "./app/bills"
 
 const cors = require('cors');
@@ -116,6 +117,7 @@ app.use(`${urlBase}`, [
 	listBillsRoute,
 	deleteBillRouter,
 	statusBillRoute,
+	updateBillRoute,
 ]);
 
 // Start Server

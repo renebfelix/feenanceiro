@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { database } from "../../prisma/client";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { errorHandler } from "../../../utils/errorsHandlers";
-import { findCategory } from "./findCategory";
+import { findCategory } from "./utils/findCategory";
 import { isEmpty } from "../../../utils/isEmpty";
 
 const updateCategoryRoute = Router();

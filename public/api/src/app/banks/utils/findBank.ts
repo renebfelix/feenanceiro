@@ -1,4 +1,4 @@
-import { database } from "../../prisma/client";
+import { database } from "../../../prisma/client";
 
 export async function findBank(uuidCard: string, uuidUser: string){
 	const findBank = await database.cards.findFirst({

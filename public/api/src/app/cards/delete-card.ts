@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
-import { findCard } from "./findCard";
+import { findCard } from "./utils/findCard";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
 import moment from "moment";

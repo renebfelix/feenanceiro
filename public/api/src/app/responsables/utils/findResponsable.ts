@@ -1,4 +1,4 @@
-import { database } from "../../prisma/client";
+import { database } from "../../../prisma/client";
 
 export async function findResponsable(uuidResponsable: string, uuidUser: string){
 	const selectResponsable = await database.responsables.findFirst({

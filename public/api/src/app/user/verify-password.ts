@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { isEmpty } from "../../../utils/isEmpty";
-import { verifyPasswordUtil } from "./verify-password-util";
+import { verifyPasswordUtil } from "./utils/verify-password-util";
 
 const verifyPasswordRoute = Router();
 

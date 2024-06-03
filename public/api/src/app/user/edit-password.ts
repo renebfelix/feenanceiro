@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
-import { verifyPasswordUtil } from "./verify-password-util";
+import { verifyPasswordUtil } from "./utils/verify-password-util";
 import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";

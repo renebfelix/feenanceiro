@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
-import { findBill, findStatus } from "./findBill";
+import { findValueBill, findStatus } from "./utils/findBill";
 import { database } from "../../prisma/client";
 import moment from "moment";
 
@@ -16,7 +16,7 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 	if (isEmpty([status, date]) || status !== "EM_ABERTO" && status !== "PAGO"){
 		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
 	} else {
-		const searchBill = await findBill(uuidBillingValue, uuid);
+		const searchBill = await findValueBill(uuidBillingValue, uuid);
 
 		if (!searchBill) {
 			res.status(401).send(errorHandler(1, "Sem permissão"));
