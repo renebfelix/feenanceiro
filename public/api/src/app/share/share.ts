@@ -74,7 +74,7 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 				if (bill.billings_info.valueTypeBillingInfo === "SAIDA"){
 					totalGasto = totalGasto + bill.valueBillingValue
 
-					if (bill.billings_status && bill.billings_status[0].statusBillingStatus === "PAGO"){
+					if (bill?.billings_status[0]?.statusBillingStatus === "PAGO"){
 						totalPago = totalPago + bill.valueBillingValue;
 					}
 				} else {
