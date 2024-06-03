@@ -82,25 +82,35 @@ listBillsRoute.get('/app/bills', async(req: Request, res: Response) => {
 				}
 			})
 
-			let totalGastos = 0;
-			let totalEntradas = 0;
+			if (!listBills){
+				res.status(401).send(errorHandler(3, "Ocorreu um erro"));
+			} else {
+				let totalGasto = 0;
+				let totalEntradas = 0;
+				let totalPago = 0;
 
-			for(const bill of listBills){
-				if (bill.billings_info.valueTypeBillingInfo === "SAIDA"){
-					totalGastos = totalGastos + bill.valueBillingValue;
-				} else if (bill.billings_info.valueTypeBillingInfo === "ENTRADA") {
-					totalEntradas = totalEntradas + bill.valueBillingValue
-				}
+				listBills.map((bill) => {
+					if (bill.billings_info.valueTypeBillingInfo === "SAIDA"){
+						totalGasto = totalGasto + bill.valueBillingValue
+
+						if (bill?.billings_status[0]?.statusBillingStatus === "PAGO"){
+							totalPago = totalPago + bill.valueBillingValue;
+						}
+					} else {
+						totalEntradas = totalEntradas + bill.valueBillingValue
+					}
+				});
+
+				res.send({
+					meta:{
+						totalGasto,
+						totalEntradas,
+						totalPago,
+						saldo: totalEntradas - totalGasto,
+					},
+					items: listBills
+				});
 			}
-
-			res.send({
-				meta:{
-					totalGastos,
-					totalEntradas,
-					totalDescontado: totalEntradas-totalGastos
-				},
-				items: listBills
-			});
 		}
 	}
 });
