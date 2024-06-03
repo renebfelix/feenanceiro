@@ -54,7 +54,9 @@ import {
 	deleteBillRouter,
 	statusBillRoute,
 	updateBillRoute
-} from "./app/bills"
+} from "./app/bills";
+
+import { shareRoute } from './app/share';
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -81,7 +83,9 @@ app.use(`${urlBase}`, [
 	refreshRouter,
 	requestPassword,
 	verifyPasswordRouter,
-	changePasswordRoute
+	changePasswordRoute,
+
+	shareRoute,
 ]);
 
 // Rotas autenticadas
