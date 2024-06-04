@@ -3,7 +3,7 @@ import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
 import { userDataToken } from "../../../utils/userDatatoken";
-import { fieldsBillInfo, parcelsFieldsValueBill } from "./utils";
+import { dataFieldsBillInfo, parcelsFieldsValueBill } from "./utils";
 import { BodyBillProps } from "./types/types";
 
 const createBillRoute = Router();
@@ -25,7 +25,7 @@ createBillRoute.post('/app/bill', async (req: Request, res: Response) => {
 	} else {
 		// Cria informação da compra
 		const createBill = await database.billings_info.create({
-			data: fieldsBillInfo(bodyProps, uuid)
+			data: dataFieldsBillInfo(bodyProps, uuid)
 		});
 
 		// Cria os valores individuais

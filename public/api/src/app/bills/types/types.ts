@@ -13,3 +13,12 @@ export interface BodyBillProps {
 	}>;
 	observation: string;
 }
+
+export interface FilterProps {
+	period?: string;
+	responsable?: string;
+	payment?: string;
+	category?: string;
+	type?: string;
+	paymentValue?: number;
+}

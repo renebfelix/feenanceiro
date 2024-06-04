@@ -31,7 +31,8 @@ import {
 	createCardRouter,
 	listCardsRouter,
 	updateCardRoute,
-	deleteCardRoute
+	deleteCardRoute,
+	billingCardRoute
 } from './app/cards';
 
 import {
@@ -106,6 +107,7 @@ app.use(`${urlBase}`, [
 	listCardsRouter,
 	updateCardRoute,
 	deleteCardRoute,
+	billingCardRoute,
 
 	createBankRouter,
 	listBanksRouter,

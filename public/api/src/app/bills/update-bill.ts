@@ -4,7 +4,7 @@ import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
 import { BodyBillProps } from "./types/types";
-import { findInfoBill, fieldsBillInfo, parcelsFieldsValueBill } from "./utils";
+import { findInfoBill, dataFieldsBillInfo, parcelsFieldsValueBill } from "./utils";
 
 const updateBillRoute = Router();
 
@@ -28,7 +28,7 @@ updateBillRoute.put('/app/bill/:uuidBillingInfo', async (req: Request, res: Resp
 		res.status(401).send(errorHandler(1, "Gasto não encontrado"));
 	}else {
 		const updateInfosBill = await database.billings_info.update({
-			data: fieldsBillInfo(bodyProps, uuid),
+			data: dataFieldsBillInfo(bodyProps, uuid),
 			where: {
 				idBillingInfo: uuidBillingInfo,
 				idUserBillingInfo: uuid,

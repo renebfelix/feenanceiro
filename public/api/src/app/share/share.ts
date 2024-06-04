@@ -3,6 +3,7 @@ import { isEmpty } from "../../../utils/isEmpty";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
 import { regexDate } from "../../../utils/regex";
+import { calculateMeta } from "../../app/bills/utils/calculate-meta";
 
 const shareRoute = Router();
 
@@ -73,29 +74,8 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 		if (!getShareData || !getUserInfos) {
 			res.status(401).send(errorHandler(3, "Ocorreu um erro"));
 		} else {
-			let totalGasto = 0;
-			let totalEntradas = 0;
-			let totalPago = 0;
-
-			getShareData.map((bill) => {
-				if (bill.billings_info.valueTypeBillingInfo === "SAIDA"){
-					totalGasto = totalGasto + bill.valueBillingValue
-
-					if (bill?.billings_status[0]?.statusBillingStatus === "PAGO"){
-						totalPago = totalPago + bill.valueBillingValue;
-					}
-				} else {
-					totalEntradas = totalEntradas + bill.valueBillingValue
-				}
-			});
-
 			res.send({
-				meta: {
-					totalGasto,
-					totalPago,
-					totalEntradas,
-					balance: totalEntradas - totalGasto
-				},
+				meta: calculateMeta(getShareData),
 				infos: {
 					mainUser: getUserInfos.users.fullnameUser,
 					responsable: getUserInfos.nameResponsable,
