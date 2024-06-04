@@ -16,7 +16,8 @@ listResponsablesRouter.get(`/app/responsables`, async (req: Request, res: Respon
 		select: {
 			idResponsable: true,
 			nameResponsable: true,
-			isDefaultResponsable: true
+			emailResponsable: true,
+			isDefaultResponsable: true,
 		}
 	});
 

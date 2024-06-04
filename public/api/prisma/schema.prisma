@@ -102,11 +102,12 @@ model reset_password {
 }
 
 model responsables {
-  idResponsable        String       @id @default(uuid())
-  nameResponsable      String    @db.VarChar(100)
-  deletedResponsable   DateTime? @db.DateTime(0)
-  idUserResponsable    String
-  isDefaultResponsable Boolean
+  idResponsable        	String    @id @default(uuid())
+  nameResponsable      	String    @db.VarChar(100)
+  emailResponsable		String?
+  deletedResponsable   	DateTime? @db.DateTime(0)
+  idUserResponsable    	String
+  isDefaultResponsable 	Boolean
   users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
 
   @@index([idUserResponsable], map: "responsables_FK")

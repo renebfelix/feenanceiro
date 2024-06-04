@@ -7,7 +7,7 @@ import { isEmpty } from "../../../utils/isEmpty";
 const createResponsableRouter = Router();
 
 createResponsableRouter.post(`/app/responsable`, async(req: Request, res: Response) => {
-	const { name } = req.body;
+	const { name, email } = req.body;
 	const { uuid } = userDataToken(req.headers.authorization ?? '');
 
 	if (isEmpty([name])) {
@@ -16,6 +16,7 @@ createResponsableRouter.post(`/app/responsable`, async(req: Request, res: Respon
 		const createResponsable = await database.responsables.create({
 			data: {
 				nameResponsable: name,
+				emailResponsable: email,
 				idUserResponsable: uuid,
 				isDefaultResponsable: false
 			}

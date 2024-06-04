@@ -17,7 +17,7 @@ export function sendEmail(
 	ArrayTo: Array<EmailsToProps>,
 	subject: string,
 	template_id: string,
-	dynamic_template_data: DynamicTemplateDate,
+	dynamic_template_data: any,
 	res: Response
 ){
 	const msg = {

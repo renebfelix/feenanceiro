@@ -24,7 +24,8 @@ import {
 	createResponsableRouter,
 	listResponsablesRouter,
 	editResponsableRoute,
-	deleteResponsableRoute
+	deleteResponsableRoute,
+	sendEmailResponsableRoute
 } from './app/responsables';
 
 import {
@@ -102,6 +103,7 @@ app.use(`${urlBase}`, [
 	listResponsablesRouter,
 	editResponsableRoute,
 	deleteResponsableRoute,
+	sendEmailResponsableRoute,
 
 	createCardRouter,
 	listCardsRouter,

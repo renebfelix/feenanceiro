@@ -10,7 +10,7 @@ const editResponsableRoute = Router();
 editResponsableRoute.put(`/app/responsable/:uuidResponsable`, async (req: Request, res: Response) => {
 	const { uuidResponsable } = req.params;
 	const { uuid } = userDataToken(req.headers.authorization ?? '');
-	const { name } = req.body;
+	const { name, email } = req.body;
 
 	const selectResponsable = await findResponsable(uuidResponsable, uuid);
 
@@ -26,6 +26,9 @@ editResponsableRoute.put(`/app/responsable/:uuidResponsable`, async (req: Reques
 			data: {
 				nameResponsable: {
 					set: name
+				},
+				emailResponsable: {
+					set: email
 				}
 			}
 		});
