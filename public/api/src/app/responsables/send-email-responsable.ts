@@ -25,25 +25,33 @@ sendEmailResponsableRoute.post('/app/responsable/email/:uuidResponsable', async(
 		} else {
 			const values = await getBillValues({
 				responsable: uuidResponsable,
+				period: period
 			}, uuid);
 			const valoresFinais = calculateMeta(values);
+			const saldoDevedor = valoresFinais.totalGasto - valoresFinais.totalPago;
 
-			sendEmail(
-				[{
-					name: responsable.nameResponsable,
-					email: responsable.emailResponsable ?? ''
-				}],
-				"Fatura mensal - Feenanceiro",
-				'd-db4f79957196437c8b4cf7adccf1db25',
-				{
-					name: responsable.nameResponsable,
-					fullname: fullname,
-					dataVencimento: vencimento,
-					valor: moneyCurrency(valoresFinais.totalGasto - valoresFinais.totalPago),
-					link: `https://feenanceiro.com.br/share?user=${uuid}&responsable=${uuidResponsable}&period=${period}`
-				},
-				res
-			)
+			if (saldoDevedor <= 0){
+				res.send({
+					message: "Não há saldo devedor"
+				});
+			} else {
+				sendEmail(
+					[{
+						name: responsable.nameResponsable,
+						email: responsable.emailResponsable ?? ''
+					}],
+					"Fatura mensal - Feenanceiro",
+					'd-db4f79957196437c8b4cf7adccf1db25',
+					{
+						name: responsable.nameResponsable,
+						fullname: fullname,
+						dataVencimento: vencimento,
+						valor: moneyCurrency(saldoDevedor),
+						link: `https://feenanceiro.com.br/share?user=${uuid}&responsable=${uuidResponsable}&period=${period}`
+					},
+					res
+				)
+			}
 		}
 	}
 

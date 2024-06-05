@@ -28,7 +28,7 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 				{
 					dateBillingValue: null
 				}
-			]
+			],
 		},
 		select: {
 			valueBillingValue: true,
@@ -36,10 +36,19 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 			responsableBillingValue: true,
 			numberParcelBillingValue: true,
 			dateBillingValue: true,
-			billings_status:{
+			billings_status: {
+				where: {
+					dateBillingStatus: {
+						gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
+						lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
+					}
+				},
 				select:{
-					statusBillingStatus: true
-				}
+					idBillingStatus: true,
+					idBillingValueBillingStatus: true,
+					statusBillingStatus: true,
+					dateBillingStatus: true,
+				},
 			},
 			billings_info: {
 				select:{

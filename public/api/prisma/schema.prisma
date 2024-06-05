@@ -21,7 +21,7 @@ model billings_info {
   paymentBillingInfo     String
   valueTypeBillingInfo   String            @db.VarChar(100)
   dataCriacaoBillingInfo DateTime?         @db.DateTime(0)
-  observationBillingInfo String
+  observationBillingInfo String            @default("")
   users                  users?            @relation(fields: [idUserBillingInfo], references: [idUser], onDelete: Restrict, onUpdate: Restrict, map: "billings_info_FK")
   cards                  cards             @relation(fields: [paymentBillingInfo], references: [idCard], onUpdate: Restrict, map: "billings_info_cards_FK")
   categories             categories        @relation(fields: [categoryBillingInfo], references: [idCategory], onUpdate: Restrict, map: "billings_info_categories_FK")
@@ -33,24 +33,24 @@ model billings_info {
 }
 
 model billings_status {
-  idBillingStatus             String             	@id @default(uuid())
+  idBillingStatus             String          @id @default(uuid())
   idBillingValueBillingStatus String
-  statusBillingStatus         String?         		@db.VarChar(100)
-  dateBillingStatus           DateTime?       		@db.Date
+  statusBillingStatus         String?         @db.VarChar(100)
+  dateBillingStatus           DateTime?       @db.Date
   responsableBillingStatus    String
-  billings_values             billings_values 		@relation(fields: [idBillingValueBillingStatus], references: [idBillingValue], onUpdate: Restrict, map: "billings_status_billings_values_FK")
+  billings_values             billings_values @relation(fields: [idBillingValueBillingStatus], references: [idBillingValue], onUpdate: Restrict, map: "billings_status_billings_values_FK")
 
   @@index([idBillingValueBillingStatus], map: "billings_status_billings_values_FK")
 }
 
 model billings_values {
-  idBillingValue            String               @id @default(uuid())
+  idBillingValue            String            @id @default(uuid())
   valueBillingValue         Float             @db.Float
   idBillingInfoBillingValue String
   dateBillingValue          DateTime?         @db.Date
   responsableBillingValue   String
   numberParcelBillingValue  Int?
-  deletedBillingValue		DateTime?
+  deletedBillingValue       DateTime?
   billings_status           billings_status[]
   billings_info             billings_info     @relation(fields: [idBillingInfoBillingValue], references: [idBillingInfo], onUpdate: Restrict, map: "billing_values_FK")
 
@@ -58,7 +58,7 @@ model billings_values {
 }
 
 model cards {
-  idCard          String             @id @default(uuid())
+  idCard          String          @id @default(uuid())
   nameCard        String          @db.VarChar(100)
   dueDateCard     Int?
   closingDateCard Int?
@@ -73,7 +73,7 @@ model cards {
 }
 
 model categories {
-  idCategory      String             @id @default(uuid())
+  idCategory      String          @id @default(uuid())
   nameCategory    String          @db.VarChar(100)
   idUserCategory  String
   deletedCategory DateTime?       @db.DateTime(0)
@@ -91,23 +91,24 @@ model icons {
 }
 
 model reset_password {
-  idReset             String     @id @default(uuid())
+  idReset             String  @id @default(uuid())
   idUserReset         String
+  dateReset           String
+  dateExpirationReset String
   finishedReset       Boolean
-  dateReset           Int
-  dateExpirationReset Int
   users               users   @relation(fields: [idUserReset], references: [idUser], onUpdate: Restrict, map: "reset_password_users_FK")
 
   @@index([idUserReset], map: "reset_password_users_FK")
 }
 
 model responsables {
-  idResponsable        	String    @id @default(uuid())
-  nameResponsable      	String    @db.VarChar(100)
-  emailResponsable		String?
-  deletedResponsable   	DateTime? @db.DateTime(0)
-  idUserResponsable    	String
-  isDefaultResponsable 	Boolean
+  idResponsable        String    @id @default(uuid())
+  nameResponsable      String    @db.VarChar(100)
+  deletedResponsable   DateTime? @db.DateTime(0)
+  idUserResponsable    String
+  isDefaultResponsable Boolean
+  emailResponsable     String?
+  isInvitedResponsable Boolean?
   users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
 
   @@index([idUserResponsable], map: "responsables_FK")
@@ -130,8 +131,8 @@ model users {
   fullnameUser   String           @db.VarChar(255)
   limitUser      Float?           @db.Float
   photoUser      String?
-  deletedUser    DateTime?        @db.DateTime(0)
   blockedUser    DateTime?        @db.DateTime(0)
+  deletedUser    DateTime?        @db.DateTime(0)
   billings_info  billings_info[]
   cards          cards[]
   categories     categories[]

@@ -23,3 +23,4 @@ Um projeto multiplataforma para controle e planejamento de finanças pessoais.
 * [Expo](https://expo.dev/)
 * [NextJs](https://nextjs.org/)
 * [Prisma](https://www.prisma.io/)
+* [Sendgrid](https://sendgrid.com/en-us)
