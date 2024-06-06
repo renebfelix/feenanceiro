@@ -19,10 +19,6 @@ responseInviteRouter.post('/app/invite/response/:uuidResponsable', async (req: R
 				idUserInvitedResponsalbe: uuid,
 				idResponsable: uuidResponsable,
 				isInvitedResponsable: true,
-				OR: [
-					{ acceptedInviteResponsable: false },
-					{ acceptedInviteResponsable: null },
-				]
 			}
 		});
 
