@@ -93,8 +93,8 @@ model icons {
 model reset_password {
   idReset             String  @id @default(uuid())
   idUserReset         String
-  dateReset           String
-  dateExpirationReset String
+  dateReset           Int
+  dateExpirationReset Int
   finishedReset       Boolean
   users               users   @relation(fields: [idUserReset], references: [idUser], onUpdate: Restrict, map: "reset_password_users_FK")
 
@@ -108,7 +108,9 @@ model responsables {
   idUserResponsable    String
   isDefaultResponsable Boolean
   emailResponsable     String?
-  isInvitedResponsable Boolean?
+  isInvitedResponsable Boolean 		@default(false)
+  acceptedInviteResponsable Boolean?
+  idUserInvitedResponsalbe String?
   users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
 
   @@index([idUserResponsable], map: "responsables_FK")

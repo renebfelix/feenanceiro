@@ -25,7 +25,10 @@ import {
 	listResponsablesRouter,
 	editResponsableRoute,
 	deleteResponsableRoute,
-	sendEmailResponsableRoute
+	sendEmailResponsableRoute,
+	inviteResponsableRouter,
+	listInvitesResponsableRouter,
+	responseInviteRouter
 } from './app/responsables';
 
 import {
@@ -104,6 +107,9 @@ app.use(`${urlBase}`, [
 	editResponsableRoute,
 	deleteResponsableRoute,
 	sendEmailResponsableRoute,
+	inviteResponsableRouter,
+	listInvitesResponsableRouter,
+	responseInviteRouter,
 
 	createCardRouter,
 	listCardsRouter,
