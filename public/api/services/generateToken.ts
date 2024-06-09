@@ -7,7 +7,7 @@ function generateToken(uuid: string, email: string){
 			email,
 		},
 		`${process.env.APP_JWT_PRIVATE}`,
-		{expiresIn: '120m'}
+		{expiresIn: '15m'}
 	);
 
 	return token;
