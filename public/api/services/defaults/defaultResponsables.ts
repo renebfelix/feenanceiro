@@ -1,11 +1,12 @@
 import { database } from "../../src/prisma/client";
 
-export async function createDefaultResponsable(uuid: string, fullname: string){
+export async function createDefaultResponsable(uuid: string, fullname: string, email: string){
 	const responsables = await database.responsables.create({
 		data: {
 			nameResponsable: fullname,
 			idUserResponsable: uuid,
-			isDefaultResponsable: true
+			isDefaultResponsable: true,
+			emailResponsable: email
 		}
 	});
 
