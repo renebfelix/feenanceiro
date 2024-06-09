@@ -1,26 +1,36 @@
 import { Request, Response, Router } from "express";
 import { userDataToken } from "../../../utils/userDatatoken";
 import { database } from "../../prisma/client";
+import { errorHandler } from "../../../utils/errorsHandlers";
+import { isEmpty } from "../../../utils/isEmpty";
 
 const userDataRoute = Router();
 
 userDataRoute.get('/app/user', async(req: Request, res: Response) => {
 	const { uuid } = userDataToken(req.headers.authorization ?? "");
 
-	const user = await database.users.findFirst({
-		where: {
-			idUser: uuid
-		},
-		select: {
-			idUser: true,
-			fullnameUser: true,
-			emailUser: true,
-			photoUser: true,
-			usernameUser: true,
-		}
-	})
+	if (isEmpty(uuid)){
+		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
+	} else {
+		const user = await database.users.findFirst({
+			where: {
+				idUser: uuid
+			},
+			select: {
+				idUser: true,
+				fullnameUser: true,
+				emailUser: true,
+				photoUser: true,
+				usernameUser: true,
+			}
+		});
 
-	res.send(user);
+		if (!user) {
+			res.status(401).send(errorHandler(1, "Usuário não encontrado"));
+		} else {
+			res.send();
+		}
+	}
 })
 
 export { userDataRoute }
