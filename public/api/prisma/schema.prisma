@@ -53,8 +53,10 @@ model billings_values {
   deletedBillingValue       DateTime?
   billings_status           billings_status[]
   billings_info             billings_info     @relation(fields: [idBillingInfoBillingValue], references: [idBillingInfo], onUpdate: Restrict, map: "billing_values_FK")
+  responsables              responsables      @relation(fields: [responsableBillingValue], references: [idResponsable], onUpdate: Restrict, map: "billings_values_responsables_FK")
 
   @@index([idBillingInfoBillingValue], map: "billing_values_FK")
+  @@index([responsableBillingValue], map: "billings_values_responsables_FK")
 }
 
 model cards {
@@ -102,16 +104,17 @@ model reset_password {
 }
 
 model responsables {
-  idResponsable        String    @id @default(uuid())
-  nameResponsable      String    @db.VarChar(100)
-  deletedResponsable   DateTime? @db.DateTime(0)
-  idUserResponsable    String
-  isDefaultResponsable Boolean
-  emailResponsable     String?
-  isInvitedResponsable Boolean 		@default(false)
+  idResponsable             String            @id @default(uuid())
+  nameResponsable           String            @db.VarChar(100)
+  deletedResponsable        DateTime?         @db.DateTime(0)
+  idUserResponsable         String
+  isDefaultResponsable      Boolean
+  emailResponsable          String?
+  isInvitedResponsable      Boolean           @default(false)
   acceptedInviteResponsable Boolean?
-  idUserInvitedResponsalbe String?
-  users                users     @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
+  idUserInvitedResponsalbe  String?
+  billings_values           billings_values[]
+  users                     users             @relation(fields: [idUserResponsable], references: [idUser], onUpdate: Restrict, map: "responsables_FK")
 
   @@index([idUserResponsable], map: "responsables_FK")
 }
