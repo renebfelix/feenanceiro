@@ -7,6 +7,16 @@ async function refreshTokenUseCase(refresh_token: string){
 	const refreshToken = await database.refresh_token.findFirst({
 		where:{
 			idRefresh: refresh_token,
+		},
+		select: {
+			idRefresh: true,
+			idUserRefresh: true,
+			expiresInRefresh: true,
+			users: {
+				select: {
+					emailUser: true,
+				}
+			}
 		}
 	});
 
@@ -14,7 +24,7 @@ async function refreshTokenUseCase(refresh_token: string){
 		return "Invalid";
 	}
 
-	const token = generateToken(refreshToken.idUserRefresh);
+	const token = generateToken(refreshToken.idUserRefresh, refreshToken.users.emailUser);
 
 	if (moment().isAfter(moment.unix(refreshToken.expiresInRefresh))){
 		await database.refresh_token.deleteMany({

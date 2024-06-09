@@ -30,7 +30,7 @@ loginRouter.post(`/auth/login`, async (req: Request, res: Response) => {
 	if (!user) {
 		res.status(400).send(errorHandler(3, "Usuário ou senha incorreto"));
 	} else {
-		const token = generateToken(user.idUser);
+		const token = generateToken(user.idUser, user.emailUser);
 		const refreshToken = await generateRefreshToken(user.idUser);
 
 		res.send({

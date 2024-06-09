@@ -11,8 +11,9 @@ const isValidLogin = function(request: Request, response: Response, next: NextFu
 	try {
 		const payload = jsonwebtoken.verify(newToken[1], process.env.APP_JWT_PRIVATE);
 		const uuid = typeof payload !== "string" && payload.uuid;
+		const email = typeof payload !== "string" && payload.email;
 
-		if(!uuid){
+		if(!uuid || !email){
 			return response.status(401).send(errorHandler(1, "Invalid Token"));
 		}else{
 			return next();

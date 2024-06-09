@@ -38,7 +38,11 @@ createRouter.post(`/auth/create-account`, async (req: Request, res: Response) =>
 
 		if (createAccount){
 			const categories = await createDefaultCategories(createAccount.idUser);
-			const responsables = await createDefaultResponsable(createAccount.idUser, createAccount.fullnameUser);
+			const responsables = await createDefaultResponsable(
+				createAccount.idUser,
+				createAccount.fullnameUser,
+				createAccount.emailUser
+			);
 
 			if (categories && responsables){
 				res.status(201).send({
