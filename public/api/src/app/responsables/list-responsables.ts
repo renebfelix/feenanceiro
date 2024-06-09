@@ -18,6 +18,8 @@ listResponsablesRouter.get(`/app/responsables`, async (req: Request, res: Respon
 			nameResponsable: true,
 			emailResponsable: true,
 			isDefaultResponsable: true,
+			acceptedInviteResponsable: true,
+			isInvitedResponsable: true
 		}
 	});
 
