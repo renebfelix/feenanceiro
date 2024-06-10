@@ -6,14 +6,29 @@ const {
 	defineMultiStyleConfig
 } = createMultiStyleConfigHelpers(inputAnatomy.keys)
 
-const baseStyle = definePartsStyle({
+const primary = definePartsStyle({
 	field: {
 		color: 'typo.500',
 		bgColor: 'white',
 		border: '1px',
 		borderType: "solid",
-		borderColor: "typo.100"
+		borderColor: "typo.100",
 	},
 })
 
-export const inputTheme = defineMultiStyleConfig({ baseStyle })
+const primaryError = definePartsStyle({
+	field: {
+		color: 'danger.400',
+		bgColor: 'white',
+		border: '1px',
+		borderType: "solid",
+		borderColor: "danger.400",
+	},
+})
+
+export const inputTheme = defineMultiStyleConfig({
+	variants:{
+		"primary": primary,
+		"primary-error": primaryError
+	}
+ })

@@ -17,13 +17,14 @@ export function LayoutAuth({children}: Readonly<{children: React.ReactNode}>){
 				maxW={"450px"}
 				mx={"auto"}
 				justifyContent={"center"}
+				p={3}
 			>
 				<Box
 					maxW={"300px"}
 					mx={"auto"}
 				>
-					<Link href={"/"}>
-						<Image src={LogoWhite} alt="Feenanceiro" />
+					<Link href={"/"} aria-label="Página inicial">
+						<Image src={LogoWhite} alt="Logo Feenanceiro" />
 					</Link>
 				</Box>
 
