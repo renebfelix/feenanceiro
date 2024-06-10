@@ -11,7 +11,7 @@ import { useState } from "react";
 import type { AlertStatus } from "@chakra-ui/react";
 
 export default function LoginPage(){
-	const { register, handleSubmit, clearErrors, formState: {errors} } = useForm();
+	const { register, handleSubmit, formState: {errors}, reset } = useForm();
 	const router = useRouter();
 
 	const [notification, setNotification] = useState<{
@@ -67,13 +67,14 @@ export default function LoginPage(){
 							show: true,
 						});
 
-						router.push('/');
+						reset();
+						router.push('/dashboard');
 					} else{
 						setNotification({
-							message: response.message,
+							message: response.message ?? "Ocorreu um erro",
 							status: "error",
 							show: true,
-							errorCode: response.code,
+							errorCode: response.code ?? 100,
 						});
 
 						setLoading(false);

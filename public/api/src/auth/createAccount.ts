@@ -14,12 +14,15 @@ createRouter.post(`/auth/create-account`, async (req: Request, res: Response) =>
 		username,
 		password,
 		email,
-		limit
+		limit,
+		confirmPassword
 	} = req.body;
 
 	if (isEmpty([fullname, username, password, email])) {
 		res.status(401).send(errorHandler(1, "Preencha todos os campos"));
-	}else {
+	} else if (confirmPassword !== password){
+		res.status(401).send(errorHandler(2, "Senhas divergentes"));
+	} else {
 		const checkUSer = await database.users.findFirst({
 			where: {
 				OR: [
@@ -53,11 +56,11 @@ createRouter.post(`/auth/create-account`, async (req: Request, res: Response) =>
 						message: "Criado com sucesso!"
 					});
 				} else {
-					res.status(401).send(errorHandler(6, "Ocorreu um erro"));
+					res.status(401).send(errorHandler(3, "Ocorreu um erro"));
 				}
 
 			}else {
-				res.status(401).send(errorHandler(6, "Ocorreu um erro"));
+				res.status(401).send(errorHandler(4, "Ocorreu um erro"));
 			}
 		} else {
 			res.status(401).send(errorHandler(5, "Usuário já existente"));
