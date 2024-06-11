@@ -22,6 +22,8 @@
 		"web:build": "yarn workspace @feenanceiro/web build",
 		"web:start": "yarn workspace @feenanceiro/web start",
 
+		"context": "yarn workspace @feenanceiro/context",
+
 		"api": "yarn workspace @feenanceiro/api",
 		"api:dev": "yarn workspace @feenanceiro/api dev",
 		"api:build": "yarn workspace @feenanceiro/api build",

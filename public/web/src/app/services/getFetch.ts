@@ -1,6 +1,6 @@
+"use server";
 import { isValidJSON } from "@feenanceiro/utils";
-import Cookies from "js-cookie";
-
+import { cookies } from "next/headers";
 interface FetchProps {
 	url: string;
 	method: "GET" | "POST" | "DELETE"| "PUT" | "PATCH";
@@ -9,25 +9,25 @@ interface FetchProps {
 
 export async function getFetch(params: FetchProps){
 	const { method, url, data } = params;
-	const cookie = Cookies.get('token_fee');
+	const cookie = cookies().get('token_fee');
 	let headersConfig = {};
 
 	try {
-		if (method === "POST" || method === "PUT"){
-			headersConfig = {
-				"Content-Type" : "application/json",
+		if (!isValidJSON(cookie?.value)){
+			return new Error("JSON Token inválido");
+		} else{
+			if (method === "POST" || method === "PUT"){
+				headersConfig = {
+					"Content-Type" : "application/json",
+				}
 			}
-		}
 
-		if (!isValidJSON(cookie)){
-			return new Error();
-		} else {
 			const response = await fetch(`${process.env.API_HOST}${url}`, {
 				method: method,
 				body: JSON.stringify(data) ?? undefined,
 				headers: {
 					...headersConfig,
-					"authorization": `Bearer ${JSON.parse(cookie ?? '').token}`,
+					"authorization": `Bearer ${JSON.parse(cookie?.value ?? '').token}`,
 				}
 			});
 

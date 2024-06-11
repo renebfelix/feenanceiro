@@ -30,6 +30,7 @@
   },
   "devDependencies": {
 	"@feenanceiro/types": "*",
+	"@feenanceiro/context": "*",
     "@feenanceiro/tsconfig-commons": "*",
     "@types/node": "^20",
     "@types/react": "^18",
