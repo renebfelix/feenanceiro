@@ -68,7 +68,7 @@ export default function LoginPage(){
 						});
 
 						reset();
-						router.push('/dashboard');
+						router.push('/app/dashboard');
 					} else{
 						setNotification({
 							message: response.message ?? "Ocorreu um erro",

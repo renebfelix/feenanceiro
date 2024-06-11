@@ -9,7 +9,7 @@ const userDataRoute = Router();
 userDataRoute.get('/app/user', async(req: Request, res: Response) => {
 	const { uuid } = userDataToken(req.headers.authorization ?? "");
 
-	if (isEmpty(uuid)){
+	if (isEmpty([`${uuid}`])){
 		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
 	} else {
 		const user = await database.users.findFirst({
@@ -28,7 +28,7 @@ userDataRoute.get('/app/user', async(req: Request, res: Response) => {
 		if (!user) {
 			res.status(401).send(errorHandler(1, "Usuário não encontrado"));
 		} else {
-			res.send();
+			res.send(user);
 		}
 	}
 })
