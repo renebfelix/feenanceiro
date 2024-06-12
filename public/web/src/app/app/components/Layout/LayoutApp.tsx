@@ -3,6 +3,7 @@
 import { Box, Container } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { HeaderApp } from "../Header/Header";
+import { Footer } from "../Footer/Footer";
 
 export function LayoutApp({children}: Readonly<{children: ReactNode}>){
 	return (
@@ -14,6 +15,8 @@ export function LayoutApp({children}: Readonly<{children: ReactNode}>){
 					{children}
 				</Container>
 			</Box>
+
+			<Footer />
 		</>
 	)
 }
