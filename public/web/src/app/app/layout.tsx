@@ -4,10 +4,10 @@ import { MainContextProvider } from "@feenanceiro/context";
 
 export default async function LayoutAppRoot({ children }: Readonly<{children: React.ReactNode}>){
 	return (
-		<LayoutApp>
-			<MainContextProvider>
+		<MainContextProvider>
+			<LayoutApp>
 				{children}
-			</MainContextProvider>
-		</LayoutApp>
+			</LayoutApp>
+		</MainContextProvider>
 	)
 }

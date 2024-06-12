@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { HeaderApp } from "../Header/Header";
 
@@ -8,8 +8,11 @@ export function LayoutApp({children}: Readonly<{children: ReactNode}>){
 	return (
 		<>
 			<HeaderApp />
-			<Box w={"full"} bgColor={"secundary.400"} paddingTop={"50px"}>
-				{children}
+
+			<Box w={"full"} paddingTop={"65px"}>
+				<Container my={4} maxW='container.xl' w={"100%"}>
+					{children}
+				</Container>
 			</Box>
 		</>
 	)
