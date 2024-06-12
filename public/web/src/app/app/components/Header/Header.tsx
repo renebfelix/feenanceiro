@@ -2,7 +2,7 @@
 
 import { Avatar, Box, Button, Container, Flex, HStack, IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { NavLink, NavLinkProps } from "../NavLink/NavLink";
-import { FiCreditCard, FiGrid, FiLock, FiLogOut, FiMenu, FiSettings, FiTag, FiUser, FiUsers, FiX } from "react-icons/fi";
+import { FiCreditCard, FiLock, FiLogOut, FiMenu, FiSettings, FiTag, FiUser, FiUsers, FiX } from "react-icons/fi";
 
 import LogoFeenanceiro from "../../../../../public/logo-white.svg";
 import Image from "next/image";
@@ -12,9 +12,13 @@ import { BsBank } from "react-icons/bs";
 
 import { getFetch } from "@/app/services/getFetch";
 import { useEffect } from "react";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+
 
 export function HeaderApp(){
 	const { user, start, setStart, setUser } = useMainContext();
+	const router = useRouter();
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const Links: Array<NavLinkProps> = [
@@ -23,6 +27,11 @@ export function HeaderApp(){
 		{ title: "Bancos", href: "/app/banks", icon: <BsBank /> },
 		{ title: "Categorias", href: "/app/categories", icon: <FiTag /> },
 	];
+
+	function signOut(){
+		Cookies.remove("token_fee", { path: '/', secure: true })
+		router.push('/login');
+	}
 
 	useEffect(() => {
 		async function getUser(){
@@ -93,7 +102,7 @@ export function HeaderApp(){
 								<MenuItem icon={<FiSettings />}>Configurações</MenuItem>
 								<MenuItem icon={<FiLock />}>Alterar senha</MenuItem>
 								<MenuDivider />
-								<MenuItem icon={<FiLogOut />}>Sair</MenuItem>
+								<MenuItem icon={<FiLogOut />} onClick={() => signOut()}>Sair</MenuItem>
 							</MenuList>
 						</Menu>
 					</Flex>

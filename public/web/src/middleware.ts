@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
 
 			redirect.headers.set(
 				"Set-Cookie",
-				`token_fee=${JSON.stringify(newToken)}; HttpOnly; Max-Age=${60 * 60}; Path=/; SameSite=None; Secure`
+				`token_fee=${JSON.stringify(newToken)}; HttpOnly; Path=/; SameSite=None;`
 			);
 
 			return redirect;
