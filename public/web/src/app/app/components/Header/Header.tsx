@@ -14,6 +14,7 @@ import { getFetch } from "@/app/services/getFetch";
 import { useEffect } from "react";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
+import { MdOutlineAttachMoney } from "react-icons/md";
 
 
 export function HeaderApp(){
@@ -22,6 +23,7 @@ export function HeaderApp(){
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const Links: Array<NavLinkProps> = [
+		{ title: "Lançamentos", href: "/app/bills", icon: <MdOutlineAttachMoney /> },
 		{ title: "Responsáveis", href: "/app/responsables", icon: <FiUsers /> },
 		{ title: "Cartões", href: "/app/cards", icon: <FiCreditCard /> },
 		{ title: "Bancos", href: "/app/banks", icon: <BsBank /> },
@@ -29,7 +31,7 @@ export function HeaderApp(){
 	];
 
 	function signOut(){
-		Cookies.remove("token_fee", { path: '/', secure: true })
+		Cookies.remove("token_fee", { path: '/', secure: true, sameSite: "none" })
 		router.push('/login');
 	}
 
