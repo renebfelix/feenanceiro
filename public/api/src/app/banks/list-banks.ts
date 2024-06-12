@@ -26,7 +26,14 @@ listBanksRouter.get('/app/banks', async(req: Request, res: Response) => {
 	if (!listBanks) {
 		res.status(401).send(errorHandler(1, "Ocorreu um erro"));
 	} else {
-		res.send(listBanks);
+		let renameBank = listBanks.map((item) => {
+			return {
+				idBank: item.idCard,
+				nameBank: item.nameCard
+			}
+		});
+
+		res.send(renameBank);
 	}
 })
 
