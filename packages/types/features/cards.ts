@@ -1,11 +1,11 @@
 import { LoadingProps } from "../general/loading";
 
 export type CardsProps = {
-	idCard: string;
-	nameCard: string;
-	closingDateCard: number;
-	dueDateCard: number;
-	limitCard: number;
+	id: string;
+	name: string;
+	closingDate: number;
+	dueDate: number;
+	limit: number;
 }
 
 export type CardsFetchProps = {

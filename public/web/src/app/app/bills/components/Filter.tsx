@@ -54,10 +54,10 @@ export function Filter(){
 							{!cards.status.isLoading && cards.data.map((card) => {
 								return (
 									<option
-										key={card.idCard}
-										value={card.idCard}
+										key={card.id}
+										value={card.id}
 									>
-										{card.nameCard}
+										{card.name}
 									</option>
 								);
 							})}
