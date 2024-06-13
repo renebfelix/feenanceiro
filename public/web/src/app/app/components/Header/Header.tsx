@@ -64,7 +64,7 @@ export function HeaderApp(){
 	}, []);
 
 	return (
-		<Box bg={'primary.500'} px={4} position={"fixed"} w={"full"} minH={"60px"}>
+		<Box bg={'primary.500'} px={4} position={"fixed"} w={"full"} minH={"60px"} zIndex={100}>
 			<Container maxW='container.xl' w={"100%"}>
 				<Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
 					<IconButton

@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import  { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getNewTokenRefresh } from './app/services/generateNewToken';
+import { getNewTokenRefresh } from './app/services/tokens/generateNewToken';
 import { isValidJSON } from '@feenanceiro/utils';
 
 
