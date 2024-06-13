@@ -29,7 +29,18 @@ listResponsablesRouter.get(`/app/responsables`, async (req: Request, res: Respon
 	if (!listResponsables) {
 		res.status(401).send(errorHandler(1, "Ocorreu um erro"))
 	} else {
-		res.send(listResponsables);
+		const rename = listResponsables.map((responsable) => {
+			return {
+				id: responsable.idResponsable,
+				name: responsable.nameResponsable,
+				email: responsable.emailResponsable,
+				isDefault: responsable.isDefaultResponsable,
+				isInvited: responsable.isInvitedResponsable,
+				acceptedInvite: responsable.acceptedInviteResponsable,
+			}
+		})
+
+		res.send(rename);
 	}
 });
 

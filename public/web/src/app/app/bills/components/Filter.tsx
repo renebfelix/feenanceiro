@@ -24,10 +24,10 @@ export function Filter(){
 						{!responsables.status.isLoading && responsables.data.map((responsable) => {
 							return (
 								<option
-									key={responsable.idResponsable}
-									value={responsable.idResponsable}
+									key={responsable.id}
+									value={responsable.id}
 								>
-									{responsable.nameResponsable}
+									{responsable.name}
 								</option>
 							);
 						})}

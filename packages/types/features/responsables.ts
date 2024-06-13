@@ -1,12 +1,12 @@
 import { LoadingProps } from "../general/loading";
 
 export type ResponsableProps = {
-	idResponsable: string;
-	nameResponsable: string,
-	emailResponsable?: string,
-	isDefaultResponsable: boolean;
-	acceptedInviteResponsable?: boolean;
-	isInvitedResponsable: boolean;
+	id: string;
+	name: string,
+	email?: string,
+	isDefault: boolean;
+	acceptedInvite?: boolean;
+	isInvited: boolean;
 }
 
 export type ResponsableFetchProps = {
