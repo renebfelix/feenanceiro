@@ -1,9 +1,9 @@
 import { LoadingProps } from "../general/loading";
 
 export type CategoriesPorps = {
-	idCategory: string;
-	nameCategory: string;
-	limitCategory: number;
+	id: string;
+	name: string;
+	limit: number;
 }
 
 export type CategoriesFetchProps = {

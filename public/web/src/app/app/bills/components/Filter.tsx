@@ -38,10 +38,10 @@ export function Filter(){
 						{!categories.status.isLoading && categories.data.map((category) => {
 							return (
 								<option
-									key={category.idCategory}
-									value={category.idCategory}
+									key={category.id}
+									value={category.id}
 								>
-									{category.nameCategory}
+									{category.name}
 								</option>
 							);
 						})}
