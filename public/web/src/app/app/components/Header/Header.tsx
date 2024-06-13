@@ -96,7 +96,7 @@ export function HeaderApp(){
 							display={{ base: 'none', md: 'flex' }}
 							color={"white"}
 						>
-							{user.status.isLoading ? 'Carregando...' : user.data.fullnameUser}
+							{user.status.isLoading ? 'Carregando...' : user.data.fullname}
 						</Text>
 
 						<Menu>
@@ -110,7 +110,7 @@ export function HeaderApp(){
 								<Avatar
 									size={'sm'}
 									icon={user.status.isLoading ? <FiUser /> : undefined}
-									name={!user.status.isLoading ? user.data.fullnameUser : undefined}
+									name={!user.status.isLoading ? user.data.fullname : undefined}
 								/>
 							</MenuButton>
 

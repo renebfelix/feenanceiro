@@ -1,11 +1,11 @@
 import { LoadingProps } from "../general/loading";
 
 export type UserProps = {
-	idUser: string;
-	fullnameUser: string;
-	emailUser: string;
-	photoUser?: string;
-	usernameUser: string;
+	id: string;
+	fullname: string;
+	email: string;
+	photo?: string;
+	username: string;
 }
 
 export type UserFetchProps = {

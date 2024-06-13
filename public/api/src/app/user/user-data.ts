@@ -28,7 +28,15 @@ userDataRoute.get('/app/user', async(req: Request, res: Response) => {
 		if (!user) {
 			res.status(401).send(errorHandler(1, "Usuário não encontrado"));
 		} else {
-			res.send(user);
+			const rename = {
+				id: user.idUser,
+				fullname: user.fullnameUser,
+				email: user.emailUser,
+				photo: user.photoUser,
+				username: user.usernameUser
+			}
+
+			res.send(rename);
 		}
 	}
 })
