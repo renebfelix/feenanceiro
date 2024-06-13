@@ -1,3 +1,5 @@
+import { LoadingProps } from "../general/loading";
+
 export type MetaTagsBillsProps = {
 	totalGasto: number;
 	totalEntradas: number;
@@ -38,7 +40,8 @@ export type BillProps = {
 	}
 }
 
-export interface BillsProps {
-	meta: MetaTagsBillsProps,
-	items: Array<BillProps>,
+export interface BillsFetchProps {
+	meta: MetaTagsBillsProps;
+	items: Array<BillProps>;
+	status: LoadingProps;
 }

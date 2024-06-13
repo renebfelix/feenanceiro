@@ -2,7 +2,7 @@
 
 import { BanksFetchProps, CardsFetchProps, CategoriesFetchProps, LoadingProps, ResponsableFetchProps, UserFetchProps } from "@feenanceiro/types";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo, useState } from "react";
-import { BANKS_INITITAL_STATE, CARDS_INITITAL_STATE, CATEGORIES_INITIAL_STATE, RESPONSABLE_INITIAL_STATE, START_INITIAL_STATE, USER_INITIAL_STATE } from "./initial-states";
+import { BANKS_INITITAL_STATE, CARDS_INITITAL_STATE, CATEGORIES_INITIAL_STATE, RESPONSABLE_INITIAL_STATE, STATUS_INITIAL_STATE, USER_INITIAL_STATE } from "./initial-states";
 
 interface MainContextProps {
 	user: UserFetchProps;

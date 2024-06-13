@@ -12,4 +12,4 @@ export type { UserProps, UserFetchProps } from './features/user';
 export type { CategoriesPorps, CategoriesFetchProps } from './features/categories';
 export type { CardsProps, CardsFetchProps } from './features/cards';
 export type { BanksProps, BanksFetchProps } from './features/banks';
-export type { BillsProps, BillProps, MetaTagsBillsProps } from './features/bills';
+export type { BillsFetchProps, BillProps, MetaTagsBillsProps } from './features/bills';
