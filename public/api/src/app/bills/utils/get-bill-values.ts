@@ -66,6 +66,12 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 						}
 					}
 				}
+			},
+			responsables: {
+				select: {
+					nameResponsable: true,
+					idResponsable: true,
+				}
 			}
 		}
 	});

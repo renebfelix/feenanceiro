@@ -28,8 +28,8 @@ listBanksRouter.get('/app/banks', async(req: Request, res: Response) => {
 	} else {
 		let renameBank = listBanks.map((item) => {
 			return {
-				idBank: item.idCard,
-				nameBank: item.nameCard
+				id: item.idCard,
+				name: item.nameCard
 			}
 		});
 

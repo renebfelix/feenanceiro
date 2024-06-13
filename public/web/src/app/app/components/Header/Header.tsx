@@ -10,15 +10,22 @@ import Link from "next/link";
 import { useMainContext } from "@feenanceiro/context";
 import { BsBank } from "react-icons/bs";
 
-import { getFetch } from "@/app/services/getFetch";
 import { useEffect } from "react";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { MdOutlineAttachMoney } from "react-icons/md";
 
+import {
+	fetcResponsable,
+	fetchBanks,
+	fetchCards,
+	fetchUser,
+	fetchCategories
+} from "@/app/services/fetchs";
+
 
 export function HeaderApp(){
-	const { user, start, setStart, setUser } = useMainContext();
+	const { user, setUser, setBanks, setCards, setCategories, setResponsables } = useMainContext();
 	const router = useRouter();
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,13 +44,20 @@ export function HeaderApp(){
 
 	useEffect(() => {
 		async function getUser(){
-			const userData = await getFetch({method: "GET", url: '/app/user'});
+			const cardsData = await fetchCards();
+			setCards(cardsData);
 
+			const userData = await fetchUser();
 			setUser(userData);
-			setStart({
-				hasError: false,
-				isLoading: false
-			})
+
+			const responsablesData = await fetcResponsable();
+			setResponsables(responsablesData);
+
+			const banksData = await fetchBanks();
+			setBanks(banksData);
+
+			const categoriesData = await fetchCategories();
+			setCategories(categoriesData);
 		}
 
 		getUser();
@@ -82,7 +96,7 @@ export function HeaderApp(){
 							display={{ base: 'none', md: 'flex' }}
 							color={"white"}
 						>
-							{start.isLoading ? 'Carregando...' : user.fullnameUser}
+							{user.status.isLoading ? 'Carregando...' : user.data.fullnameUser}
 						</Text>
 
 						<Menu>
@@ -95,8 +109,8 @@ export function HeaderApp(){
 							>
 								<Avatar
 									size={'sm'}
-									icon={start.isLoading ? <FiUser /> : undefined}
-									name={!start.isLoading ? user.fullnameUser : undefined}
+									icon={user.status.isLoading ? <FiUser /> : undefined}
+									name={!user.status.isLoading ? user.data.fullnameUser : undefined}
 								/>
 							</MenuButton>
 

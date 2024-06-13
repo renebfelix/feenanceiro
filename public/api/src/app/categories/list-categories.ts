@@ -14,10 +14,13 @@ listCategoriesRouter.get(`/app/categories`, async (req: Request, res: Response) 
 			nameCategory: true,
 			limitCategory: true,
 		},
+		orderBy:{
+			nameCategory: "asc",
+		},
 		where: {
 			idUserCategory: uuid,
 			deletedCategory: null
-		}
+		},
 	});
 
 	if (!listCategories){

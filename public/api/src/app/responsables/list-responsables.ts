@@ -13,6 +13,9 @@ listResponsablesRouter.get(`/app/responsables`, async (req: Request, res: Respon
 			idUserResponsable: uuid,
 			deletedResponsable: null
 		},
+		orderBy:{
+			nameResponsable: "asc",
+		},
 		select: {
 			idResponsable: true,
 			nameResponsable: true,

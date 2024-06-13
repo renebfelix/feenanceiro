@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-	"build:apk": "eas build -p android --profile preview"
+    "build:apk": "eas build -p android --profile preview"
   },
   "dependencies": {
     "expo": "~51.0.8",
@@ -17,9 +17,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@feenanceiro/tsconfig-commons": "*",
     "@types/react": "~18.2.45",
-    "typescript": "^5.1.3",
-	"@feenanceiro/tsconfig-commons": "*"
+    "prettier": "3.3.2",
+    "typescript": "^5.1.3"
   },
   "private": true
 }
