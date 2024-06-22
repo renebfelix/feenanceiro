@@ -1,5 +1,8 @@
-"use server";
-import { cookies } from "next/headers";
+"use client";
+import { isValidJSON } from '@feenanceiro/utils';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { getNewTokenRefresh } from '../tokens/generateNewToken';
 interface FetchProps {
 	url: string;
 	method: "GET" | "POST" | "DELETE"| "PUT" | "PATCH";
@@ -8,7 +11,7 @@ interface FetchProps {
 
 export async function getFetch(params: FetchProps){
 	const { method, url, data } = params;
-	const cookie = cookies().get('token_fee');
+	const cookie = Cookies.get('token_fee');
 	let headersConfig = {};
 
 	try {
@@ -18,16 +21,34 @@ export async function getFetch(params: FetchProps){
 			}
 		}
 
-		const response = await fetch(`${process.env.API_HOST}${url}`, {
-			method: method,
-			body: JSON.stringify(data) ?? undefined,
-			headers: {
-				...headersConfig,
-				"authorization": `Bearer ${JSON.parse(cookie?.value ?? '').token}`,
-			}
-		});
+		if (!cookie || !isValidJSON(cookie)) {
+			return new Error();
+		} else {
+			let { token } = JSON.parse(cookie);
+			const decoded = jwtDecode(token);
+			const currentDate = new Date();
 
-		return await response.json();
+			if (decoded.exp && decoded.exp * 1000 < currentDate.getTime()) {
+				const newToken = await getNewTokenRefresh();
+
+				if (!newToken.token){
+					return new Error();
+				}
+
+				Cookies.set('token_fee', JSON.stringify(newToken));
+			}
+
+			const response = await fetch(`${process.env.API_HOST}${url}`, {
+				method: method,
+				body: JSON.stringify(data) ?? undefined,
+				headers: {
+					...headersConfig,
+					"authorization": `Bearer ${JSON.parse(Cookies.get('token_fee') ?? '').token}`,
+				}
+			});
+
+			return await response.json();
+		}
 	} catch(error: any) {
 		return new Error(error);
 	}

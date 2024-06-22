@@ -5,7 +5,7 @@ import { ResponsableFetchProps} from "@feenanceiro/types";
 export async function fetcResponsable(): Promise<ResponsableFetchProps> {
 	const responsableData = await getFetch({method: "GET", url: '/app/responsables'});
 
-	if (responsableData.code){
+	if (responsableData.code || responsableData === undefined){
 		return {
 			data: RESPONSABLE_INITIAL_STATE.data,
 			status: {

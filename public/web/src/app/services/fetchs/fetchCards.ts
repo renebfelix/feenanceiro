@@ -4,7 +4,7 @@ import { CardsFetchProps } from "@feenanceiro/types";
 export async function fetchCards(): Promise<CardsFetchProps> {
 	const cardsData = await getFetch({method: "GET", url: '/app/cards'});
 
-	if (cardsData.code){
+	if (cardsData.code || cardsData === undefined){
 		return {
 			data: [],
 			status: {

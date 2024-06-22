@@ -5,7 +5,7 @@ import { getFetch } from "./getFetch";
 export async function fetchBanks(): Promise<BanksFetchProps> {
 	const banksData = await getFetch({method: "GET", url: '/app/banks'});
 
-	if (banksData.code){
+	if (banksData.code || banksData === undefined){
 		return {
 			data: BANKS_INITITAL_STATE.data,
 			status: {
