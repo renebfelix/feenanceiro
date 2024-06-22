@@ -10,7 +10,7 @@ interface BillContext {
 	setMeta: Dispatch<SetStateAction<MetaTagsBillsProps>>;
 	items: Array<BillProps>;
 	setItems: Dispatch<SetStateAction<Array<BillProps>>>;
-	status: LoadingProps,
+	status: LoadingProps;
 	setStatus: Dispatch<SetStateAction<LoadingProps>>;
 }
 
