@@ -9,6 +9,10 @@
 			"setup/*"
 		]
 	},
+	"dependencies": {
+		"eslint": "9.5.0",
+		"prettier": "3.3.2"
+	},
 	"scripts": {
 		"app": "yarn workspace @feenanceiro/app",
 		"app:dev": "yarn workspace @feenanceiro/app start",
@@ -21,6 +25,7 @@
 		"web:dev": "yarn workspace @feenanceiro/web dev",
 		"web:build": "yarn workspace @feenanceiro/web build",
 		"web:start": "yarn workspace @feenanceiro/web start",
+		"web:lint": "yarn workspace @feenanceiro/web lint",
 
 		"context": "yarn workspace @feenanceiro/context",
 

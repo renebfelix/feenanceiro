@@ -5,8 +5,12 @@
 	"author": "Rene Felix",
 	"license": "MIT",
 	"dependencies": {
+		"@chakra-ui/react": "^2.8.2",
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
+		"@feenanceiro/types": "*",
+		"framer-motion": "^11.2.10",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"@feenanceiro/types": "*"
+		"react-dom": "^18.3.1"
 	}
 }
