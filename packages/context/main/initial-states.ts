@@ -2,6 +2,7 @@ import { BanksFetchProps, CategoriesFetchProps, UserFetchProps } from "@feenance
 import { CardsFetchProps } from "@feenanceiro/types/features/cards"
 import { ResponsableFetchProps } from "@feenanceiro/types/features/responsables"
 import { STATUS_INITIAL_STATE } from "../default/initial-state"
+import { ModalComponentProps } from "@feenanceiro/types/components/modal"
 
 export const USER_INITIAL_STATE : UserFetchProps = {
 	data: {
@@ -32,4 +33,9 @@ export const CARDS_INITITAL_STATE: CardsFetchProps = {
 export const BANKS_INITITAL_STATE: BanksFetchProps = {
 	data: [],
 	status: STATUS_INITIAL_STATE,
+}
+
+export const MODAL_INITIAL_STATE: ModalComponentProps = {
+	title: "",
+	bodyComponent: "",
 }

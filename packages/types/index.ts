@@ -6,6 +6,9 @@ export type { LoadingProps } from './general/loading';
 export type { LoginPostProps, ResponseSuccessLoginProps } from "./auth/login";
 export type { CreateAccountProps } from "./auth/create-account";
 
+// Components
+export type { ControlDisclosureProps } from "./components/modal";
+
 // Features
 export type { ResponsableProps, ResponsableFetchProps } from './features/responsables';
 export type { UserProps, UserFetchProps } from './features/user';

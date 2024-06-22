@@ -1,16 +1,21 @@
 "use client";
 
-import { Box, Flex, HStack, Heading, IconButton, Skeleton, Tag, TagCloseButton, TagLabel, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, IconButton, Tooltip } from "@chakra-ui/react";
 import { Filter } from "./components/Filter";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { fetchBills } from "@/app/services/fetchs/fetchBills";
-import { useBillsContext } from "@feenanceiro/context";
+import { useBillsContext, useMainContext } from "@feenanceiro/context";
 import moment from "moment";
-import { moneyCurrency } from "../../../../../api/utils/moneyCurrency";
-import { FiRefreshCw } from "react-icons/fi";
+import { FiPlus, FiRefreshCw } from "react-icons/fi";
+import { useSearchParams } from "next/navigation";
+import { ListBills } from "./components/ListBills";
+import { CardsValues } from "./components/RowCardsValues";
+import { AddNewBill } from "./components/modal/NewBill";
 
 export default function BillsPage(){
-	const { meta, setMeta, setItems, setStatus, status, items } = useBillsContext();
+	const { setMeta, setItems, setStatus } = useBillsContext();
+	const { controlModalBillings, setModalComponent } = useMainContext();
+	const searchParams = useSearchParams();
 
 	async function getBills(){
 		setStatus({
@@ -19,7 +24,12 @@ export default function BillsPage(){
 		});
 
 		const bills = await fetchBills({
-			period: moment().format("MM-YYYY"),
+			period: searchParams?.get('period') ?? moment().format("YYYY-MM"),
+			category: searchParams?.get('category') ?? undefined,
+			responsable: searchParams?.get('responsable') ?? undefined,
+			payment: searchParams?.get('payment') ?? undefined,
+			method: searchParams?.get('method') ?? undefined,
+			type: searchParams?.get('type') ?? undefined
 		});
 
 		setMeta(bills.meta);
@@ -28,44 +38,40 @@ export default function BillsPage(){
 	}
 
 	useEffect(() => {
-		getBills()
-	}, []);
+		getBills();
+	}, [searchParams]);
 
 	return (
 		<>
-			<Flex w={"full"} justifyContent={"space-between"}>
+			<Flex w={"full"} gap={3} justifyContent={"space-between"} flexDirection={{base: "column", md: "row"}}>
 				<Heading variant={"h1"} as={"h1"}>Lançamentos</Heading>
-				<Filter />
+
+				<Flex gap={3} justifyContent={"flex-end"}>
+					<Tooltip label="Atualizar">
+						<IconButton variant={"primary"} icon={<FiRefreshCw />} onClick={() => getBills()} aria-label="Atualizar" />
+					</Tooltip>
+
+					<Button
+						leftIcon={<FiPlus />}
+						variant={"primary"}
+						onClick={() => {
+							setModalComponent({
+								title: "Adicionar lançamento",
+								bodyComponent: <AddNewBill />
+							})
+							controlModalBillings.onOpen();
+						}}
+					>Adicionar</Button>
+
+					<Filter />
+				</Flex>
 			</Flex>
 
-			<HStack spacing={4} my={4}>
-				<Text>Filtros aplicados:</Text>
+			<CardsValues />
 
-				{['md'].map((size) => (
-					<Tag
-						size={size}
-						key={size}
-						variant='solid'
-					>
-						<TagLabel>Green</TagLabel>
-						<TagCloseButton />
-					</Tag>
-				))}
-			</HStack>
-
-			<Box bgColor={"white"} p={5}>
-
-				<IconButton icon={<FiRefreshCw />} onClick={() => getBills()} aria-label="Atualizar" />
-
-				<Text><strong>Total gasto:</strong> {status.isLoading ? "Carregando..." : moneyCurrency(meta.totalGasto)}</Text>
-				<Text mb={4}><strong>Total pago:</strong> {status.isLoading ? "Carregando..." : moneyCurrency(meta.totalPago)}</Text>
-
-				{status.isLoading ? <Skeleton width={"full"} height={"250px"} /> : (
-					items.map((item) => {
-						return <Text key={item.id}>{item.info.title} - {moneyCurrency(item.value)}</Text>
-					})
-				)}
-			</Box>
+			<Suspense>
+				<ListBills />
+			</Suspense>
 		</>
 	);
 }
