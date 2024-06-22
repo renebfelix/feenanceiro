@@ -93,7 +93,7 @@ export function HeaderApp(){
 
 					<Flex alignItems={'center'} gap={4}>
 						<Text
-							display={{ base: 'none', md: 'flex' }}
+							display={{ base: 'none', xl: 'flex' }}
 							color={"white"}
 						>
 							{user.status.isLoading ? 'Carregando...' : user.data.fullname}

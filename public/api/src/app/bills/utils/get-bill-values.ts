@@ -4,7 +4,6 @@ import { selectFieldsBillInfo } from "./fields-bill-info";
 
 export async function getBillValues(filters: FilterProps, uuidUser: string){
 	const { period, responsable, payment, category, type, paymentValue } = filters;
-	const dateSplit = period?.toString().split("-");
 
 	return await database.billings_values.findMany({
 		where: {
@@ -21,8 +20,8 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 			OR: [
 				{
 					dateBillingValue: {
-						gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
-						lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
+						gte: new Date(period+'-01'),
+						lte: new Date(period+'-31'),
 					},
 				},
 				{
@@ -39,8 +38,8 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 			billings_status: {
 				where: {
 					dateBillingStatus: {
-						gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
-						lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
+						gte: new Date(period+'-01'),
+						lte: new Date(period+'-31'),
 					}
 				},
 				select:{

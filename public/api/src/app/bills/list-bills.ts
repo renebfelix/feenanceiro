@@ -5,7 +5,6 @@ import { regexDate } from "../../../utils/regex";
 import { getBillValues } from "./utils/get-bill-values";
 import { calculateMeta } from "./utils/calculate-meta";
 import { FilterProps } from "./types/types";
-import { BillProps } from "@feenanceiro/types";
 
 const listBillsRoute = Router();
 

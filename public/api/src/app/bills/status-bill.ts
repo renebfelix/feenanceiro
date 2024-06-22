@@ -13,6 +13,8 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 	const { uuidBillingValue } = req.params;
 	const { status, date } = req.body;
 
+	console.log(date);
+
 	if (isEmpty([status, date]) || status !== "EM_ABERTO" && status !== "PAGO"){
 		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
 	} else {
@@ -30,8 +32,18 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 					data: {
 						responsableBillingStatus: searchBill.responsableBillingValue,
 						statusBillingStatus: status,
-						dateBillingStatus: new Date(moment(date).format("YYYY-MM-DD H:mm:ss")),
+						dateBillingStatus: new Date(moment(new Date(date)).format("YYYY-MM-DD H:mm:ss")),
 						idBillingValueBillingStatus: searchBill.idBillingValue,
+					},
+					select: {
+						idBillingStatus: true,
+						statusBillingStatus: true,
+						idBillingValueBillingStatus: true,
+						billings_values: {
+							select: {
+								valueBillingValue: true
+							}
+						}
 					}
 				});
 			} else {
@@ -41,6 +53,16 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 					},
 					where: {
 						idBillingStatus: searchStatus.idBillingStatus
+					},
+					select: {
+						idBillingStatus: true,
+						statusBillingStatus: true,
+						idBillingValueBillingStatus: true,
+						billings_values: {
+							select: {
+								valueBillingValue: true
+							}
+						}
 					}
 				})
 			}
@@ -48,7 +70,13 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 			if (!queryCreateOrUpdate){
 				res.status(401).send(errorHandler(3, "Ocorreu um erro"));
 			} else {
-				res.send();
+				const rename = {
+					id: queryCreateOrUpdate.idBillingValueBillingStatus,
+					status: queryCreateOrUpdate.statusBillingStatus,
+					value: queryCreateOrUpdate.billings_values.valueBillingValue
+				}
+
+				res.send(rename);
 			}
 		}
 	}
