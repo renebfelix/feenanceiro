@@ -25,8 +25,8 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 					},
 				},
 				{
-					dateBillingValue: null
-				}
+					dateBillingValue: null,
+				},
 			],
 		},
 		select: {

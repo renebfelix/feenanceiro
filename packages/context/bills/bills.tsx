@@ -2,7 +2,7 @@
 
 import { MetaTagsBillsProps, BillProps, LoadingProps } from "@feenanceiro/types";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo, useState } from "react";
-import { META_BILLS_INITITAL_STATE } from "./initial-state";
+import { BILL_INITIAL_STATE, META_BILLS_INITITAL_STATE } from "./initial-state";
 import { STATUS_INITIAL_STATE } from "../default/initial-state";
 
 interface BillContext {
@@ -12,6 +12,8 @@ interface BillContext {
 	setItems: Dispatch<SetStateAction<Array<BillProps>>>;
 	status: LoadingProps;
 	setStatus: Dispatch<SetStateAction<LoadingProps>>;
+	edit: BillProps;
+	setEdit: Dispatch<SetStateAction<BillProps>>;
 }
 
 const Context = createContext<BillContext>({
@@ -21,18 +23,22 @@ const Context = createContext<BillContext>({
 	setItems: () => [],
 	status: STATUS_INITIAL_STATE,
 	setStatus: () => {},
+	edit: BILL_INITIAL_STATE,
+	setEdit: () => {},
 })
 
 export function BillsContext({ children }: Readonly<{children: ReactNode}>){
 	const [meta, setMeta] = useState<MetaTagsBillsProps>(META_BILLS_INITITAL_STATE);
 	const [status, setStatus] = useState<LoadingProps>(STATUS_INITIAL_STATE);
 	const [items, setItems] = useState<Array<BillProps>>([]);
+	const [edit, setEdit] = useState<BillProps>(BILL_INITIAL_STATE);
 
 	const useMemoBills = useMemo(() => ({
 		meta, setMeta,
 		items, setItems,
 		status, setStatus,
-	}), [meta, items, status]);
+		edit, setEdit
+	}), [meta, items, status, edit]);
 
 	return (
 		<Context.Provider value={useMemoBills}>

@@ -7,10 +7,7 @@ export interface BodyBillProps {
 	parcels: number;
 	payment: string;
 	category: string;
-	division: Array<{
-		value: string;
-		label: string;
-	}>;
+	division: Array<string>;
 	observation: string;
 }
 

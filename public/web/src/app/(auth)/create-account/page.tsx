@@ -7,9 +7,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { handleCreateAccount } from "./handleCreateAccount";
 import { useRouter } from "next/navigation";
+import { useGoogleReCaptcha } from "react-google-recaptcha-hook";
+import { verifyRecaptcha } from "@/services/verifyRecaptcha";
 
 export default function CreateAccountPage(){
 	const { register, handleSubmit, formState: { errors }, reset } = useForm();
+	const { executeGoogleReCaptcha } = useGoogleReCaptcha(`${process.env.RECAPTCHA_KEY}`, {
+		hide: true
+	});
+
 	const router = useRouter();
 	const [notification, setNotification] = useState<{
 		show: boolean;
@@ -55,27 +61,39 @@ export default function CreateAccountPage(){
 						status: "loading",
 					})
 
-					const response = await handleCreateAccount(data, event);
-					const dataResponse = await response.json();
+					const tokenCaptcha = await executeGoogleReCaptcha("execute");
+					const verifyCaptcha = await verifyRecaptcha(tokenCaptcha);
 
-					if (response.status === 201){
-						setNotification({
-							show: true,
-							message: dataResponse.message,
-							status: "success",
-						})
+					if (verifyCaptcha.success){
+						const response = await handleCreateAccount(data, event);
+						const dataResponse = await response.json();
 
-						setTimeout(() => {
-							router.push('/login');
-						}, 2500);
+						if (response.status === 201){
+							setNotification({
+								show: true,
+								message: dataResponse.message,
+								status: "success",
+							})
 
-						reset();
+							setTimeout(() => {
+								router.push('/login');
+							}, 2500);
+
+							reset();
+						} else {
+							setNotification({
+								show: true,
+								message: dataResponse.message ?? "Ocorreu um erro",
+								status: "error",
+								errorCode: dataResponse.code ?? 100
+							})
+						}
 					} else {
 						setNotification({
 							show: true,
-							message: dataResponse.message ?? "Ocorreu um erro",
+							message: "Captcha inválido",
 							status: "error",
-							errorCode: dataResponse.code ?? 100
+							errorCode: 100
 						})
 					}
 

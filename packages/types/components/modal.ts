@@ -8,5 +8,4 @@ export interface ControlDisclosureProps {
 export interface ModalComponentProps {
 	title: string;
 	bodyComponent: React.ReactNode;
-	footerComponent?: React.ReactNode;
 }

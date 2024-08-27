@@ -11,7 +11,7 @@ export function dataFieldsBillInfo(body: BodyBillProps, uuid: string){
 		valueBillingInfo: value,
 		dataBillingInfo: stringDateFormat(date),
 		typeBillingInfo: type,
-		parcelBillingInfo: parcels,
+		parcelBillingInfo: Number(parcels),
 		paymentBillingInfo: payment,
 		categoryBillingInfo: category,
 		divisionBillingInfo: division.length,

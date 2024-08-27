@@ -1,7 +1,7 @@
 "use client";
 
 import { BanksFetchProps, CardsFetchProps, CategoriesFetchProps, ControlDisclosureProps, ResponsableFetchProps, UserFetchProps } from "@feenanceiro/types";
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo, useState } from "react";
+import { Dispatch, ReactNode, RefObject, SetStateAction, createContext, useContext, useMemo, useRef, useState } from "react";
 import { BANKS_INITITAL_STATE, CARDS_INITITAL_STATE, CATEGORIES_INITIAL_STATE, MODAL_INITIAL_STATE, RESPONSABLE_INITIAL_STATE, USER_INITIAL_STATE } from "./initial-states";
 import { useDisclosure } from "@chakra-ui/react";
 import { ModalComponentProps } from "@feenanceiro/types/components/modal";
@@ -17,9 +17,10 @@ interface MainContextProps {
 	setCards: Dispatch<SetStateAction<CardsFetchProps>>;
 	banks: BanksFetchProps;
 	setBanks: Dispatch<SetStateAction<BanksFetchProps>>;
-	controlModalBillings: ControlDisclosureProps;
+	controlModal: ControlDisclosureProps;
 	modalComponent: ModalComponentProps;
 	setModalComponent: Dispatch<SetStateAction<ModalComponentProps>>;
+	refreshBillings?: RefObject<HTMLButtonElement>;
 }
 
 const MainContext = createContext<MainContextProps>({
@@ -33,13 +34,14 @@ const MainContext = createContext<MainContextProps>({
 	setCards: () => {},
 	banks: BANKS_INITITAL_STATE,
 	setBanks: () => {},
-	controlModalBillings: {
+	controlModal: {
 		isOpen: false,
 		onClose: () => {},
 		onOpen: () => {},
 	},
 	modalComponent: MODAL_INITIAL_STATE,
-	setModalComponent: () => {}
+	setModalComponent: () => {},
+	refreshBillings: undefined,
 });
 
 export function MainContextProvider({ children }: Readonly<{children: ReactNode}>){
@@ -49,7 +51,8 @@ export function MainContextProvider({ children }: Readonly<{children: ReactNode}
 	const [cards, setCards] = useState<CardsFetchProps>(CARDS_INITITAL_STATE);
 	const [banks, setBanks] = useState<BanksFetchProps>(BANKS_INITITAL_STATE);
 	const [modalComponent, setModalComponent] = useState<ModalComponentProps>(MODAL_INITIAL_STATE);
-	const controlModalBillings = useDisclosure();
+	const controlModal = useDisclosure();
+	const refreshBillings = useRef(null);
 
 	const appMemo = useMemo(() => ({
 		user, setUser,
@@ -58,9 +61,10 @@ export function MainContextProvider({ children }: Readonly<{children: ReactNode}
 		cards, setCards,
 		banks, setBanks,
 		modalComponent, setModalComponent,
-		controlModalBillings,
+		controlModal,
+		refreshBillings
 	}), [
-		user, responsables, categories, cards, banks, modalComponent, controlModalBillings
+		user, responsables, categories, cards, banks, modalComponent, controlModal, refreshBillings
 	]);
 
 	return (

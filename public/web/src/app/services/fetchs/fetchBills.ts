@@ -3,6 +3,8 @@
 import { META_BILLS_INITITAL_STATE } from "@feenanceiro/context";
 import { BillsFetchProps } from "@feenanceiro/types";
 import { getFetch } from "./getFetch";
+import moment from "moment";
+import { getFetchGeneral } from "./getFetchGeneral";
 
 interface Filters {
 	period: string;
@@ -13,7 +15,13 @@ interface Filters {
 	type?: string;
 }
 
-export async function fetchBills({ period, category, responsable, payment, type, method }: Filters): Promise<BillsFetchProps>{
+export async function fetchBills(searchParams: any): Promise<BillsFetchProps>{
+	const period = searchParams?.get('period') ?? moment().format("YYYY-MM");
+	const category = searchParams?.get('category') ?? undefined;
+	const responsable = searchParams?.get('responsable') ?? undefined;
+	const payment = searchParams?.get('payment') ?? undefined;
+	const method = searchParams?.get('method') ?? undefined;
+	const type = searchParams?.get('type') ?? undefined;
 
 	let paramsUrl = period ? "period="+period : "";
 		paramsUrl += category ? "&category="+category : "";
@@ -22,12 +30,23 @@ export async function fetchBills({ period, category, responsable, payment, type,
 		paramsUrl += type ? "&type="+type : "";
 		paramsUrl += method ? "&paymentValue="+method : "";
 
-	const billsData = await getFetch({
+	const response = await getFetchGeneral({
 		method: "GET",
 		url: `/app/bills?${paramsUrl}`
 	});
 
-	if (billsData.code || billsData === undefined){
+	if(response.ok){
+		const data = await response.json();
+
+		return {
+			items: data.items,
+			meta: data.meta,
+			status: {
+				hasError: false,
+				isLoading: false
+			}
+		}
+	} else {
 		return {
 			items: [],
 			meta: META_BILLS_INITITAL_STATE,
@@ -36,15 +55,5 @@ export async function fetchBills({ period, category, responsable, payment, type,
 				isLoading: false
 			}
 		}
-	} else {
-		return {
-			items: billsData.items,
-			meta: billsData.meta,
-			status: {
-				hasError: false,
-				isLoading: false
-			}
-		}
 	}
-
 }

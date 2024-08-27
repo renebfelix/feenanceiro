@@ -55,7 +55,6 @@ export function Filter(){
 
 				<PopoverBody>
 					<Box as="form" onSubmit={handleSubmit((data, event) => {
-						console.log(handleFilters(data, event));
 						router.push(`/app/bills?${handleFilters(data, event)}`);
 					})}>
 						<Grid columnGap={4} templateColumns={{base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)"}}>

@@ -2,19 +2,19 @@
 
 import { Button, Flex, Heading, IconButton, Tooltip } from "@chakra-ui/react";
 import { Filter } from "./components/Filter";
-import { Suspense, useEffect } from "react";
+import { LegacyRef, Suspense, useEffect, useRef } from "react";
 import { fetchBills } from "@/app/services/fetchs/fetchBills";
 import { useBillsContext, useMainContext } from "@feenanceiro/context";
-import moment from "moment";
 import { FiPlus, FiRefreshCw } from "react-icons/fi";
 import { useSearchParams } from "next/navigation";
 import { ListBills } from "./components/ListBills";
 import { CardsValues } from "./components/RowCardsValues";
-import { AddNewBill } from "./components/modal/NewBill";
+import { BillingModal } from "./components/modal/BillingModal";
+import { HeaderBill } from "./components/HeaderBill";
 
 export default function BillsPage(){
 	const { setMeta, setItems, setStatus } = useBillsContext();
-	const { controlModalBillings, setModalComponent } = useMainContext();
+	const { controlModal, setModalComponent, refreshBillings } = useMainContext();
 	const searchParams = useSearchParams();
 
 	async function getBills(){
@@ -23,14 +23,7 @@ export default function BillsPage(){
 			isLoading: true,
 		});
 
-		const bills = await fetchBills({
-			period: searchParams?.get('period') ?? moment().format("YYYY-MM"),
-			category: searchParams?.get('category') ?? undefined,
-			responsable: searchParams?.get('responsable') ?? undefined,
-			payment: searchParams?.get('payment') ?? undefined,
-			method: searchParams?.get('method') ?? undefined,
-			type: searchParams?.get('type') ?? undefined
-		});
+		const bills = await fetchBills(searchParams);
 
 		setMeta(bills.meta);
 		setItems(bills.items);
@@ -48,7 +41,12 @@ export default function BillsPage(){
 
 				<Flex gap={3} justifyContent={"flex-end"}>
 					<Tooltip label="Atualizar">
-						<IconButton variant={"primary"} icon={<FiRefreshCw />} onClick={() => getBills()} aria-label="Atualizar" />
+						<IconButton
+							ref={refreshBillings}
+							variant={"primary"}
+							icon={<FiRefreshCw />}
+							onClick={() => getBills()} aria-label="Atualizar"
+						/>
 					</Tooltip>
 
 					<Button
@@ -57,15 +55,19 @@ export default function BillsPage(){
 						onClick={() => {
 							setModalComponent({
 								title: "Adicionar lançamento",
-								bodyComponent: <AddNewBill />
+								bodyComponent: <BillingModal />
 							})
-							controlModalBillings.onOpen();
+							controlModal.onOpen();
 						}}
-					>Adicionar</Button>
+					>
+						Adicionar
+					</Button>
 
 					<Filter />
 				</Flex>
 			</Flex>
+
+			<HeaderBill />
 
 			<CardsValues />
 

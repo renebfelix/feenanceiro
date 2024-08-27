@@ -36,7 +36,10 @@ createBillRoute.post('/app/bill', async (req: Request, res: Response) => {
 		if (!createBill || !createValues) {
 			res.status(401).send(errorHandler(1, "Ocorreu um erro"));
 		} else {
-			res.status(201).send();
+			res.status(201).send({
+				status: 201,
+				message: "Criado com sucesso"
+			});
 		}
 	}
 });

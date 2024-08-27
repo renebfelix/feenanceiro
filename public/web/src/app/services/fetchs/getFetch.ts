@@ -41,6 +41,7 @@ export async function getFetch(params: FetchProps){
 			const response = await fetch(`${process.env.API_HOST}${url}`, {
 				method: method,
 				body: JSON.stringify(data) ?? undefined,
+				cache: "no-cache",
 				headers: {
 					...headersConfig,
 					"authorization": `Bearer ${JSON.parse(Cookies.get('token_fee') ?? '').token}`,

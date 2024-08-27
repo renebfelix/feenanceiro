@@ -44,19 +44,24 @@ export function HeaderApp(){
 
 	useEffect(() => {
 		async function getUser(){
-			const cardsData = await fetchCards();
+			const [
+				cardsData,
+				userData,
+				responsablesData,
+				banksData,
+				categoriesData
+			] = await Promise.all([
+				fetchCards(),
+				fetchUser(),
+				fetcResponsable(),
+				fetchBanks(),
+				fetchCategories()
+			]);
+
 			setCards(cardsData);
-
-			const userData = await fetchUser();
 			setUser(userData);
-
-			const responsablesData = await fetcResponsable();
 			setResponsables(responsablesData);
-
-			const banksData = await fetchBanks();
 			setBanks(banksData);
-
-			const categoriesData = await fetchCategories();
 			setCategories(categoriesData);
 		}
 

@@ -4,13 +4,15 @@ import { inputTheme } from "./themeParts/Input";
 import { buttonTheme } from "./themeParts/Button";
 import { colorsTheme } from "./themeParts/Colors";
 import { headingTheme } from "./themeParts/Headings";
+import { textTheme } from "./themeParts/Text";
 
 export const themeChakraGlobal = extendTheme({
 	colors: colorsTheme,
 	components: {
 		Input: inputTheme,
 		Button: buttonTheme,
-		Heading: headingTheme
+		Heading: headingTheme,
+		Text: textTheme,
 	},
 	styles: {
 		global: {

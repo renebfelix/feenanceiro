@@ -13,8 +13,6 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 	const { uuidBillingValue } = req.params;
 	const { status, date } = req.body;
 
-	console.log(date);
-
 	if (isEmpty([status, date]) || status !== "EM_ABERTO" && status !== "PAGO"){
 		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
 	} else {

@@ -1,13 +1,13 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter} from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton} from "@chakra-ui/react";
 import { useMainContext } from "@feenanceiro/context";
 
 export function ModalDefault(){
-	const { controlModalBillings, modalComponent } = useMainContext();
+	const { controlModal, modalComponent } = useMainContext();
 
 	return (
 		<Modal
-			isOpen={controlModalBillings.isOpen}
-			onClose={controlModalBillings.onClose}
+			isOpen={controlModal.isOpen}
+			onClose={controlModal.onClose}
 			size={"xl"}
 		>
 			<ModalOverlay />
@@ -16,15 +16,7 @@ export function ModalDefault(){
 				<ModalHeader borderBottom={"1px solid"} borderBottomColor={"neutral.100"}>{modalComponent.title}</ModalHeader>
 				<ModalCloseButton />
 
-				<ModalBody>
-					{modalComponent.bodyComponent}
-				</ModalBody>
-
-				{modalComponent.footerComponent && (
-					<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"}>
-						{modalComponent.footerComponent}
-					</ModalFooter>
-				)}
+				{modalComponent.bodyComponent}
 			</ModalContent>
 		</Modal>
 	)

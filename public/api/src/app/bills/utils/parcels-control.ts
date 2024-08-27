@@ -30,7 +30,7 @@ export function parcelsFieldsValueBill(body: BodyBillProps, uuidBillingInfo: str
 					arrayDbFields(
 						valorParcela,
 						uuidBillingInfo,
-						responsable.value,
+						responsable,
 						new Date(dateParcela),
 						i
 					)
@@ -45,7 +45,7 @@ export function parcelsFieldsValueBill(body: BodyBillProps, uuidBillingInfo: str
 				arrayDbFields(
 					valorParcela,
 					uuidBillingInfo,
-					responsable.value,
+					responsable,
 					type === "UNICA" ? stringDateFormat(date) : null,
 					1
 				)
