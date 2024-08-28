@@ -1,9 +1,12 @@
+import moment from "moment";
 import { database } from "../../../prisma/client";
 import { FilterProps } from "../types/types";
 import { selectFieldsBillInfo } from "./fields-bill-info";
 
 export async function getBillValues(filters: FilterProps, uuidUser: string){
 	const { period, responsable, payment, category, type, paymentValue } = filters;
+
+	const data = new Date(moment(new Date(period+'-31')).format("YYYY-MM-DD"));
 
 	return await database.billings_values.findMany({
 		where: {
@@ -17,17 +20,43 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 				valueTypeBillingInfo: paymentValue?.toString(),
 				paymentBillingInfo: payment?.toString(),
 			},
-			OR: [
+			AND: [
 				{
-					dateBillingValue: {
-						gte: new Date(period+'-01'),
-						lte: new Date(period+'-31'),
-					},
+					OR: [
+						{
+							dateBillingValue: {
+								gte: new Date(period+'-01'),
+								lte: new Date(period+'-31'),
+							},
+						},
+						{
+							dateBillingValue: null,
+						},
+					]
 				},
 				{
-					dateBillingValue: null,
-				},
-			],
+					OR: [
+						{
+							stopBillingValue: {
+								gte: data,
+							},
+							billings_info: {
+								dataBillingInfo: {
+									lte: data,
+								}
+							}
+						},
+						{
+							stopBillingValue: null,
+							billings_info: {
+								dataBillingInfo: {
+									lte: data,
+								}
+							}
+						}
+					]
+				}
+			]
 		},
 		select: {
 			valueBillingValue: true,

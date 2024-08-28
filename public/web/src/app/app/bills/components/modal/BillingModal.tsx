@@ -1,12 +1,10 @@
-import { Flex, FormControl, FormLabel, Input, Select, Button, IconButton, Textarea, ModalBody, ModalFooter, Box, useToast, position, Text } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, Select, Button, IconButton, Textarea, ModalBody, ModalFooter, Box, useToast, Text } from "@chakra-ui/react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { CurrencyInput } from "react-currency-mask";
-import { useBillsContext, useMainContext } from "@feenanceiro/context";
+import { useMainContext } from "@feenanceiro/context";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import { hadleSubmitBill } from "../../functions/handleSubmitBill";
-import { fetchBills } from "@/app/services/fetchs/fetchBills";
-import { useSearchParams } from "next/navigation";
 import { BillProps } from "@feenanceiro/types";
 import moment from "moment";
 
@@ -14,10 +12,8 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 	const toast = useToast();
   	const toastIdRef = useRef<any>();
 
-	const searchParams = useSearchParams();
 	const [isParcel, setIsParcel] = useState(false);
-	const { responsables, categories, cards, banks, controlModal } = useMainContext();
-	const { setMeta, setItems, setStatus, edit, setEdit } = useBillsContext();
+	const { responsables, categories, cards, banks, refreshBillings } = useMainContext();
 	const { control, register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
 	const { append, remove, fields } = useFieldArray({
 		control,
@@ -27,19 +23,6 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 			minLength: 1
 		}
 	});
-
-	async function getBills(){
-		setStatus({
-			hasError: false,
-			isLoading: true,
-		});
-
-		const bills = await fetchBills(searchParams);
-
-		setMeta(bills.meta);
-		setItems(bills.items);
-		setStatus(bills.status);
-	}
 
 	function errorLabel(){
 		return <Text variant={"error"}>Campo obrigatório</Text>;
@@ -70,7 +53,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 				toast.update(toastIdRef.current, { description: dataResponse.message, status: "success" });
 				reset();
 				remove();
-				getBills();
+				refreshBillings?.current?.click();
 			} else {
 				toast.update(toastIdRef.current, { description: dataResponse.message, status: "error" });
 			}

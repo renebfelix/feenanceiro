@@ -8,6 +8,7 @@ import { ListBillItem } from "./ListBillItem";
 import { BillingDetail } from "./modal/BillingDetail";
 import { BillingDelete } from "./modal/BillingDelete";
 import { BillingModal } from "./modal/BillingModal";
+import { BillingStop } from "./modal/BillingStop";
 
 export function ListBills(){
 	const { status, items, meta, edit, setItems, setMeta, setEdit } = useBillsContext();
@@ -67,6 +68,14 @@ export function ListBills(){
 												setModalComponent({
 													title: "Excluir lançamento",
 													bodyComponent: <BillingDelete {...item} />
+												})
+												controlModal.onOpen();
+											}}
+
+											onClickStop={() => {
+												setModalComponent({
+													title: "Interromper continuidade",
+													bodyComponent: <BillingStop {...item} />
 												})
 												controlModal.onOpen();
 											}}

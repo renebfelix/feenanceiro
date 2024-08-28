@@ -30,6 +30,7 @@
 		"context": "yarn workspace @feenanceiro/context",
 
 		"api": "yarn workspace @feenanceiro/api",
+		"api:prisma": "yarn workspace @feenanceiro/api prisma studio",
 		"api:dev": "yarn workspace @feenanceiro/api dev",
 		"api:build": "yarn workspace @feenanceiro/api build",
 		"api:start": "yarn workspace @feenanceiro/api start",

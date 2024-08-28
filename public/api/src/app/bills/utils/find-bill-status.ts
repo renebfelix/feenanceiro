@@ -5,8 +5,6 @@ export async function findBillStatus(uuidBillingValue: string, uuid: string, dat
 	try{
 		const dateConvert = new Date(moment(date).format("YYYY-MM-DD"));
 
-		console.log(dateConvert);
-
 		const findStatus = await database.billings_status.findFirst({
 			where: {
 				idBillingValueBillingStatus: uuidBillingValue,
@@ -20,8 +18,6 @@ export async function findBillStatus(uuidBillingValue: string, uuid: string, dat
 				}
 			}
 		});
-
-		console.log(findStatus);
 
 		return findStatus;
 	} catch (error: any) {

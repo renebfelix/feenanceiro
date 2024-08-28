@@ -58,7 +58,8 @@ import {
 	listBillsRoute,
 	deleteBillRouter,
 	statusBillRoute,
-	updateBillRoute
+	updateBillRoute,
+	stopBillRouter
 } from "./app/bills";
 
 import { shareRoute } from './app/share';
@@ -132,6 +133,7 @@ app.use(`${urlBase}`, [
 	deleteBillRouter,
 	statusBillRoute,
 	updateBillRoute,
+	stopBillRouter,
 ]);
 
 // Start Server

@@ -1,39 +1,40 @@
 "use client";
 import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
-import { Notification } from "@/components/Notification/Notification";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, Text, useToast } from "@chakra-ui/react";
 import { useMainContext } from "@feenanceiro/context";
 import { BillProps } from "@feenanceiro/types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export function BillingDelete(params: Readonly<BillProps>){
+	const toast = useToast();
+  	const toastIdRef = useRef<any>();
+
 	const { controlModal, refreshBillings } = useMainContext();
 	const [disabled, setDisabled] = useState(false);
-	const [errorResponse, setErrorResponse] = useState({
-		code: 0,
-		message: ""
-	});
+	const [deleteBill, setDeleteBill] = useState("VALOR");
 
 	async function handleDeleteBilling(params: BillProps){
 		setDisabled(true);
+		toastIdRef.current = toast({ description: 'Excluindo', position: "top-right", isClosable: true, duration: 3000 });
 
 		const response = await getFetchGeneral({
 			method: "DELETE",
 			url: `/app/bill/${params.id}`,
 			data: {
-				"toDelete": "VALOR"
+				"toDelete": deleteBill
 			}
 		});
 
 		if (response.status === 200){
+			toast.update(toastIdRef.current, { description: "Excluído com sucesso", status: "success" });
 			controlModal.onClose();
 			refreshBillings?.current?.click();
 		} else {
-			const dataResponse = await response.json();
-			setErrorResponse(dataResponse);
+			toast.update(toastIdRef.current, { description: "Ocorreu um erro", status: "error" });
 		}
 
 		setDisabled(false);
+
 	}
 
 	return (
@@ -48,12 +49,11 @@ export function BillingDelete(params: Readonly<BillProps>){
 			)}
 
 
-			{errorResponse.code > 0 && (
-				<Notification
-					status={"error"}
-					message={"Ocorreu um erro, tente novamente."}
-					error={errorResponse.code}
-				/>
+			{params.parcel.total > 1 && (
+				<Select onChange={(e) => setDeleteBill(e.target.value)}>
+					<option value={"VALOR"}>Apenas parcela atual</option>
+					<option value={"GERAL"}>Todas as parcelas</option>
+				</Select>
 			)}
 
 			<Flex gap={5} mt={5} justifyContent={"flex-end"}>
