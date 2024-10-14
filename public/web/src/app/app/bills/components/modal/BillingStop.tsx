@@ -43,7 +43,7 @@ export function BillingStop(params: BillProps){
 			</Box>
 
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
-				<Button type="button">Cancelar</Button>
+				<Button type="button" onClick={() => controlModal.onClose()}>Cancelar</Button>
 				<Button type="submit" variant={"danger"}>Interromper</Button>
 			</ModalFooter>
 		</Box>
