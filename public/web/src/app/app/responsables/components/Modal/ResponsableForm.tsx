@@ -1,13 +1,15 @@
 "use client";
 import { Box, Button, FormControl, FormLabel, Input, ModalBody, ModalFooter, Text, useToast } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { hadleSubmitResponsable } from "../../functions/handleResponsable";
 import { fetcResponsable } from "@/app/services/fetchs";
 import { useMainContext } from "@feenanceiro/context";
+import { ResponsableProps } from "@feenanceiro/types";
+import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
 
-export function ResponsableForm(){
-	const { handleSubmit, register, reset, formState: { errors } } = useForm();
+export function ResponsableForm(params: { edit?: ResponsableProps }){
+	const { handleSubmit, register, reset, formState: { errors }, setValue } = useForm();
 	const toast = useToast();
   	const toastIdRef = useRef<any>();
 	const { setResponsables } = useMainContext();
@@ -16,16 +18,36 @@ export function ResponsableForm(){
 		return <Text variant={"error"}>{`${errors.message}`}</Text>;
 	}
 
+	// Add values if the form it to edit
+	useEffect(() => {
+		if(params.edit){
+			setValue("name", params.edit.name);
+			setValue("email", params.edit.email);
+		}
+	}, []);
+
 	return (
 		<Box
 			as="form"
 			onSubmit={handleSubmit(async (data, event) => {
 				toastIdRef.current = toast({ description: 'Adicionando...', position: "top-right", isClosable: true, duration: 3000 });
 
-				const response = await hadleSubmitResponsable(data, event);
+				const url = params.edit ? "/app/responsable/"+params.edit.id : "/app/responsable"
+
+				const response = await getFetchGeneral({
+					method: params.edit ? "PUT" : "POST",
+					data: data,
+					url: url,
+				});
 
 				if (response.ok){
-					toast.update(toastIdRef.current, { description: "Criado com sucesso.", status: "success" });
+					toast.update(
+						toastIdRef.current,
+						{
+							description: `${params.edit ? "Editado" : "Criado"} com sucesso.`,
+							status: "success"
+						}
+					);
 
 					const responsables = await fetcResponsable();
 
@@ -73,7 +95,9 @@ export function ResponsableForm(){
 
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
 				<Button type="button">Cancelar</Button>
-				<Button type="submit" variant={"primary"}>Cadastrar</Button>
+				<Button type="submit" variant={"primary"}>
+					{params.edit ? "Editar" : "Cadastrar"}
+				</Button>
 			</ModalFooter>
 		</Box>
 	)

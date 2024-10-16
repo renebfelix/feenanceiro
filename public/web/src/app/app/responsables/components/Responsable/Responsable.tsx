@@ -3,8 +3,9 @@ import { useMainContext } from "@feenanceiro/context";
 import { ResponsableProps } from "@feenanceiro/types";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
-import { FiInfo, FiMail, FiUser, FiUserCheck, FiUserX, FiX } from "react-icons/fi";
+import { FiMail, FiX } from "react-icons/fi";
 import { DeleteResponsable } from "../Modal/DeleteResponsable";
+import { ResponsableForm } from "../Modal/ResponsableForm";
 
 export function ResponsableCard(params: ResponsableProps){
 	const { id, name, isInvited, isDefault, email, acceptedInvite } = params;
@@ -53,8 +54,8 @@ export function ResponsableCard(params: ResponsableProps){
 							onClick={() => {
 								setModalComponent({
 									title: "Editar responsável",
-									bodyComponent: <>Body {params.name}</>
-								})
+									bodyComponent: <ResponsableForm edit={params} />
+								});
 
 								controlModal.onOpen();
 							}}
