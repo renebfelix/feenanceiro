@@ -45,7 +45,7 @@ export function DeleteResponsable(params: Readonly<ResponsableProps>){
 
 				<Box bgColor={"danger.100"} p={2}>
 					<Text fontWeight={"bold"} color={"danger.400"}>Atenção!</Text>
-					<Text fontSize={"14px"}>Todas os gastos e entradas deste usuário ainda aparecerão na plataforma, você só não poderá criar novos gastos para este mesmo usuário.</Text>
+					<Text fontSize={"14px"}>Todos os lançamentos deste responsável ainda aparecerão na plataforma.</Text>
 				</Box>
 			</ModalBody>
 
