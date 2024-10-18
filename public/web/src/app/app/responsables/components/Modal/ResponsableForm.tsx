@@ -1,22 +1,18 @@
 "use client";
 import { Box, Button, FormControl, FormLabel, Input, ModalBody, ModalFooter, Text, useToast } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
-import { FieldValues, useForm } from "react-hook-form";
-import { hadleSubmitResponsable } from "../../functions/handleResponsable";
+import { useForm } from "react-hook-form";
 import { fetcResponsable } from "@/app/services/fetchs";
 import { useMainContext } from "@feenanceiro/context";
 import { ResponsableProps } from "@feenanceiro/types";
 import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
+import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
 
-export function ResponsableForm(params: { edit?: ResponsableProps }){
+export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
 	const { handleSubmit, register, reset, formState: { errors }, setValue } = useForm();
 	const toast = useToast();
   	const toastIdRef = useRef<any>();
 	const { setResponsables } = useMainContext();
-
-	function errorLabel(errors: FieldValues){
-		return <Text variant={"error"}>{`${errors.message}`}</Text>;
-	}
 
 	// Add values if the form it to edit
 	useEffect(() => {
@@ -75,7 +71,7 @@ export function ResponsableForm(params: { edit?: ResponsableProps }){
 							}
 						})}
 					/>
-					{errors.name && errorLabel(errors.name)}
+					{errors.name && <ErrorLabel errors={errors.name} />}
 				</FormControl>
 
 				<FormControl mb={3}>
@@ -89,7 +85,7 @@ export function ResponsableForm(params: { edit?: ResponsableProps }){
 							}
 						})}
 					/>
-					{errors.email && errorLabel(errors.email)}
+					{errors.email && <ErrorLabel errors={errors.email} />}
 				</FormControl>
 			</ModalBody>
 

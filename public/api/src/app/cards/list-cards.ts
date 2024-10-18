@@ -20,7 +20,8 @@ listCardsRouter.get('/app/cards', async(req: Request, res: Response) => {
 			nameCard: true,
 			closingDateCard: true,
 			dueDateCard: true,
-			limitCard: true
+			limitCard: true,
+			typeCard: true,
 		},
 		orderBy: {
 			nameCard: "asc"
@@ -37,6 +38,7 @@ listCardsRouter.get('/app/cards', async(req: Request, res: Response) => {
 				closingDate: card.closingDateCard,
 				dueDate: card.dueDateCard,
 				limit: card.limitCard,
+				type: card.typeCard
 			}
 		})
 		res.send(rename);

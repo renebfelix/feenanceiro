@@ -6,6 +6,7 @@ export type CardsProps = {
 	closingDate: number;
 	dueDate: number;
 	limit: number;
+	type: "CREDITO" | "DEBITO"
 }
 
 export type CardsFetchProps = {

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { hadleSubmitBill } from "../../functions/handleSubmitBill";
 import { BillProps } from "@feenanceiro/types";
 import moment from "moment";
+import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
 
 export function BillingModal({ editBill }: {editBill?: BillProps}){
 	const toast = useToast();
@@ -19,14 +20,13 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 		control,
 		name: "division",
 		rules: {
-			required: true,
+			required: {
+				value: true,
+				message: "Campo obrigatório"
+			},
 			minLength: 1
 		}
 	});
-
-	function errorLabel(){
-		return <Text variant={"error"}>Campo obrigatório</Text>;
-	}
 
 	useEffect(() => {
 		if (editBill){
@@ -61,13 +61,18 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 			<ModalBody>
 				<FormControl mb={3}>
 					<FormLabel>Tipo:</FormLabel>
-					<Select {...register("valueType", { required: true })}>
+					<Select {...register("valueType", {
+						required: {
+							value: true,
+							message: "Campo obrigatório"
+						},
+					})}>
 						<option value={""}>Selecione</option>
 						<option value={"SAIDA"}>Gasto (Saída)</option>
 						<option value={"ENTRADA"}>Recebidos (Entradas)</option>
 					</Select>
 
-					{errors.valueType && errorLabel()}
+					{errors.valueType && <ErrorLabel errors={errors.valueType} />}
 				</FormControl>
 
 				<Flex gap={4}>
@@ -75,10 +80,15 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 						<FormLabel>Nome:</FormLabel>
 						<Input
 							type="text"
-							{...register("description", { required: true })}
+							{...register("description", {
+								required: {
+									value: true,
+									message: "Campo obrigatório"
+								}
+							})}
 						/>
 
-						{errors.description && errorLabel()}
+						{errors.description && <ErrorLabel errors={errors.description} />}
 					</FormControl>
 
 					<FormControl mb={3}>
@@ -87,7 +97,10 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 							name="value"
 							control={control}
 							rules={{
-								required: true
+								required: {
+									value: true,
+									message: "Campo obrigatório"
+								}
 							}}
 							render={({field}) => (
 								<CurrencyInput
@@ -101,7 +114,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 								></CurrencyInput>
 							)}
 						/>
-						{errors.value && errorLabel()}
+						{errors.value && <ErrorLabel errors={errors.value} />}
 					</FormControl>
 				</Flex>
 
@@ -110,16 +123,24 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 						<FormLabel>Data:</FormLabel>
 						<Input
 							type="date"
-							{...register("date", { required: true })}
+							{...register("date", {
+								required: {
+									value: true,
+									message: "Campo obrigatório"
+								}
+							})}
 						/>
-						{errors.date && errorLabel()}
+						{errors.date && <ErrorLabel errors={errors.date} />}
 					</FormControl>
 
 					<FormControl mb={3}>
 						<FormLabel>Forma:</FormLabel>
 						<Select {...register("type",
 							{
-								required: true,
+								required: {
+									value: true,
+									message: "Campo obrigatório"
+								},
 								onChange: (e) => {
 									setIsParcel(e.target.value === "PARCELADA");
 								}
@@ -130,7 +151,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 							<option value={"PARCELADA"}>Parcelada</option>
 							<option value={"FIXA"}>Fixa</option>
 						</Select>
-						{errors.type && errorLabel()}
+						{errors.type && <ErrorLabel errors={errors.type} />}
 					</FormControl>
 
 					{isParcel && (
@@ -138,9 +159,14 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 							<FormLabel>Nº Parcelas:</FormLabel>
 							<Input
 								type="number"
-								{...register("parcels", { required: true })}
+								{...register("parcels", {
+									required: {
+										value: true,
+										message: "Campo obrigatório"
+									}
+								})}
 							/>
-							{errors.parcels && errorLabel()}
+							{errors.parcels && <ErrorLabel errors={errors.parcels} />}
 						</FormControl>
 					)}
 				</Flex>
@@ -150,7 +176,12 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 						<FormLabel>Metódo:</FormLabel>
 						<Select
 							disabled={cards.status.isLoading}
-							{...register("payment", { required: true })}
+							{...register("payment", {
+								required: {
+									value: true,
+									message: "Campo obrigatório"
+								}
+							})}
 						>
 							{cards.status.isLoading && banks.status.isLoading ? (
 								<option value={""}>Carregando</option>
@@ -171,7 +202,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 								</>
 							) }
 						</Select>
-						{errors.payment && errorLabel()}
+						{errors.payment && <ErrorLabel errors={errors.payment} />}
 					</FormControl>
 
 					<FormControl mb={3}>
@@ -179,7 +210,12 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 
 						<Select
 							disabled={categories.status.isLoading}
-							{...register("category", { required: true })}
+							{...register("category", {
+								required: {
+									value: true,
+									message: "Campo obrigatório"
+								}
+							})}
 						>
 							{categories.status.isLoading ? (
 								<option value={""}>Carregando</option>
@@ -192,7 +228,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 								</>
 							) }
 						</Select>
-						{errors.category && errorLabel()}
+						{errors.category && <ErrorLabel errors={errors.category} />}
 					</FormControl>
 				</Flex>
 
@@ -207,7 +243,10 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 									key={field.id}
 									control={control}
 									rules={{
-										required: true,
+										required: {
+											value: true,
+											message: "Campo obrigatório"
+										},
 									}}
 									render={({field}) => (
 										<Flex gap={4}>
@@ -229,7 +268,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 							))}
 						</Flex>
 
-						{errors.division && errorLabel()}
+						{errors.division && <ErrorLabel errors={errors.division} />}
 
 						<Button size={"xs"} leftIcon={<FiPlus />} my={3} type="button" onClick={() => append("")}>Adicionar</Button>
 					</FormControl>
