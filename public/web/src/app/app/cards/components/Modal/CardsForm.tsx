@@ -10,7 +10,7 @@ import { CurrencyInput } from "react-currency-mask";
 import { Controller, useForm } from "react-hook-form";
 
 export function CardsForm(params: Readonly<{ edit?: CardsProps }>){
-	const { setCards } = useMainContext();
+	const { setCards, controlModal } = useMainContext();
 	const { handleSubmit, register, reset, formState: { errors }, setValue, control } = useForm();
 	const toast = useToast();
   	const toastIdRef = useRef<any>();
@@ -165,7 +165,7 @@ export function CardsForm(params: Readonly<{ edit?: CardsProps }>){
 			</ModalBody>
 
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
-				<Button type="button">Cancelar</Button>
+				<Button type="button" onClick={() => controlModal.onClose()}>Cancelar</Button>
 				<Button type="submit" variant={"primary"}>
 					{params.edit ? "Editar" : "Cadastrar"}
 				</Button>

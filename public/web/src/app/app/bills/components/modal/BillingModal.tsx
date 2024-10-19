@@ -14,7 +14,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
   	const toastIdRef = useRef<any>();
 
 	const [isParcel, setIsParcel] = useState(false);
-	const { responsables, categories, cards, banks, refreshBillings } = useMainContext();
+	const { responsables, categories, cards, banks, refreshBillings, controlModal } = useMainContext();
 	const { control, register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
 	const { append, remove, fields } = useFieldArray({
 		control,
@@ -285,7 +285,7 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 			</ModalBody>
 
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
-				<Button type="button">Cancelar</Button>
+				<Button type="button" onClick={() => controlModal.onClose()}>Cancelar</Button>
 				<Button type="submit" variant={"primary"}>Cadastrar</Button>
 			</ModalFooter>
 		</Box>

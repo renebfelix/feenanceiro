@@ -4,14 +4,20 @@ import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
 import { Box, Button, FormControl, FormLabel, Input, ModalBody, ModalFooter, useToast } from "@chakra-ui/react";
 import { useMainContext } from "@feenanceiro/context";
 import { BanksProps } from "@feenanceiro/types";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 export function BanksForm(params: Readonly<{ edit?: BanksProps }>){
-	const { setBanks } = useMainContext();
-	const { handleSubmit, register, formState: { errors }, reset } = useForm();
+	const { setBanks, controlModal } = useMainContext();
+	const { handleSubmit, register, formState: { errors }, reset, setValue } = useForm();
 	const toast = useToast();
 	const toastIdRef = useRef<any>();
+
+	useEffect(() => {
+		if (params.edit){
+			setValue("name", params.edit.name);
+		}
+	})
 
 	return (
 		<Box
@@ -54,7 +60,7 @@ export function BanksForm(params: Readonly<{ edit?: BanksProps }>){
 		>
 			<ModalBody>
 				<FormControl mb={3}>
-					<FormLabel>Nome do cartão:</FormLabel>
+					<FormLabel>Nome do banco:</FormLabel>
 					<Input
 						type="text"
 						{...register("name", {
@@ -69,7 +75,7 @@ export function BanksForm(params: Readonly<{ edit?: BanksProps }>){
 			</ModalBody>
 
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
-				<Button type="button">Cancelar</Button>
+				<Button type="button" onClick={() => controlModal.onClose()}>Cancelar</Button>
 				<Button type="submit" variant={"primary"}>
 					{params.edit ? "Editar" : "Cadastrar"}
 				</Button>
