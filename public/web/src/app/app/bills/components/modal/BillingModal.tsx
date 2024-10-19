@@ -8,8 +8,9 @@ import { hadleSubmitBill } from "../../functions/handleSubmitBill";
 import { BillProps } from "@feenanceiro/types";
 import moment from "moment";
 import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
+import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
 
-export function BillingModal({ editBill }: {editBill?: BillProps}){
+export function BillingModal({ editBill }: Readonly<{editBill?: BillProps}>){
 	const toast = useToast();
   	const toastIdRef = useRef<any>();
 
@@ -46,16 +47,21 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 		<Box as="form" onSubmit={handleSubmit(async (data, event) => {
 			toastIdRef.current = toast({ description: 'Adicionando...', position: "top-right", isClosable: true, duration: 3000 });
 
-			const response = await hadleSubmitBill(data, event);
-			const dataResponse = await response.json();
+			const url = editBill ? "/app/bill/"+editBill.info.id : "/app/bill"
+
+			const response = await getFetchGeneral({
+				method: editBill ? "PUT" : "POST",
+				data: data,
+				url: url,
+			});
 
 			if (response.ok){
-				toast.update(toastIdRef.current, { description: dataResponse.message, status: "success" });
+				toast.update(toastIdRef.current, { description: `${editBill ? "Editado" : "Criado"} com sucesso.`, status: "success" });
 				reset();
 				remove();
 				refreshBillings?.current?.click();
 			} else {
-				toast.update(toastIdRef.current, { description: dataResponse.message, status: "error" });
+				toast.update(toastIdRef.current, { description: `${editBill ? "Editado" : "Criado"} com sucesso.`, status: "error" });
 			}
 		})}>
 			<ModalBody>
@@ -286,7 +292,9 @@ export function BillingModal({ editBill }: {editBill?: BillProps}){
 
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
 				<Button type="button" onClick={() => controlModal.onClose()}>Cancelar</Button>
-				<Button type="submit" variant={"primary"}>Cadastrar</Button>
+				<Button type="submit" variant={"primary"}>
+					{editBill ? "Editar" : "Cadastrar"}
+				</Button>
 			</ModalFooter>
 		</Box>
 	)

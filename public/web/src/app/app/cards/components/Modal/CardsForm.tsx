@@ -52,6 +52,10 @@ export function CardsForm(params: Readonly<{ edit?: CardsProps }>){
 						}
 					);
 
+					if (params.edit) {
+						controlModal.onClose();
+					}
+
 					const cards = await fetchCards();
 
 					if (!cards.status.hasError){

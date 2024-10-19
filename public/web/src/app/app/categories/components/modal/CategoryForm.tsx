@@ -1,26 +1,25 @@
-"use client";
-import { Box, Button, FormControl, FormLabel, Input, ModalBody, ModalFooter, Text, useToast } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { fetcResponsable } from "@/app/services/fetchs";
-import { useMainContext } from "@feenanceiro/context";
-import { ResponsableProps } from "@feenanceiro/types";
+import { fetchCategories } from "@/app/services/fetchs";
 import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
 import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
+import { useToast, Box, ModalBody, FormControl, FormLabel, Input, ModalFooter, Button } from "@chakra-ui/react";
+import { useMainContext } from "@feenanceiro/context";
+import { CategoriesPorps } from "@feenanceiro/types";
+import { useRef, useEffect } from "react";
+import { CurrencyInput } from "react-currency-mask";
+import { Controller, useForm } from "react-hook-form";
 
-export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
-	const { handleSubmit, register, reset, formState: { errors }, setValue } = useForm();
+export function CategoryForm(params: Readonly<{ edit?: CategoriesPorps }>){
+	const { setCategories, controlModal } = useMainContext();
+	const { handleSubmit, register, formState: { errors }, reset, setValue, control } = useForm();
 	const toast = useToast();
-  	const toastIdRef = useRef<any>();
-	const { setResponsables, controlModal } = useMainContext();
+	const toastIdRef = useRef<any>();
 
-	// Add values if the form it to edit
 	useEffect(() => {
-		if(params.edit){
+		if (params.edit){
 			setValue("name", params.edit.name);
-			setValue("email", params.edit.email);
+			setValue("limit", params.edit.limit);
 		}
-	}, []);
+	})
 
 	return (
 		<Box
@@ -28,7 +27,7 @@ export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
 			onSubmit={handleSubmit(async (data, event) => {
 				toastIdRef.current = toast({ description: 'Adicionando...', position: "top-right", isClosable: true, duration: 3000 });
 
-				const url = params.edit ? "/app/responsable/"+params.edit.id : "/app/responsable"
+				const url = params.edit ? "/app/category/"+params.edit.id : "/app/category"
 
 				const response = await getFetchGeneral({
 					method: params.edit ? "PUT" : "POST",
@@ -40,7 +39,7 @@ export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
 					toast.update(
 						toastIdRef.current,
 						{
-							description: `${params.edit ? "Editado" : "Criado"} com sucesso.`,
+							description: `${params.edit ? "Editada" : "Criada"} com sucesso.`,
 							status: "success"
 						}
 					);
@@ -49,10 +48,10 @@ export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
 						controlModal.onClose();
 					}
 
-					const responsables = await fetcResponsable();
+					const categories = await fetchCategories();
 
-					if (!responsables.status.hasError){
-						setResponsables(responsables);
+					if (!categories.status.hasError){
+						setCategories(categories);
 					}
 
 					reset();
@@ -60,12 +59,11 @@ export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
 					const dataResponse = await response.json();
 					toast.update(toastIdRef.current, { description: dataResponse.message, status: "error" });
 				}
-
 			})}
 		>
 			<ModalBody>
 				<FormControl mb={3}>
-					<FormLabel>Nome:</FormLabel>
+					<FormLabel>Nome da categoria:</FormLabel>
 					<Input
 						type="text"
 						{...register("name", {
@@ -79,17 +77,27 @@ export function ResponsableForm(params: Readonly<{ edit?: ResponsableProps }>){
 				</FormControl>
 
 				<FormControl mb={3}>
-					<FormLabel>Email:</FormLabel>
-					<Input
-						type="text"
-						{...register("email", {
-							pattern: {
-								value: /\S+@\S+\.\S+/,
-								message: "E-mail inválido"
-							}
-						})}
+					<FormLabel>Limite (R$):</FormLabel>
+
+					<Controller
+						name="limit"
+						control={control}
+						rules={{
+							required: true
+						}}
+						render={({field}) => (
+							<CurrencyInput
+								value={field.value}
+								InputElement={
+									<Input type="text" {...field} />
+								}
+								onChangeValue={(_: any, value: any) => {
+									field.onChange(value);
+								}}
+							></CurrencyInput>
+						)}
 					/>
-					{errors.email && <ErrorLabel errors={errors.email} />}
+					{errors.limit && <ErrorLabel errors={errors.limit} />}
 				</FormControl>
 			</ModalBody>
 

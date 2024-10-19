@@ -45,6 +45,10 @@ export function BanksForm(params: Readonly<{ edit?: BanksProps }>){
 						}
 					);
 
+					if (params.edit) {
+						controlModal.onClose();
+					}
+
 					const banks = await fetchBanks();
 
 					if (!banks.status.hasError){
