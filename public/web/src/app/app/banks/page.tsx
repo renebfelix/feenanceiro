@@ -36,7 +36,6 @@ export default function BanksPage(){
 							<Thead>
 								<Tr>
 									<Th>Nome</Th>
-									<Th isNumeric>Limite</Th>
 									<Th></Th>
 								</Tr>
 							</Thead>
