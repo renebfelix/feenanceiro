@@ -42,7 +42,7 @@ export default function BanksPage(){
 
 							<Tbody>
 								{banks.data.map((item) => {
-									return <Banks {...item} />
+									return <Banks key={item.id} {...item} />
 								})}
 							</Tbody>
 						</Table>

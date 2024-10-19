@@ -9,7 +9,7 @@ import { FiPlus, FiRefreshCw } from "react-icons/fi";
 import { useSearchParams } from "next/navigation";
 import { ListBills } from "./components/ListBills";
 import { CardsValues } from "./components/RowCardsValues";
-import { BillingModal } from "./components/modal/BillingModal";
+import { BillingModal } from "./components/modal/BillingForm";
 import { HeaderBill } from "./components/HeaderBill";
 
 export default function BillsPage(){

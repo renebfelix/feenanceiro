@@ -44,7 +44,7 @@ export default function CategoriesPage(){
 
 							<Tbody>
 								{categories.data.map((item) => {
-									return <Category {...item} />
+									return <Category key={item.id} {...item} />
 								})}
 							</Tbody>
 						</Table>

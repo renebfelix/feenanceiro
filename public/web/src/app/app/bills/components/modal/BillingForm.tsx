@@ -4,20 +4,20 @@ import { CurrencyInput } from "react-currency-mask";
 import { useMainContext } from "@feenanceiro/context";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
-import { hadleSubmitBill } from "../../functions/handleSubmitBill";
 import { BillProps } from "@feenanceiro/types";
 import moment from "moment";
 import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
 import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
 
-export function BillingModal({ editBill }: Readonly<{editBill?: BillProps}>){
+export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 	const toast = useToast();
   	const toastIdRef = useRef<any>();
 
 	const [isParcel, setIsParcel] = useState(false);
 	const { responsables, categories, cards, banks, refreshBillings, controlModal } = useMainContext();
 	const { control, register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
-	const { append, remove, fields } = useFieldArray({
+
+	const { append, remove, fields, replace } = useFieldArray({
 		control,
 		name: "division",
 		rules: {
@@ -26,42 +26,46 @@ export function BillingModal({ editBill }: Readonly<{editBill?: BillProps}>){
 				message: "Campo obrigatório"
 			},
 			minLength: 1
-		}
+		},
 	});
 
+
 	useEffect(() => {
-		if (editBill){
-			setValue("valueType", editBill.info.method);
-			setValue("description", editBill.info.title);
-			setValue("value", editBill.info.value);
-			setValue("date", moment(editBill.info.dateInfo).format("YYYY-MM-DD"));
-			setValue("type", editBill.info.type);
-			setValue("parcels", editBill.parcel.total);
-			setValue("payment", editBill.payment.id);
-			setValue("category", editBill.category.id);
-			setValue("observation", editBill.info.description);
+		if (edit){
+			setValue("valueType", edit.info.method);
+			setValue("description", edit.info.title);
+			setValue("value", edit.info.value);
+			setValue("date", moment(edit.info.dateInfo).format("YYYY-MM-DD"));
+			setValue("type", edit.info.type);
+			setValue("parcels", edit.parcel.total);
+			setValue("payment", edit.payment.id);
+			setValue("category", edit.category.id);
+			setValue("observation", edit.info.description);
+			replace(edit.responsable.id)
+		} else {
+			replace("");
 		}
-	}, [editBill])
+	}, [])
 
 	return (
 		<Box as="form" onSubmit={handleSubmit(async (data, event) => {
 			toastIdRef.current = toast({ description: 'Adicionando...', position: "top-right", isClosable: true, duration: 3000 });
 
-			const url = editBill ? "/app/bill/"+editBill.info.id : "/app/bill"
+			const url = edit ? "/app/bill/"+edit.info.id : "/app/bill"
 
 			const response = await getFetchGeneral({
-				method: editBill ? "PUT" : "POST",
+				method: edit ? "PUT" : "POST",
 				data: data,
 				url: url,
 			});
 
 			if (response.ok){
-				toast.update(toastIdRef.current, { description: `${editBill ? "Editado" : "Criado"} com sucesso.`, status: "success" });
+				toast.update(toastIdRef.current, { description: `${edit ? "Editado" : "Criado"} com sucesso.`, status: "success" });
 				reset();
 				remove();
 				refreshBillings?.current?.click();
 			} else {
-				toast.update(toastIdRef.current, { description: `${editBill ? "Editado" : "Criado"} com sucesso.`, status: "error" });
+				toast.update(toastIdRef.current, { description: `${edit ? "Editado" : "Criado"} com sucesso.`, status: "error" });
 			}
 		})}>
 			<ModalBody>
@@ -293,7 +297,7 @@ export function BillingModal({ editBill }: Readonly<{editBill?: BillProps}>){
 			<ModalFooter borderTop={"1px solid"} borderTopColor={"neutral.100"} gap={3}>
 				<Button type="button" onClick={() => controlModal.onClose()}>Cancelar</Button>
 				<Button type="submit" variant={"primary"}>
-					{editBill ? "Editar" : "Cadastrar"}
+					{edit ? "Editar" : "Cadastrar"}
 				</Button>
 			</ModalFooter>
 		</Box>

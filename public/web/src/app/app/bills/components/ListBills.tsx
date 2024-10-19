@@ -7,7 +7,7 @@ import moment from "moment";
 import { ListBillItem } from "./ListBillItem";
 import { BillingDetail } from "./modal/BillingDetail";
 import { BillingDelete } from "./modal/BillingDelete";
-import { BillingModal } from "./modal/BillingModal";
+import { BillingModal } from "./modal/BillingForm";
 import { BillingStop } from "./modal/BillingStop";
 
 export function ListBills(){
@@ -41,7 +41,7 @@ export function ListBills(){
 											onClickEdit={() => {
 												setModalComponent({
 													title: "Editar lançamento",
-													bodyComponent: <BillingModal editBill={item} />
+													bodyComponent: <BillingModal edit={item} />
 												})
 												controlModal.onOpen();
 											}}

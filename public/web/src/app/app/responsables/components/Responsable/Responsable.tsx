@@ -18,16 +18,18 @@ export function ResponsableCard(params: ResponsableProps){
 					<Avatar name={name} />
 				</Box>
 
-				<Flex flexDirection={"column"} gap={1}>
+				<Flex flexDirection={"column"} gap={1} justifyContent={"center"}>
 					<Flex gap={3} alignItems={"center"}>
 						<Heading variant={"h4"}>{name}</Heading>
 						<Text fontStyle={"italic"} fontSize={"12px"}>{isDefault && "(Principal)"}</Text>
 					</Flex>
 
-					<Flex gap={2} alignItems={"center"}>
-						<FiMail />
-						<Text>{email ?? "Sem e-mail"}</Text>
-					</Flex>
+					{email && (
+						<Flex gap={2} alignItems={"center"}>
+							<FiMail />
+							<Text>{email ?? "Sem e-mail"}</Text>
+						</Flex>
+					)}
 				</Flex>
 			</Flex>
 

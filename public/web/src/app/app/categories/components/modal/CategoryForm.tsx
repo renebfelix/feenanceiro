@@ -19,7 +19,7 @@ export function CategoryForm(params: Readonly<{ edit?: CategoriesPorps }>){
 			setValue("name", params.edit.name);
 			setValue("limit", params.edit.limit);
 		}
-	})
+	}, [])
 
 	return (
 		<Box
@@ -82,9 +82,6 @@ export function CategoryForm(params: Readonly<{ edit?: CategoriesPorps }>){
 					<Controller
 						name="limit"
 						control={control}
-						rules={{
-							required: true
-						}}
 						render={({field}) => (
 							<CurrencyInput
 								value={field.value}

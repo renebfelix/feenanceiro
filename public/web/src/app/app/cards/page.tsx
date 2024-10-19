@@ -46,7 +46,7 @@ export default function CardsPage(){
 
 							<Tbody>
 								{cards.data.map((item) => {
-									return <Cards {...item} />
+									return <Cards key={item.id} {...item} />
 								})}
 							</Tbody>
 						</Table>
