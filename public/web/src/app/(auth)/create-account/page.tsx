@@ -13,7 +13,7 @@ import { verifyRecaptcha } from "@/services/verifyRecaptcha";
 export default function CreateAccountPage(){
 	const { register, handleSubmit, formState: { errors }, reset } = useForm();
 	const { executeGoogleReCaptcha } = useGoogleReCaptcha(`${process.env.RECAPTCHA_KEY}`, {
-		hide: true
+		hide: false
 	});
 
 	const router = useRouter();
@@ -44,7 +44,7 @@ export default function CreateAccountPage(){
 			</Text>
 
 			{notification.show && (
-				<Notification status={notification.status} message={notification.message} error={notification.errorCode} />
+				<Notification {...notification} />
 			)}
 
 			<Flex

@@ -1,5 +1,5 @@
-import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
-import type { AlertStatus } from "@chakra-ui/react";
+import { Alert, AlertIcon, AlertStatus, AlertTitle } from "@chakra-ui/react";
+import { NotificationProps } from "./Notification.types";
 
 function statusControl(status: AlertStatus, error?: number){
 	switch (status) {
@@ -14,11 +14,13 @@ function statusControl(status: AlertStatus, error?: number){
 	}
 }
 
-export function Notification({status, message, error}: Readonly<{status: AlertStatus; message: string; error?: number}>){
+export function Notification({status, message, errorCode, isSimple}: Readonly<NotificationProps>){
 	return (
 		<Alert status={status}>
 			<AlertIcon></AlertIcon>
-			<AlertTitle>{statusControl(status, error)}</AlertTitle>
+			{!isSimple && (
+				<AlertTitle>{statusControl(status, errorCode)}</AlertTitle>
+			)}
 
 			{message}
 		</Alert>

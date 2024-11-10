@@ -8,18 +8,13 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import type { AlertStatus } from "@chakra-ui/react";
+import { NotificationProps } from "@/components/Notification/Notification.types";
 
 export default function LoginPage(){
 	const { register, handleSubmit, formState: {errors}, reset } = useForm();
 	const router = useRouter();
 
-	const [notification, setNotification] = useState<{
-		show: boolean;
-		status: AlertStatus;
-		message: string;
-		errorCode?: number;
-	}>({
+	const [notification, setNotification] = useState<NotificationProps>({
 		show: false,
 		status: "loading",
 		message: "",
@@ -41,7 +36,7 @@ export default function LoginPage(){
 			</Text>
 
 			{notification.show && (
-				<Notification status={notification.status} message={notification.message} error={notification.errorCode} />
+				<Notification {...notification} />
 			)}
 
 			<Flex
