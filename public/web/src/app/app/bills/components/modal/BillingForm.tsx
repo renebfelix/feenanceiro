@@ -35,7 +35,7 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 			setValue("valueType", edit.info.method);
 			setValue("description", edit.info.title);
 			setValue("value", edit.info.value);
-			setValue("date", moment(edit.info.dateInfo).format("YYYY-MM-DD"));
+			setValue("date", moment(edit.info.dateInfo, "YYYY-MM-DD").format("YYYY-MM-DD"));
 			setValue("type", edit.info.type);
 			setValue("parcels", edit.parcel.total);
 			setValue("payment", edit.payment.id);
