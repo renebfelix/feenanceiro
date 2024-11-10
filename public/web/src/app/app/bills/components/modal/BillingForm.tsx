@@ -61,8 +61,14 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 
 			if (response.ok){
 				toast.update(toastIdRef.current, { description: `${edit ? "Editado" : "Criado"} com sucesso.`, status: "success" });
-				reset();
-				remove();
+
+				if (!edit){
+					reset();
+					remove();
+				} else {
+					controlModal.onClose();
+				}
+
 				refreshBillings?.current?.click();
 			} else {
 				toast.update(toastIdRef.current, { description: `${edit ? "Editado" : "Criado"} com sucesso.`, status: "error" });
