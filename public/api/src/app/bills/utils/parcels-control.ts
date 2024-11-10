@@ -22,11 +22,16 @@ export function parcelsFieldsValueBill(body: BodyBillProps, uuidBillingInfo: str
 		valorParcela = (value/parcels)/division.length;
 
 		for(let i = 1; i <= parcels; i++){
-			const day = moment(date).format("DD"); // sempre o mesmo dia do mês
 			const month = moment(date).add(i-1, "M").format("MM");
 			const year = moment(date).add(i-1, "M").format("YYYY");
 
-			console.log(`${year}-${month}-${day}`);
+			let day = moment(date).format("DD");
+			const lastMonthDay = moment(date, "YYYY-MM-DD").add(i-1, "M").daysInMonth()
+
+			// Check the last day of the month
+			if(Number(day) > Number(lastMonthDay)){
+				day = lastMonthDay.toString();
+			}
 
 			// Looping para divisão
 			for(const responsable of division){

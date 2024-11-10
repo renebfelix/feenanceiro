@@ -59,6 +59,18 @@ export async function getBillValues(filters: FilterProps, uuidUser: string){
 				}
 			]
 		},
+		orderBy: [
+			{
+				billings_info: {
+					typeBillingInfo: "asc",
+				}
+			},
+			{
+				billings_info: {
+					dataBillingInfo: "asc",
+				}
+			}
+		],
 		select: {
 			valueBillingValue: true,
 			idBillingValue: true,

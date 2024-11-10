@@ -32,8 +32,8 @@ export const minMonthsName = [
 
 export function formatDateBasic(date: any){
 	const day = moment(date, "YYYY-MM-DD").format("DD");
-	const month = moment(date, "YYYY-MM-DD").format("m");
+	const month = moment(date, "YYYY-MM-DD").format("M");
 	const year = moment(date, "YYYY-MM-DD").format("YYYY");
 
-	return  day+" "+minMonthsName[Number(month)]+" "+year;
+	return  day+" "+minMonthsName[Number(month)-1]+" "+year;
 }

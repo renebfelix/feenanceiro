@@ -24,12 +24,11 @@ export function ListBillItem(params: Readonly<ActionsButtonsProps>){
 	return (
 		<Tr bgColor={info.statusPayment === "PAGO" ? "success.200" : "white"}>
 			<Td>
-				{info.type === "FIXA" ?
+				{info.type === "FIXA" || info.type === "PARCELADA" ?
 					formatDateBasic(info.dateInfo)
 				 :
 				 	formatDateBasic(dateValue)
 				}
-
 			</Td>
 			<Td isTruncated>{info.title}</Td>
 			<Td isNumeric fontWeight={"bold"} color={info.method === "SAIDA" ? "danger.400" : "success.500"}>
