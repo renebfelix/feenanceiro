@@ -22,7 +22,11 @@ export function parcelsFieldsValueBill(body: BodyBillProps, uuidBillingInfo: str
 		valorParcela = (value/parcels)/division.length;
 
 		for(let i = 1; i <= parcels; i++){
-			let dateParcela = i === 1 ? date : moment(new Date(date)).add(i-1, "M").format("YYYY-MM-DD");
+			const day = moment(date).format("DD"); // sempre o mesmo dia do mês
+			const month = moment(date).add(i-1, "M").format("MM");
+			const year = moment(date).add(i-1, "M").format("YYYY");
+
+			console.log(`${year}-${month}-${day}`);
 
 			// Looping para divisão
 			for(const responsable of division){
@@ -31,7 +35,7 @@ export function parcelsFieldsValueBill(body: BodyBillProps, uuidBillingInfo: str
 						valorParcela,
 						uuidBillingInfo,
 						responsable,
-						new Date(dateParcela),
+						new Date(`${year}-${month}-${day}`),
 						i
 					)
 				)

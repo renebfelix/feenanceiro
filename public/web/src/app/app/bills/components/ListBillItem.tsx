@@ -5,7 +5,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FiInfo, FiStopCircle, FiThumbsUp, FiX } from "react-icons/fi";
 import { FaRegEdit } from "react-icons/fa";
 import { moneyCurrency } from "../../../../../../api/utils/moneyCurrency";
-import { typePayment } from "@feenanceiro/utils";
+import { formatDateBasic, minMonthsName, typePayment } from "@feenanceiro/utils";
 
 interface ActionsButtonsProps extends BillProps {
 	onClickDetail?: () => void;
@@ -24,11 +24,12 @@ export function ListBillItem(params: Readonly<ActionsButtonsProps>){
 	return (
 		<Tr bgColor={info.statusPayment === "PAGO" ? "success.200" : "white"}>
 			<Td>
-				{info.type === "FIXA" ? (
-					moment(new Date(info.dateInfo ?? '')).format("DD/MM")
-				) : (
-					moment(new Date(dateValue ?? '')).format("DD/MM")
-				)}
+				{info.type === "FIXA" ?
+					formatDateBasic(info.dateInfo)
+				 :
+				 	formatDateBasic(dateValue)
+				}
+
 			</Td>
 			<Td isTruncated>{info.title}</Td>
 			<Td isNumeric fontWeight={"bold"} color={info.method === "SAIDA" ? "danger.400" : "success.500"}>

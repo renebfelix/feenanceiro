@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const fullMonthsName = [
 	"Janeiro",
 	"Fevereiro",
@@ -26,4 +28,12 @@ export const minMonthsName = [
 	"Out",
 	"Nov",
 	"Dez"
-]
+];
+
+export function formatDateBasic(date: any){
+	const day = moment(date, "YYYY-MM-DD").format("DD");
+	const month = moment(date, "YYYY-MM-DD").format("m");
+	const year = moment(date, "YYYY-MM-DD").format("YYYY");
+
+	return  day+" "+minMonthsName[Number(month)]+" "+year;
+}

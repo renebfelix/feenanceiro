@@ -33,7 +33,7 @@ export function BillingDetail(params: Readonly<BillProps>){
 			<LineBilling title="Pagamento" description={params.payment.name} />
 			<LineBilling title="Responsável" description={params.responsable.name} />
 			<LineBilling title="Data do lançamento" description={params.dateValue && moment(new Date(params.dateValue)).format("DD/MM/YYYY")} />
-			<LineBilling title="Data criação" description={moment(new Date(params.info.dateInfo)).format("DD/MM/YYYY")} />
+			<LineBilling title="Data criação" description={moment(params.info.dateInfo, "YYYY-MM-DD").format("DD/MM/YYYY")} />
 
 			<Divider my={2} />
 

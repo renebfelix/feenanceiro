@@ -30,7 +30,7 @@ statusBillRoute.post('/app/bill/:uuidBillingValue', async(req: Request, res: Res
 					data: {
 						responsableBillingStatus: searchBill.responsableBillingValue,
 						statusBillingStatus: status,
-						dateBillingStatus: new Date(moment(new Date(date)).format("YYYY-MM-DD H:mm:ss")),
+						dateBillingStatus: moment(date, "YYYY-MM-DD").format("YYYY-MM-DD H:mm:ss"),
 						idBillingValueBillingStatus: searchBill.idBillingValue,
 					},
 					select: {

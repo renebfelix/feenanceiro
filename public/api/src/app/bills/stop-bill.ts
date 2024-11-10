@@ -10,14 +10,14 @@ stopBillRouter.post('/app/stop-bill/:uuidBillingValue', async(req: Request, res:
 	const { uuidBillingValue } = req.params; // ID do Gasto na table values
 	const { date } = req.body;
 
-	console.log(date);
+	const lastMonthDay = moment(date, "YYYY-MM").daysInMonth();
 
 	if (!date || isEmpty([date])){
 		res.status(401).send(errorHandler(1, "Parâmetro inválido"))
 	} else {
 		const stopBill = await database.billings_values.update({
 			data: {
-				stopBillingValue: new Date(moment(new Date(date+"-31")).format("YYYY-MM-DD")),
+				stopBillingValue: new Date(moment(date+"-"+lastMonthDay, "YYYY-MM-DD").format("YYYY-MM-DD")),
 			},
 			where: {
 				idBillingValue: uuidBillingValue,
