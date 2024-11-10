@@ -5,7 +5,7 @@
 	"author": "Rene Felix",
 	"license": "MIT",
 	"scripts": {
-		"build": "npx tsc",
+		"build": "tsc --build",
 		"start": "node dist/index.js",
 		"dev": "nodemon src/index.ts",
 		"prisma:pull": "prisma db pull"
