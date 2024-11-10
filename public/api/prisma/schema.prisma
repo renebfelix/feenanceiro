@@ -51,7 +51,7 @@ model billings_values {
   responsableBillingValue   String
   numberParcelBillingValue  Int?
   deletedBillingValue       DateTime?
-  stopBillingValue       	DateTime?		  @db.Date
+  stopBillingValue          DateTime?         @db.Date
   billings_status           billings_status[]
   billings_info             billings_info     @relation(fields: [idBillingInfoBillingValue], references: [idBillingInfo], onUpdate: Restrict, map: "billing_values_FK")
   responsables              responsables      @relation(fields: [responsableBillingValue], references: [idResponsable], onUpdate: Restrict, map: "billings_values_responsables_FK")
