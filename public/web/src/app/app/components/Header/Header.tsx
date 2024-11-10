@@ -2,7 +2,7 @@
 
 import { Avatar, Box, Button, Container, Flex, HStack, IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { NavLink, NavLinkProps } from "../NavLink/NavLink";
-import { FiCreditCard, FiLock, FiLogOut, FiMenu, FiSettings, FiTag, FiUser, FiUsers, FiX } from "react-icons/fi";
+import { FiCreditCard, FiLogOut, FiMenu, FiSettings, FiTag, FiUser, FiUsers, FiX } from "react-icons/fi";
 
 import LogoFeenanceiro from "../../../../../public/logo-white.svg";
 import Image from "next/image";
@@ -120,8 +120,7 @@ export function HeaderApp(){
 							</MenuButton>
 
 							<MenuList>
-								<MenuItem icon={<FiSettings />}>Configurações</MenuItem>
-								<MenuItem icon={<FiLock />}>Alterar senha</MenuItem>
+								<MenuItem onClick={() => router.push("/app/settings/account")} icon={<FiSettings />}>Configurações</MenuItem>
 								<MenuDivider />
 								<MenuItem icon={<FiLogOut />} onClick={() => signOut()}>Sair</MenuItem>
 							</MenuList>
