@@ -97,7 +97,7 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 					{errors.valueType && <ErrorLabel errors={errors.valueType} />}
 				</FormControl>
 
-				<Flex gap={4}>
+				<Flex gap={4} flexDirection={{base: "column", sm: "row"}}>
 					<FormControl mb={3}>
 						<FormLabel>Nome:</FormLabel>
 						<Input
@@ -140,7 +140,7 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 					</FormControl>
 				</Flex>
 
-				<Flex gap={4}>
+				<Flex gap={4} flexDirection={{base: "column", sm: "row"}}>
 					<FormControl mb={3}>
 						<FormLabel>Data:</FormLabel>
 						<Input
