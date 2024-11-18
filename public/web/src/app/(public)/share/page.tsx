@@ -12,11 +12,12 @@ import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { FiDollarSign } from "react-icons/fi";
 
-function saldoDevedor(gasto?: number, pago?: number){
+function saldoDevedor(gasto?: number, entrada?: number, pago?: number){
 	const totalPago = pago ?? 0;
 	const totalGasto = gasto ?? 0;
+	const totalEntrada = entrada ??0;
 
-	return totalGasto - totalPago;
+	return (totalGasto - totalEntrada) - totalPago;
 }
 
 
@@ -135,7 +136,7 @@ export default function SharePage(){
 
 				<StatsCard
 					icon={<FiDollarSign />}
-					stat={moneyCurrency(saldoDevedor(data?.meta.totalGasto, data?.meta.totalPago))}
+					stat={moneyCurrency(saldoDevedor(data?.meta.totalGasto, data?.meta.totalEntradas, data?.meta.totalPago))}
 					title={"Saldo devedor"}
 				/>
 			</Flex>

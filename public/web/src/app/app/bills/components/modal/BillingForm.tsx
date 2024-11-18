@@ -1,4 +1,4 @@
-import { Flex, FormControl, FormLabel, Input, Select, Button, IconButton, Textarea, ModalBody, ModalFooter, Box, useToast, Text } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, Select, Button, IconButton, Textarea, ModalBody, ModalFooter, Box, useToast, Text, Skeleton, Spinner } from "@chakra-ui/react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { CurrencyInput } from "react-currency-mask";
 import { useMainContext } from "@feenanceiro/context";
@@ -8,11 +8,12 @@ import { BillProps } from "@feenanceiro/types";
 import moment from "moment";
 import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
 import { getFetchGeneral } from "@/app/services/fetchs/getFetchGeneral";
+import { LoadingSpinner } from "@/app/app/components/LoadingSpinner/LoadingSpinner";
 
 export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 	const toast = useToast();
-  	const toastIdRef = useRef<any>();
 
+	const [loading, setLoading] = useState(false);
 	const [isParcel, setIsParcel] = useState(false);
 	const { responsables, categories, cards, banks, refreshBillings, controlModal } = useMainContext();
 	const { control, register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
@@ -47,10 +48,12 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 		}
 	}, [])
 
+	if (loading){
+		return <LoadingSpinner text={`${edit ? "Editando" : "Adicionando"}, aguarde...`} />
+	}
+
 	return (
 		<Box as="form" onSubmit={handleSubmit(async (data, event) => {
-			toastIdRef.current = toast({ description: 'Adicionando...', position: "top-right", isClosable: true, duration: 3000 });
-
 			const url = edit ? "/app/bill/"+edit.info.id : "/app/bill"
 
 			const response = await getFetchGeneral({
@@ -60,7 +63,7 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 			});
 
 			if (response.ok){
-				toast.update(toastIdRef.current, { description: `${edit ? "Editado" : "Criado"} com sucesso.`, status: "success" });
+				toast({ description: `${edit ? "Editado" : "Criado"} com sucesso.`, position: "top", status: "success" });
 
 				if (!edit){
 					reset();
@@ -71,8 +74,10 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 
 				refreshBillings?.current?.click();
 			} else {
-				toast.update(toastIdRef.current, { description: `${edit ? "Editado" : "Criado"} com sucesso.`, status: "error" });
+				toast({ description: "Ocorreu um erro, tente novamente.", position: "top", status: "error" });
 			}
+
+			setLoading(false);
 		})}>
 			<ModalBody>
 				<FormControl mb={3}>
