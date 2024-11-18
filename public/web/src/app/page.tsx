@@ -1,7 +1,8 @@
 "use client";
-import { Box } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { LayoutAuth } from "./(auth)/components/Layout";
 
 export default function Home() {
 	const route = useRouter();
@@ -11,8 +12,10 @@ export default function Home() {
 	}, [])
 
 	return (
-		<Box bgColor={"danger.400"}>
-			<h1>Página de apresentação da plataforma</h1>
-		</Box>
+		<LayoutAuth>
+			<Box p={5}>
+				<Spinner />
+			</Box>
+		</LayoutAuth>
 	);
 }
