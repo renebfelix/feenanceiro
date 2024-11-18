@@ -94,8 +94,7 @@ app.use(`${urlBase}`, [
 	shareRoute,
 ]);
 
-app.use(`${urlBase}`, [
-	isValidLogin,
+app.use(`${urlBase}`, isValidLogin, [
 	categoryRoute,
 	listCategoriesRouter,
 	updateCategoryRoute,
