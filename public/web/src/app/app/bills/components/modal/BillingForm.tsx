@@ -3,7 +3,7 @@ import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { CurrencyInput } from "react-currency-mask";
 import { useMainContext } from "@feenanceiro/context";
 import { FiPlus, FiTrash } from "react-icons/fi";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { BillProps } from "@feenanceiro/types";
 import moment from "moment";
 import { ErrorLabel } from "@/components/ErrorLabel/ErrorLabel";
@@ -54,6 +54,7 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 
 	return (
 		<Box as="form" onSubmit={handleSubmit(async (data, event) => {
+			setLoading(true);
 			const url = edit ? "/app/bill/"+edit.info.id : "/app/bill"
 
 			const response = await getFetchGeneral({
