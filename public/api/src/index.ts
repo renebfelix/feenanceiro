@@ -70,10 +70,11 @@ const bodyParser = require("body-parser");
 const app: Express = express();
 const port = process.env.APP_PORT;
 const urlBase = `${process.env.APP_URL_BASE}`;
+const urlCors = `${process.env.APP_URL_CORS}`;
 
 // CORS Settings
 app.use(cors({
-	origin: "https://feenanceiro-web.vercel.app",
+	origin: urlCors,
 }));
 
 // Files public upload
