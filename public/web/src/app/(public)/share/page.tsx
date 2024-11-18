@@ -28,6 +28,11 @@ export default function SharePage(){
 	const { register, handleSubmit, setValue } = useForm();
 	const router = useRouter();
 
+	function redirectPeriod(period: string){
+		let url = `?user=${queryParams.get('user')}&responsable=${queryParams.get('responsable')}&period=${period}`;
+		router.push(`/share${url}`);
+	}
+
 	async function getBills(){
 		setLoading(true);
 
@@ -51,14 +56,18 @@ export default function SharePage(){
 
 	function handlerFilters(data: FieldValues, event: any){
 		event.preventDefault();
-
-		let url = `?user=${queryParams.get('user')}&responsable=${queryParams.get('responsable')}&period=${data.period}`;
-		router.push(`/share${url}`);
+		redirectPeriod(data.period)
 	}
 
 	useEffect(() => {
-		setValue("period", queryParams.get("period"))
-		getBills();
+		const period = queryParams.get("period");
+
+		if (!period) {
+			redirectPeriod(moment().format("YYYY-MM"));
+		} else {
+			setValue("period", period)
+			getBills();
+		}
 	}, [queryParams]);
 
 	if (loading) {
