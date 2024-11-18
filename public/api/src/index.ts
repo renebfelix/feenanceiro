@@ -94,6 +94,9 @@ app.use(`${urlBase}`, [
 	shareRoute,
 ]);
 
+// Rotas autenticadas
+app.use(isValidLogin);
+
 app.use(`${urlBase}`, [
 	categoryRoute,
 	listCategoriesRouter,

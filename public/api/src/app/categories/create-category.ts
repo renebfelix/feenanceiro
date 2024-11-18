@@ -3,11 +3,10 @@ import { userDataToken } from "../../../utils/userDatatoken";
 import { database } from "../../prisma/client";
 import { errorHandler } from "../../../utils/errorsHandlers";
 import { isEmpty } from "../../../utils/isEmpty";
-import { isValidLogin } from "../../../services/middleware";
 
 const categoryRoute = Router();
 
-categoryRoute.post(`/app/category`, isValidLogin, async (req: Request, res: Response) => {
+categoryRoute.post(`/app/category`, async (req: Request, res: Response) => {
 	const { uuid } = userDataToken(req.headers.authorization ?? '');
 	const { name, limit } = req.body;
 
