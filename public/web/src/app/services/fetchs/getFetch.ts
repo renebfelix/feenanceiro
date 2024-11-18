@@ -18,6 +18,7 @@ export async function getFetch(params: FetchProps){
 		if (method === "POST" || method === "PUT"){
 			headersConfig = {
 				"Content-Type" : "application/json",
+				"Access-Control-Allow-Origin": "https://feenanceiro-web.vercel.app"
 			}
 		}
 
