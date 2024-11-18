@@ -4,6 +4,8 @@ import { errorHandler } from "../../../utils/errorsHandlers";
 import { database } from "../../prisma/client";
 import { regexDate } from "../../../utils/regex";
 import { calculateMeta } from "../../app/bills/utils/calculate-meta";
+import moment from "moment";
+import { selectFieldsBillInfo } from "../../app/bills/utils/fields-bill-info";
 
 const shareRoute = Router();
 
@@ -13,7 +15,7 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 	if (!period || !responsable || !user || isEmpty([period.toString(), responsable.toString(), user.toString()]) && regexDate(period.toString())) {
 		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
 	} else {
-		const dateSplit = period.toString().split("-");
+		const lastMonthDay = moment(period.toString(), "YYYY-MM").daysInMonth();
 
 		const getUserInfos = await database.responsables.findFirst({
 			where: {
@@ -35,8 +37,8 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 				OR: [
 					{
 						dateBillingValue: {
-							gte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-01'),
-							lte: dateSplit && new Date(dateSplit[1]+'-'+dateSplit[0]+'-31'),
+							gte: new Date(period+'-01'),
+							lte: new Date(period+'-'+lastMonthDay),
 						},
 					},
 					{
@@ -51,25 +53,56 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 				}
 			},
 			select: {
-				idBillingValue: true,
 				valueBillingValue: true,
-				dateBillingValue: true,
+				idBillingValue: true,
+				responsableBillingValue: true,
 				numberParcelBillingValue: true,
+				dateBillingValue: true,
 				billings_info: {
 					select: {
-						descriptionBillingInfo: true,
-						typeBillingInfo: true,
-						valueTypeBillingInfo: true,
-						parcelBillingInfo: true,
+						...selectFieldsBillInfo()
 					}
 				},
 				billings_status: {
+					where: {
+						dateBillingStatus: {
+							gte: new Date(period+'-01'),
+							lte: new Date(period+'-'+lastMonthDay),
+						}
+					},
 					select:{
+						idBillingStatus: true,
+						idBillingValueBillingStatus: true,
 						statusBillingStatus: true,
-					}
+						dateBillingStatus: true,
+					},
 				},
 			}
 		});
+
+		let formatApi = getShareData.map((bill) => {
+			return {
+				id: bill.idBillingValue,
+				value: bill.valueBillingValue,
+				dateValue: bill.dateBillingValue,
+				info: {
+					id: bill.billings_info.idBillingInfo,
+					title: bill.billings_info.descriptionBillingInfo,
+					description: bill.billings_info.observationBillingInfo,
+					division: bill.billings_info.divisionBillingInfo,
+					value: bill.billings_info.valueBillingInfo,
+					dateInfo: bill.billings_info.dataBillingInfo,
+					dateCreationInfo: bill.billings_info.dataCriacaoBillingInfo,
+					type: bill.billings_info.typeBillingInfo,
+					method: bill.billings_info.valueTypeBillingInfo,
+					statusPayment: bill.billings_status[0]?.statusBillingStatus ?? "EM_ABERTO"
+				},
+				parcel: {
+					total: bill.billings_info.parcelBillingInfo,
+					current: bill.numberParcelBillingValue,
+				},
+			}
+		})
 
 		if (!getShareData || !getUserInfos) {
 			res.status(401).send(errorHandler(3, "Ocorreu um erro"));
@@ -80,7 +113,7 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 					mainUser: getUserInfos.users.fullnameUser,
 					responsable: getUserInfos.nameResponsable,
 				},
-				items: getShareData
+				items: formatApi
 			});
 		}
 	}

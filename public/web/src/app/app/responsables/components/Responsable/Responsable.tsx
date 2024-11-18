@@ -3,13 +3,15 @@ import { useMainContext } from "@feenanceiro/context";
 import { ResponsableProps } from "@feenanceiro/types";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
-import { FiMail, FiX } from "react-icons/fi";
+import { FiLink, FiMail, FiX } from "react-icons/fi";
 import { DeleteResponsable } from "../Modal/DeleteResponsable";
 import { ResponsableForm } from "../Modal/ResponsableForm";
+import Link from "next/link";
+import moment from "moment";
 
 export function ResponsableCard(params: ResponsableProps){
 	const { id, name, isInvited, isDefault, email, acceptedInvite } = params;
-	const { controlModal, setModalComponent } = useMainContext();
+	const { controlModal, setModalComponent, user } = useMainContext();
 
 	return (
 		<Flex mb={3} border={"1px solid"} borderColor={"neutral.100"} rounded={"lg"} key={id} p={2} justifyContent={"space-between"} alignItems={"flex-start"}>
@@ -49,7 +51,11 @@ export function ResponsableCard(params: ResponsableProps){
 					)}
 
 					<MenuList>
-						{/* <MenuItem icon={<FiInfo />}>Detalhes</MenuItem> */}
+						<Link href={`/share?user=${user.data.id}&responsable=${params.id}&period=${moment().format("YYYY-MM")}`} target="_blank">
+							<MenuItem icon={<FiLink />}>
+								Link
+							</MenuItem>
+						</Link>
 
 						<MenuItem
 							icon={<FaRegEdit />}

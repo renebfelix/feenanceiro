@@ -6,38 +6,48 @@ export type MetaTagsBillsProps = {
 	totalPago: number;
 }
 
+export type InfoBillProps = {
+	id: string;
+	title: string;
+	description: string;
+	division: number;
+	value: number;
+	dateInfo: Date;
+	dateCreationInfo: Date;
+	statusPayment: "EM_ABERTO" | "PAGO",
+	type: "UNICA" | "FIXA" | "PARCELADA",
+	method: "SAIDA" | "ENTRADA",
+}
+
+export type ResponsableBillProps = {
+	id: string;
+	name: string;
+}
+
+export type ParcelBillProps = {
+	current: number;
+	total: number;
+}
+
+export type PaymentBillProps = {
+	id: string;
+	name: string;
+}
+
+export type CategoryBillProps = {
+	id: string;
+	name: string;
+}
+
 export type BillProps = {
 	id: string;
 	value: number;
 	dateValue?: Date;
-	info: {
-		id: string;
-		title: string;
-		description: string;
-		division: number;
-		value: number;
-		dateInfo: Date;
-		dateCreationInfo: Date;
-		statusPayment: "EM_ABERTO" | "PAGO",
-		type: "UNICA" | "FIXA" | "PARCELADA",
-		method: "SAIDA" | "ENTRADA",
-	},
-	responsable: {
-		id: string;
-		name: string;
-	},
-	parcel: {
-		current: number;
-		total: number;
-	},
-	payment: {
-		id: string;
-		name: string;
-	},
-	category: {
-		id: string;
-		name: string;
-	}
+	info: InfoBillProps,
+	responsable: ResponsableBillProps,
+	parcel: ParcelBillProps,
+	payment: PaymentBillProps,
+	category: CategoryBillProps,
 }
 
 export interface BillsFetchProps {

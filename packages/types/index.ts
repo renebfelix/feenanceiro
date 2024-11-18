@@ -16,3 +16,6 @@ export type { CategoriesPorps, CategoriesFetchProps } from './features/categorie
 export type { CardsProps, CardsFetchProps } from './features/cards';
 export type { BanksProps, BanksFetchProps } from './features/banks';
 export type { BillsFetchProps, BillProps, MetaTagsBillsProps } from './features/bills';
+
+// Shares
+export type { ShareProps } from './share/share';
