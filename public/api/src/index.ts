@@ -73,7 +73,7 @@ const urlBase = `${process.env.APP_URL_BASE}`;
 
 // CORS Settings
 app.use(cors({
-	origin: "*"
+	origin: "https://feenanceiro-web.vercel.app/"
 }));
 
 // Files public upload
