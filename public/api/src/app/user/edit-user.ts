@@ -22,15 +22,28 @@ editUserRouter.put('/app/user', async (req: Request, res: Response) => {
 				idUser: uuid
 			},
 			select: {
+				idUser: true,
 				fullnameUser: true,
-				limitUser: true,
+				emailUser: true,
+				photoUser: true,
+				usernameUser: true,
+				limitUser: true
 			}
 		});
 
 		if (!editUser) {
 			res.status(401).send();
 		} else {
-			res.send(editUser);
+			const rename = {
+				id: editUser.idUser,
+				fullname: editUser.fullnameUser,
+				email: editUser.emailUser,
+				photo: editUser.photoUser,
+				username: editUser.usernameUser,
+				limit: editUser.limitUser
+			}
+
+			res.send(rename);
 		}
 	}
 

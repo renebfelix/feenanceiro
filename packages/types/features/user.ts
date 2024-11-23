@@ -6,6 +6,7 @@ export type UserProps = {
 	email: string;
 	photo?: string;
 	username: string;
+	limit: number;
 }
 
 export type UserFetchProps = {

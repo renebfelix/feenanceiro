@@ -5,7 +5,7 @@ import { UserFetchProps } from "@feenanceiro/types";
 export async function fetchUser(): Promise<UserFetchProps> {
 	const userData = await getFetch({method: "GET", url: '/app/user'});
 
-	if (userData.code || userData === undefined){
+	if (userData.error){
 		return {
 			data: USER_INITIAL_STATE.data,
 			status: {
@@ -15,7 +15,7 @@ export async function fetchUser(): Promise<UserFetchProps> {
 		}
 	} else {
 		return {
-			data: userData,
+			data: userData.data,
 			status: {
 				isLoading: false,
 				hasError: false,

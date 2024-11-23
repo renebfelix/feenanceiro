@@ -7,10 +7,11 @@ export interface NavLinkProps {
 	title: string;
 	href: string;
 	icon?: ReactElement;
+	onClick?: () => void;
 }
 
 export const NavLink = (props: NavLinkProps) => {
-	const { title, href, icon } = props;
+	const { title, href, icon, onClick } = props;
 
 	return (
 		<Button
@@ -23,6 +24,7 @@ export const NavLink = (props: NavLinkProps) => {
 				bgColor: "primary.200",
 				color: "primary.500"
 			}}
+			onClick={onClick}
 		>
 			{title}
 		</Button>

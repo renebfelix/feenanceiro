@@ -22,6 +22,7 @@ userDataRoute.get('/app/user', async(req: Request, res: Response) => {
 				emailUser: true,
 				photoUser: true,
 				usernameUser: true,
+				limitUser: true
 			}
 		});
 
@@ -33,7 +34,8 @@ userDataRoute.get('/app/user', async(req: Request, res: Response) => {
 				fullname: user.fullnameUser,
 				email: user.emailUser,
 				photo: user.photoUser,
-				username: user.usernameUser
+				username: user.usernameUser,
+				limit: user.limitUser
 			}
 
 			res.send(rename);

@@ -33,7 +33,9 @@ editPasswordRoute.put('/app/user/password', async(req: Request, res: Response) =
 			if (!updatePassword) {
 				res.status(401).send(errorHandler(1, "Ocorreu um erro"))
 			} else {
-				res.send();
+				res.send({
+					message: "Atualizado com sucesso"
+				});
 			}
 		}
 	}

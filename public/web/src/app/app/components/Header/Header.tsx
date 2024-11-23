@@ -132,7 +132,7 @@ export function HeaderApp(){
 					<Box pb={4} display={{ lg: 'none' }}>
 						<Stack as={'nav'} spacing={4}>
 							{Links.map((link, index) => (
-								<NavLink icon={link.icon} href={link.href} key={link.title} title={link.title} />
+								<NavLink onClick={() => onClose()} icon={link.icon} href={link.href} key={link.title} title={link.title} />
 							))}
 						</Stack>
 					</Box>

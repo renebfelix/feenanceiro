@@ -9,7 +9,15 @@ interface FetchProps {
 	data?: Object
 }
 
-export async function getFetch(params: FetchProps){
+interface FetchResponseProps {
+	data?: any,
+	error?: {
+		code: number,
+		message: string,
+	}
+}
+
+export async function getFetch(params: FetchProps): Promise<FetchResponseProps>{
 	const { method, url, data } = params;
 	const cookie = Cookies.get('token_fee');
 	let headersConfig = {};
@@ -23,7 +31,7 @@ export async function getFetch(params: FetchProps){
 		}
 
 		if (!cookie || !isValidJSON(cookie)) {
-			return new Error();
+			throw new Error("Token inválido");
 		} else {
 			let { token } = JSON.parse(cookie);
 			const decoded = jwtDecode(token);
@@ -33,7 +41,7 @@ export async function getFetch(params: FetchProps){
 				const newToken = await getNewTokenRefresh();
 
 				if (!newToken.token){
-					return new Error();
+					throw new Error("Erro ao gerar novo token");
 				}
 
 				Cookies.set('token_fee', JSON.stringify(newToken));
@@ -49,9 +57,24 @@ export async function getFetch(params: FetchProps){
 				}
 			});
 
-			return await response.json();
+
+			if (response.ok) {
+				const dataResponse = await response.json();
+
+				return {
+					data: dataResponse ?? ""
+				};
+			} else {
+				throw new Error("Ocorreu um erro");
+			}
+
 		}
 	} catch(error: any) {
-		return new Error(error);
+		return {
+			error: {
+				code: 100,
+				message: error.message
+			}
+		}
 	}
 }
