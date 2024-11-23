@@ -11,6 +11,7 @@ export const USER_INITIAL_STATE : UserFetchProps = {
 		id: "",
 		username: "",
 		photo: "",
+		limit: 0
 	},
 	status: STATUS_INITIAL_STATE
 }
