@@ -15,7 +15,7 @@ export async function handleMarcarPago(bill: BillProps, filterPeriod: string){
 	if(response.error?.code){
 		return false;
 	} else {
-		return response;
+		return response.data;
 	}
 }
 
