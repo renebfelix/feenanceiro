@@ -12,7 +12,7 @@ export async function handleMarcarPago(bill: BillProps, filterPeriod: string){
 		}
 	});
 
-	if(response.code){
+	if(response.error?.code){
 		return false;
 	} else {
 		return response;
