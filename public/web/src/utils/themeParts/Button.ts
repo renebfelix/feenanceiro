@@ -43,6 +43,10 @@ const ghost = defineStyle({
 	_hover: {
 		color: "white",
 		bgColor: "primary.500"
+	},
+	_disabled: {
+		bgColor: "white",
+		pointerEvents: "none"
 	}
 })
 
