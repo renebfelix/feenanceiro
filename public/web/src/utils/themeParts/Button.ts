@@ -36,6 +36,16 @@ const warning = defineStyle({
 	...disabledConfig("warning.400", 'warning.500'),
 })
 
+const ghost = defineStyle({
+	...disabledConfig("white", 'primary.500'),
+	color: "primary.500",
+	bgColor: "white",
+	_hover: {
+		color: "white",
+		bgColor: "primary.500"
+	}
+})
+
 export const buttonTheme = defineStyleConfig({
   variants: {
 	"primary": primary,
@@ -43,5 +53,6 @@ export const buttonTheme = defineStyleConfig({
 	"danger": danger,
 	"success": success,
 	"warning": warning,
+	"ghost": ghost,
    },
 })
