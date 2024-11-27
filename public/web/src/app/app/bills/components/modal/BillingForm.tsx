@@ -69,6 +69,7 @@ export function BillingModal({ edit }: Readonly<{edit?: BillProps}>){
 				if (!edit){
 					reset();
 					remove();
+					append("");
 				} else {
 					controlModal.onClose();
 				}
