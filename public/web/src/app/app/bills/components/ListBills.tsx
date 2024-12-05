@@ -12,7 +12,7 @@ import { BillingStop } from "./modal/BillingStop";
 import { useState } from "react";
 
 export function ListBills(){
-	const [idLoading, setIdLoading] = useState("");
+	const [idLoading, setIdLoading] = useState<Array<string>>([]);
 	const { status, items, meta, edit, setItems, setMeta, setEdit } = useBillsContext();
 	const searchParams = useSearchParams();
 	const filterPeriod = searchParams?.get('period') ?? moment().format("YYYY-MM");
@@ -40,7 +40,7 @@ export function ListBills(){
 								items.map((item) => {
 									return (
 										<ListBillItem
-											isLoading={idLoading === item.id}
+											isLoading={idLoading.includes(item.id)}
 											onClickEdit={() => {
 												setModalComponent({
 													title: "Editar lançamento",
@@ -58,14 +58,21 @@ export function ListBills(){
 											}}
 
 											onClickPayed={async () => {
-												setIdLoading(item.id);
+												let array = idLoading;
+													array.push(item.id);
+
+												setIdLoading(array);
 												const response = await handleMarcarPago(item, filterPeriod);
 
 												if (response) {
 													const handlePlayesResult = handleUpdateList(items, meta, response);
 													setItems(handlePlayesResult.items);
 													setMeta(handlePlayesResult.meta);
-													setIdLoading("");
+													setIdLoading(idLoading.filter((idLoadingItem) => {
+														if (idLoadingItem !== item.id){
+															return idLoadingItem
+														}
+													}));
 												}
 											}}
 
