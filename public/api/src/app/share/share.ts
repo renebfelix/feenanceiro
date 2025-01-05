@@ -16,6 +16,7 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 		res.status(401).send(errorHandler(1, "Parâmetros inválidos"));
 	} else {
 		const lastMonthDay = moment(period.toString(), "YYYY-MM").daysInMonth();
+		const data = new Date(moment(period+'-'+lastMonthDay, "YYYY-MM-DD").format("YYYY-MM-DD"));
 
 		const getUserInfos = await database.responsables.findFirst({
 			where: {
@@ -34,15 +35,41 @@ shareRoute.get('/share', async (req: Request, res: Response) => {
 
 		const getShareData = await database.billings_values.findMany({
 			where: {
-				OR: [
+				AND: [
 					{
-						dateBillingValue: {
-							gte: new Date(period+'-01'),
-							lte: new Date(period+'-'+lastMonthDay),
-						},
+						OR: [
+							{
+								dateBillingValue: {
+									gte: new Date(period+'-01'),
+									lte: new Date(period+'-'+lastMonthDay),
+								},
+							},
+							{
+								dateBillingValue: null,
+							},
+						]
 					},
 					{
-						dateBillingValue: null
+						OR: [
+							{
+								stopBillingValue: {
+									gte: data,
+								},
+								billings_info: {
+									dataBillingInfo: {
+										lte: data,
+									}
+								}
+							},
+							{
+								stopBillingValue: null,
+								billings_info: {
+									dataBillingInfo: {
+										lte: data,
+									}
+								}
+							}
+						]
 					}
 				],
 				responsableBillingValue: responsable.toString(),
