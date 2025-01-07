@@ -38,4 +38,5 @@ export const BILL_INITIAL_STATE: BillProps = {
 	},
 	value: 0,
 	dateValue: new Date(),
+	loading: false,
 }
