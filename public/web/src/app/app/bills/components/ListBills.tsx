@@ -63,11 +63,13 @@ export function ListBills(){
 												setItems(itemsClone);
 
 												const response = await handleMarcarPago(item, filterPeriod);
+												itemsClone[index].loading = false;
 
 												if (response) {
-													itemsClone[index].loading = false;
 													itemsClone[index].info.statusPayment = response.status || item.info.statusPayment;
 													setItems(itemsClone);
+												} else {
+													itemsClone[index].info.statusPayment = item.info.statusPayment;
 												}
 											}}
 
