@@ -2,7 +2,7 @@ import { getFetch } from "@/app/services/fetchs";
 import { BillProps, MetaTagsBillsProps } from "@feenanceiro/types";
 import moment from "moment";
 
-export async function handleMarcarPago(bill: BillProps, filterPeriod: string){
+export async function handleMarcarPago(bill: BillProps, filterPeriod: string) {
 	const response = await getFetch({
 		method: "POST",
 		url: `/app/bill/${bill.id}`,

@@ -48,6 +48,7 @@ export type BillProps = {
 	parcel: ParcelBillProps,
 	payment: PaymentBillProps,
 	category: CategoryBillProps,
+	loading: boolean,
 }
 
 export interface BillsFetchProps {
