@@ -77,8 +77,6 @@ app.use(cors({
 	origin: urlCors,
 }));
 
-app.use(function(req,res,next){setTimeout(next,3000)});
-
 // Files public upload
 app.use(express.static('public/static'));
 
